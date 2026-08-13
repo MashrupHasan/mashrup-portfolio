@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CabbageTrack · Md. Mashrup Hasan</title>
+<meta name="description" content="GPS-free UAV plant re-identification pipeline combining YOLOv9-seg detection, visual odometry, and image-space matching across two drone passes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<div id="cdot"></div>
+<div id="cring"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="#2C7A72" stroke-width="1"/><line x1="18" y1="0" x2="18" y2="6" stroke="#2C7A72" stroke-width="1"/><line x1="18" y1="30" x2="18" y2="36" stroke="#2C7A72" stroke-width="1"/><line x1="0" y1="18" x2="6" y2="18" stroke="#2C7A72" stroke-width="1"/><line x1="30" y1="18" x2="36" y2="18" stroke="#2C7A72" stroke-width="1"/></svg></div>
+<div id="pbar-track"><div id="pbar"></div></div>
+
+<nav id="nav">
+  <div class="ni">
+    <div class="logo-group">
+      <a href="../index.html" class="logo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.3" stroke="#2C7A72" stroke-width="1.2"/><path d="M12 3.3L14.2 11.3L12 12.5L9.8 11.3Z" fill="#2C7A72"/><path d="M12 20.7L9.8 12.7L12 11.5L14.2 12.7Z" fill="#AD5A2C"/><circle cx="12" cy="12" r="1.3" fill="#111417"/></svg>
+        Mashrup&#39;s Portfolio
+      </a>
+      <span class="nav-coord mono">DHAKA, BD</span>
+    </div>
+    <div class="desklinks">
+      <a href="../index.html" class="navlink">Work</a>
+      <a href="../index.html#research" class="navlink">Research</a>
+      <a href="../index.html#skills" class="navlink">Skills</a>
+      <a href="../index.html#contact" class="navlink">Contact</a>
+    </div>
+    <button class="burger" id="burgerBtn"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div id="mobmenu">
+  <button id="mobclose">×</button>
+  <a href="../index.html">Work</a>
+  <a href="../index.html#research" data-mob-close>Research</a>
+  <a href="../index.html#skills" data-mob-close>Skills</a>
+  <a href="../index.html#contact" data-mob-close>Contact</a>
+</div>
+
+<section class="subhero">
+  <div class="sp">
+    <a href="../index.html#projects" class="back-link" data-a>&larr; All Projects</a>
+    <div class="eyebrow" data-a><span class="tick"></span>Project Case Study · 02</div>
+    <div class="subtitle" data-a>CabbageTrack</div>
+    <p class="sublede" data-a>A GPS-free UAV pipeline that re-identifies individual plants across two independent drone passes over a commercial field row, with no RTK-GPS, no ground-control points, just detection, motion estimation, and image-space matching.</p>
+    <div class="meta-row" data-a>
+      <div class="meta-item"><span>Role</span><span>Independent Research Project</span></div>
+      <div class="meta-item"><span>Stack</span><span>Python · YOLOv9-seg · OpenCV</span></div>
+      <div class="meta-item"><span>Result</span><span>90.3% re-identification (336/372 plants)</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="border-bottom:none">
+  <div class="sp">
+    <div class="prose" data-a>
+      <h3>Overview</h3>
+      <p>Tracking the same individual plant across repeated drone surveys is the basis for per-plant growth curves, early stress detection, and yield forecasting. The standard solution, RTK-GPS on the drone, is accurate but expensive and often out of reach for smallholder or commercial vegetable operations working on tighter budgets. CabbageTrack asks whether that same re-identification can be done from imagery alone.</p>
+      <p>The pipeline runs in six stages across two flight passes: in Phase 1 (outbound), YOLOv9-seg detects and segments individual plants while phase-correlation visual odometry (a keypoint-free, frequency-domain technique) estimates the drone's frame-to-frame motion directly from the imagery, with no positioning hardware involved. Automatic turn detection (via circular statistics on the motion vectors) flags the transition into Phase 2 (return), where each newly detected plant is matched back to its Phase 1 record by predicting its expected image position at the corresponding moment, rather than stitching everything into a single error-prone global map. Fourier shape descriptors act as a soft tiebreaker between spatially close candidates, and a final Hungarian-assignment pass rescues plants the sequential matcher missed.</p>
+      <p>Tested across a full commercial 372-plant cabbage row in Sylhet, Bangladesh, the pipeline recovered a confirmed match for 336 plants, a 90.3% re-identification rate, using only the drone's onboard camera. The full methodology is written up in a manuscript, <em>"GPS-Free Cabbage Plant Re-Identification Across UAV Loop Passes,"</em> currently in preparation for submission.</p>
+
+      <figure class="fig-frame">
+        <img src="../assets/projects/cabbagetrack-ablation-chart.webp" alt="Bar chart titled 'Ablation Study: RE-ID Rate by Pipeline Version' showing re-identification rate climbing from 0% for a feature-matcher baseline (LoFTR + homography canvas), to 55.1% after switching to image-space sequential matching, 80.9% after adding an outlier clamp and patience counter, 83.3% after landmark calibration, 84.4% after a direction filter, and 90.3% for the full CabbageTrack system.">
+        <figcaption class="fig-caption">Ablation study on the same 372-plant sequence: each pipeline component's contribution to the re-identification rate. The single biggest jump, 0% to 55.1%, comes from replacing feature-matching + a global canvas with image-space sequential matching; everything after that is incremental refinement.</figcaption>
+      </figure>
+
+      <h3>Major Findings</h3>
+      <ol class="ms-list">
+        <li>Achieved a 90.3% re-identification rate (336 of 372 plants) across two independent drone passes with no GPS or ground-control points involved.</li>
+        <li>The ablation study isolates the real bottleneck: a standard feature matcher (LoFTR) plus a stitched global canvas manages 0% on repetitive crop-row texture: periodic patterns alias across homographies and drift compounds past inter-plant spacing. Switching to image-space sequential matching alone jumps straight to 55.1%, the single largest gain in the whole pipeline.</li>
+        <li>Every component after that is incremental: an outlier clamp + patience counter (+25.8 pp → 80.9%), landmark calibration (+2.4 pp → 83.3%), a direction filter (+1.1 pp → 84.4%), and Fourier shape descriptors + a post-hoc Hungarian rescue pass (+5.9 pp → 90.3% final).</li>
+        <li>On a manually annotated reference subset, matching precision and recall were 96% and 94% respectively, confirming the accepted matches are reliable, not just numerous.</li>
+        <li>Demonstrates a low-cost route to per-plant longitudinal monitoring (growth tracking, early health flags) for farms that can't justify survey-grade GPS equipment, and a six-stage design that generalizes beyond cabbage to other row-crop UAV monitoring tasks.</li>
+      </ol>
+    </div>
+
+    <div style="margin-top:56px;display:flex;gap:14px;flex-wrap:wrap">
+      <a href="https://github.com/MashrupHasan/CabbageTrack" target="_blank" class="btn btn-fill" data-magnet>VIEW ON GITHUB →</a>
+      <a href="../index.html#projects" class="btn btn-line" data-magnet>← BACK TO PROJECTS</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fwrap">
+    <div class="flinks">
+      <a href="https://linkedin.com/in/md-mashrup-hasan/" target="_blank">LinkedIn</a><span style="color:var(--line)">·</span>
+      <a href="https://github.com/MashrupHasan" target="_blank">GitHub</a><span style="color:var(--line)">·</span>
+      <a href="https://www.researchgate.net/profile/Mashrup-Hasan" target="_blank">ResearchGate</a>
+    </div>
+    <div class="fcopy">© 2026 Md. Mashrup Hasan · Built with intent.</div>
+    <div class="fgeo mono">DATUM WGS84 · EPSG:4326 · 23.8103°N 90.4125°E · DHAKA</div>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>

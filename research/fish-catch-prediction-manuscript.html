@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI-Driven Earth Observation Framework for Marine Fish Yield · Md. Mashrup Hasan</title>
+<meta name="description" content="Manuscript in preparation: a Random Forest framework combining satellite Earth Observation, GLORYS ocean reanalysis, and Bangladesh fisheries statistics to predict marine fish yield and map productive fishing hotspots.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<div id="cdot"></div>
+<div id="cring"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="#2C7A72" stroke-width="1"/><line x1="18" y1="0" x2="18" y2="6" stroke="#2C7A72" stroke-width="1"/><line x1="18" y1="30" x2="18" y2="36" stroke="#2C7A72" stroke-width="1"/><line x1="0" y1="18" x2="6" y2="18" stroke="#2C7A72" stroke-width="1"/><line x1="30" y1="18" x2="36" y2="18" stroke="#2C7A72" stroke-width="1"/></svg></div>
+<div id="pbar-track"><div id="pbar"></div></div>
+
+<nav id="nav">
+  <div class="ni">
+    <div class="logo-group">
+      <a href="../index.html" class="logo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.3" stroke="#2C7A72" stroke-width="1.2"/><path d="M12 3.3L14.2 11.3L12 12.5L9.8 11.3Z" fill="#2C7A72"/><path d="M12 20.7L9.8 12.7L12 11.5L14.2 12.7Z" fill="#AD5A2C"/><circle cx="12" cy="12" r="1.3" fill="#111417"/></svg>
+        Mashrup&#39;s Portfolio
+      </a>
+      <span class="nav-coord mono">DHAKA, BD</span>
+    </div>
+    <div class="desklinks">
+      <a href="../index.html" class="navlink">Work</a>
+      <a href="../index.html#research" class="navlink">Research</a>
+      <a href="../index.html#skills" class="navlink">Skills</a>
+      <a href="../index.html#contact" class="navlink">Contact</a>
+    </div>
+    <button class="burger" id="burgerBtn"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div id="mobmenu">
+  <button id="mobclose">×</button>
+  <a href="../index.html">Work</a>
+  <a href="../index.html#research" data-mob-close>Research</a>
+  <a href="../index.html#skills" data-mob-close>Skills</a>
+  <a href="../index.html#contact" data-mob-close>Contact</a>
+</div>
+
+<section class="subhero">
+  <div class="sp">
+    <a href="../index.html#research" class="back-link" data-a>&larr; All Research</a>
+    <div class="eyebrow" data-a><span class="tick"></span><span class="badge pub-no" style="margin-right:10px">Manuscript in Preparation</span>Not yet submitted</div>
+    <div class="subtitle" data-a>AI-Driven Earth Observation Framework for Predicting Marine Fish Yield and Supporting Sustainable Fisheries Management in Bangladesh</div>
+    <p class="sublede" data-a>Can satellite oceanography alone tell you where fish are being caught, and how much? Thirteen years of sea-surface data, reconciled against real government catch statistics, says yes, with genuinely useful nuance about what it can and can't predict.</p>
+    <div class="meta-row" data-a>
+      <div class="meta-item"><span>Authors</span><span>Rahman, S., Hossain, M. S., Hasan, M. M., &amp; Kabir, R.</span></div>
+      <div class="meta-item"><span>Status</span><span>Draft manuscript, unpublished · Project final report</span></div>
+      <div class="meta-item"><span>Method</span><span>Random Forest · GLORYS Reanalysis · Satellite EO · Kriging</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="border-bottom:none">
+  <div class="sp">
+    <div class="prose" data-a>
+      <h3>Overview</h3>
+      <p>Bangladesh's marine fisheries feed nearly 60% of the country's animal-protein intake and support over 10 million livelihoods, but conventional stock surveys are expensive, slow, and spatially sparse, exactly the wrong properties for tracking a resource that moves with the ocean. This project builds the first integrated Earth Observation and AI framework for the northern Bay of Bengal, fusing five satellite- and reanalysis-derived predictors, mixed-layer thickness, salinity, chlorophyll-a, sea surface temperature, and surface current, from GLORYS ocean reanalysis and merged ocean-colour missions, with thirteen years (2012–2024) of official Department of Fisheries catch statistics.</p>
+      <p>Catch tonnage was spatially distributed using kernel-density estimates of real fishing effort (vessel-trip records and AIS-derived fishing hours), then interpolated with ordinary kriging into continuous annual catch surfaces, each rescaled to sum exactly to the officially reported national total. A Random Forest model was trained on this pixel-wise dataset with three full years (2013, 2022, 2024) held out entirely for testing, never seen during training, to give an honest read on how well ocean conditions alone predict real, audited catch.</p>
+
+      <figure class="fig-frame">
+        <img src="../assets/research/fishcatch-variable-distributions.webp" alt="Seven-panel histogram of training data distributions: kriged catch (MT, raw), log(Catch_MT+1), mixed-layer thickness, salinity, chlorophyll, sea surface temperature, and surface current.">
+        <figcaption class="fig-caption">Fig. 1: Distribution of the response variable and five environmental predictors across thirteen years of training data. Catch tonnage is heavily right-skewed, the reason it was log-transformed before modelling.</figcaption>
+      </figure>
+
+      <figure class="fig-frame">
+        <img src="../assets/research/fishcatch-correlation-matrix.webp" alt="Correlation matrix heatmap of five predictors and log catch: mixed-layer thickness, salinity, chlorophyll, sea surface temperature, surface current. Surface current shows the strongest single correlation with catch at 0.26, chlorophyll is negatively correlated at -0.17.">
+        <figcaption class="fig-caption">Fig. 2: Pairwise correlations between predictors and log-catch. No single variable explains much on its own, the reason a Random Forest, which can combine several moderately informative signals, was the better modelling choice over simple regression.</figcaption>
+      </figure>
+
+      <h3>Key Findings</h3>
+      <ol class="ms-list">
+        <li>The model explains 79% of catch variation on data it trained on (R² = 0.79) and holds a stable 52–53% on three fully unseen test years (2013, 2022, 2024), evidence it learned a genuine ocean-catch relationship rather than memorising a single year's quirks.</li>
+        <li>Discrimination between productive and unproductive water is strong and more reliable than exact tonnage: AUC for high- versus low-catch classification averaged 0.87 across the three test years (0.86 in 2013, 0.90 in 2022, 0.85 in 2024), all comfortably above the 0.85 threshold considered very good.</li>
+        <li>Salinity and mixed-layer thickness are the two dominant predictors by both importance measures tested, with surface current a clear third; chlorophyll and sea surface temperature, the variables most commonly used in fisheries remote sensing, mattered less here than expected.</li>
+        <li>Because catch was rebuilt from real government statistics rather than left as a relative index, the model's output is traceable tonnage, not just a productivity score, though aggregate predicted tonnage still runs 25–31% below observed totals in every test year, a known Random Forest tendency to compress extremes toward the mean.</li>
+        <li>The framework directly supports four SDGs: 14 (Life Below Water, via evidence-based MPA zoning), 13 (Climate Action, via El Niño-type scenario forecasting), 2 (Zero Hunger, via supply-side food security forecasting), and 1 (No Poverty, via reduced search costs for small-scale fishers).</li>
+      </ol>
+
+      <figure class="fig-frame">
+        <img src="../assets/research/fishcatch-predicted-vs-observed.webp" alt="Four scatter plots of predicted versus observed log(catch) for the training set (R2=0.7948) and three held-out test years: 2013 (R2=0.5203), 2022 (R2=0.5285), and 2024 (R2=0.5216), each with a 1:1 reference line.">
+        <figcaption class="fig-caption">Fig. 3: Predicted vs. observed catch. Training fit is strong; performance on the three genuinely unseen years is consistent within a tight band (R² 0.52–0.53), the detail behind finding 1 above.</figcaption>
+      </figure>
+
+      <figure class="fig-frame">
+        <img src="../assets/research/fishcatch-roc-auc.webp" alt="ROC curve for high-catch detection across the 2024 test split, showing 2013 (AUC=0.863), 2022 (AUC=0.899), and 2024 (AUC=0.853) all well above the chance diagonal.">
+        <figcaption class="fig-caption">Fig. 4: ROC curves for high- vs. low-catch classification (median-threshold split) across all three test years. Detail behind finding 2 above.</figcaption>
+      </figure>
+
+      <figure class="fig-frame">
+        <img src="../assets/research/fishcatch-feature-importance.webp" alt="Two-panel bar chart of Random Forest feature importance: Mean Decrease in Impurity and Permutation Importance, both ranking salinity first, mixed-layer thickness second, chlorophyll third, then surface current and sea surface temperature.">
+        <figcaption class="fig-caption">Fig. 5: Predictor importance by two independent measures (impurity-based and permutation), in close agreement on the ranking. Detail behind finding 3 above.</figcaption>
+      </figure>
+
+      <figure class="fig-frame">
+        <img src="../assets/research/fishcatch-spatial-maps.webp" alt="Six-panel map comparing observed and predicted catch (metric tonnes) across the northern Bay of Bengal for test years 2013, 2022, and 2024, with a hotspot consistently visible in the southeast of the study area.">
+        <figcaption class="fig-caption">Fig. 6: Observed vs. predicted spatial catch distribution for all three test years. The model consistently locates the same southeastern hotspot the kriged observations show, even in years it never trained on.</figcaption>
+      </figure>
+
+      <h3>Status</h3>
+      <p>This is a completed project final report, developed under an Earth Observation for SDGs initiative, and is being adapted into a peer-reviewed manuscript. The modelling pipeline is designed as a reusable operational tool: it can be re-run annually as new fisheries and satellite data arrive, and the same predictors could support species distribution modelling, bycatch risk assessment, and harmful algal bloom early warning as future extensions.</p>
+    </div>
+
+    <div style="margin-top:56px;display:flex;gap:14px;flex-wrap:wrap">
+      <a href="../projects/rf-cpue-bay-of-bengal.html" class="btn btn-fill" data-magnet>SEE THE CODE PROJECT →</a>
+      <a href="../index.html#research" class="btn btn-line" data-magnet>← BACK TO RESEARCH</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fwrap">
+    <div class="flinks">
+      <a href="https://linkedin.com/in/md-mashrup-hasan/" target="_blank">LinkedIn</a><span style="color:var(--line)">·</span>
+      <a href="https://github.com/MashrupHasan" target="_blank">GitHub</a><span style="color:var(--line)">·</span>
+      <a href="https://www.researchgate.net/profile/Mashrup-Hasan" target="_blank">ResearchGate</a>
+    </div>
+    <div class="fcopy">© 2026 Md. Mashrup Hasan · Built with intent.</div>
+    <div class="fgeo mono">DATUM WGS84 · EPSG:4326 · 23.8103°N 90.4125°E · DHAKA</div>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>

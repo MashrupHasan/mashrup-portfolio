@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StockTrek · Md. Mashrup Hasan</title>
+<meta name="description" content="StockTrek: browser-based multi-account investment dashboard for Bangladesh stock-market (DSE/CSE) investors.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<div id="cdot"></div>
+<div id="cring"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="#2C7A72" stroke-width="1"/><line x1="18" y1="0" x2="18" y2="6" stroke="#2C7A72" stroke-width="1"/><line x1="18" y1="30" x2="18" y2="36" stroke="#2C7A72" stroke-width="1"/><line x1="0" y1="18" x2="6" y2="18" stroke="#2C7A72" stroke-width="1"/><line x1="30" y1="18" x2="36" y2="18" stroke="#2C7A72" stroke-width="1"/></svg></div>
+<div id="pbar-track"><div id="pbar"></div></div>
+
+<nav id="nav">
+  <div class="ni">
+    <div class="logo-group">
+      <a href="../index.html" class="logo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.3" stroke="#2C7A72" stroke-width="1.2"/><path d="M12 3.3L14.2 11.3L12 12.5L9.8 11.3Z" fill="#2C7A72"/><path d="M12 20.7L9.8 12.7L12 11.5L14.2 12.7Z" fill="#AD5A2C"/><circle cx="12" cy="12" r="1.3" fill="#111417"/></svg>
+        Mashrup&#39;s Portfolio
+      </a>
+      <span class="nav-coord mono">DHAKA, BD</span>
+    </div>
+    <div class="desklinks">
+      <a href="../index.html" class="navlink">Work</a>
+      <a href="../index.html#research" class="navlink">Research</a>
+      <a href="../index.html#skills" class="navlink">Skills</a>
+      <a href="../index.html#contact" class="navlink">Contact</a>
+    </div>
+    <button class="burger" id="burgerBtn"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div id="mobmenu">
+  <button id="mobclose">×</button>
+  <a href="../index.html">Work</a>
+  <a href="../index.html#research" data-mob-close>Research</a>
+  <a href="../index.html#skills" data-mob-close>Skills</a>
+  <a href="../index.html#contact" data-mob-close>Contact</a>
+</div>
+
+<section class="subhero">
+  <div class="sp">
+    <a href="../index.html#projects" class="back-link" data-a>&larr; All Projects</a>
+    <div class="eyebrow" data-a><span class="tick"></span>Project Case Study · 01</div>
+    <div class="subtitle" data-a>StockTrek</div>
+    <p class="sublede" data-a>A browser-based investment dashboard that consolidates multiple Beneficiary Owner (BO) accounts for Bangladesh stock-market (DSE/CSE) investors into one unified view of gain/loss, allocation, and dividend history.</p>
+    <div class="meta-row" data-a>
+      <div class="meta-item"><span>Role</span><span>Independent Project</span></div>
+      <div class="meta-item"><span>Stack</span><span>JavaScript · Chart.js · localStorage</span></div>
+      <div class="meta-item"><span>Market</span><span>DSE / CSE, Bangladesh</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="border-bottom:none">
+  <div class="sp">
+    <div class="prose" data-a>
+      <h3>Overview</h3>
+      <p>Retail investors in Bangladesh's stock market often hold securities across more than one Beneficiary Owner (BO) account with different brokers, with no single place to see combined performance. Reconciling gain/loss, allocation, and dividend income across accounts is typically a manual, spreadsheet-driven chore repeated at every broker's end-of-day statement.</p>
+      <p>StockTrek runs as a single self-contained HTML file, no install, no build step, no backend. Chart.js handles the visualizations and every update is written straight to the browser's <code>localStorage</code>, so it opens and runs immediately and all data stays on the user's machine.</p>
+
+      <figure class="pshow" data-a>
+        <div class="pshow-frame">
+          <img class="pshow-slide active" src="../assets/projects/stocktrek-ss-signin.webp" alt="StockTrek sign-in screen with email/password fields and a Google sign-in option.">
+          <img class="pshow-slide" src="../assets/projects/stocktrek-ss-dashboard.webp" alt="StockTrek consolidated portfolio dashboard showing total market value, cost basis, gain/loss, and a breakdown across three BO accounts.">
+          <img class="pshow-slide" src="../assets/projects/stocktrek-ss-settings.webp" alt="StockTrek settings and accounts panel for editing the workspace profile and managing BO brokerage accounts.">
+          <img class="pshow-slide" src="../assets/projects/stocktrek-ss-account.webp" alt="StockTrek single-account view for Lanka Bangla Securities showing market value, top holdings, and a portfolio breakdown chart.">
+        </div>
+        <div class="pshow-dots">
+          <button class="pshow-dot active" aria-label="Sign In"></button>
+          <button class="pshow-dot" aria-label="Consolidated Dashboard"></button>
+          <button class="pshow-dot" aria-label="Settings &amp; Accounts"></button>
+          <button class="pshow-dot" aria-label="Account Detail"></button>
+        </div>
+        <figcaption class="fig-caption pshow-cap">Sign In</figcaption>
+      </figure>
+
+      <h3>Features</h3>
+      <ol class="ms-list">
+        <li><strong>Multi-account consolidation</strong> — merges holdings across every BO account into one view, with weighted-average cost and unified P&amp;L.</li>
+        <li><strong>PDF statement import</strong> — auto-detects the account by BOID and syncs prices, shares, cost basis, cash, and dividends straight from LankaBangla Securities, Royal Capital, or Shanta Securities statements.</li>
+        <li><strong>Manual trade entry</strong> — buy, sell, or overwrite any holding, including mutual/unit funds and cash positions.</li>
+        <li><strong>Dividend &amp; historical tracking</strong> — every update is saved as a timestamped snapshot, so each holding and account carries its own price and P&amp;L history.</li>
+        <li><strong>Charts &amp; analytics</strong> — asset-allocation donut, broker-allocation bars, top-10 holdings by market value, and gain/loss breakdowns.</li>
+        <li><strong>Export, print, and single-level undo</strong> — CSV export, browser print, and a safety net for the most recent destructive action.</li>
+      </ol>
+
+      <h3>Key Outcomes</h3>
+      <ol class="ms-list">
+        <li>Consolidates holdings from multiple BO accounts into a single gain/loss and asset-allocation view, a workflow most retail DSE/CSE investors otherwise build by hand in spreadsheets.</li>
+        <li>Automated PDF import and dividend tracking remove manual bookkeeping steps that are easy to lose track of across several brokers.</li>
+        <li>Historical performance charts let a user compare account-level returns over time instead of relying on isolated end-of-day broker statements.</li>
+        <li>Ships as a single client-side file with no backend to run or maintain, keeping it free to use and straightforward to extend.</li>
+      </ol>
+    </div>
+
+    <div style="margin-top:56px;display:flex;gap:14px;flex-wrap:wrap">
+      <a href="https://github.com/MashrupHasan/Investment_Tracker" target="_blank" class="btn btn-fill" data-magnet>VIEW ON GITHUB →</a>
+      <a href="../index.html#projects" class="btn btn-line" data-magnet>← BACK TO PROJECTS</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fwrap">
+    <div class="flinks">
+      <a href="https://linkedin.com/in/md-mashrup-hasan/" target="_blank">LinkedIn</a><span style="color:var(--line)">·</span>
+      <a href="https://github.com/MashrupHasan" target="_blank">GitHub</a><span style="color:var(--line)">·</span>
+      <a href="https://www.researchgate.net/profile/Mashrup-Hasan" target="_blank">ResearchGate</a>
+    </div>
+    <div class="fcopy">© 2026 Md. Mashrup Hasan · Built with intent.</div>
+    <div class="fgeo mono">DATUM WGS84 · EPSG:4326 · 23.8103°N 90.4125°E · DHAKA</div>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script>
+(function(){
+  var wrap = document.querySelector('.pshow');
+  if(!wrap) return;
+  var slides = wrap.querySelectorAll('.pshow-slide');
+  var dots = wrap.querySelectorAll('.pshow-dot');
+  var cap = wrap.querySelector('.pshow-cap');
+  var labels = Array.prototype.map.call(dots, function(d){ return d.getAttribute('aria-label'); });
+  var i = 0, timer;
+  function show(n){
+    i = (n + slides.length) % slides.length;
+    slides.forEach(function(s, idx){ s.classList.toggle('active', idx === i); });
+    dots.forEach(function(d, idx){ d.classList.toggle('active', idx === i); });
+    if(cap) cap.textContent = labels[i];
+  }
+  function next(){ show(i + 1); }
+  function start(){ timer = setInterval(next, 4200); }
+  function stop(){ clearInterval(timer); }
+  dots.forEach(function(d, idx){ d.addEventListener('click', function(){ show(idx); stop(); start(); }); });
+  wrap.addEventListener('mouseenter', stop);
+  wrap.addEventListener('mouseleave', start);
+  start();
+})();
+</script>
+</body>
+</html>

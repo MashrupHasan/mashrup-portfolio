@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RF-CPUE Bay of Bengal · Md. Mashrup Hasan</title>
+<meta name="description" content="Random Forest regression pipeline predicting fisheries Catch Per Unit Effort across the Bay of Bengal from multi-source oceanographic data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<div id="cdot"></div>
+<div id="cring"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="#2C7A72" stroke-width="1"/><line x1="18" y1="0" x2="18" y2="6" stroke="#2C7A72" stroke-width="1"/><line x1="18" y1="30" x2="18" y2="36" stroke="#2C7A72" stroke-width="1"/><line x1="0" y1="18" x2="6" y2="18" stroke="#2C7A72" stroke-width="1"/><line x1="30" y1="18" x2="36" y2="18" stroke="#2C7A72" stroke-width="1"/></svg></div>
+<div id="pbar-track"><div id="pbar"></div></div>
+
+<nav id="nav">
+  <div class="ni">
+    <div class="logo-group">
+      <a href="../index.html" class="logo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.3" stroke="#2C7A72" stroke-width="1.2"/><path d="M12 3.3L14.2 11.3L12 12.5L9.8 11.3Z" fill="#2C7A72"/><path d="M12 20.7L9.8 12.7L12 11.5L14.2 12.7Z" fill="#AD5A2C"/><circle cx="12" cy="12" r="1.3" fill="#111417"/></svg>
+        Mashrup&#39;s Portfolio
+      </a>
+      <span class="nav-coord mono">DHAKA, BD</span>
+    </div>
+    <div class="desklinks">
+      <a href="../index.html" class="navlink">Work</a>
+      <a href="../index.html#research" class="navlink">Research</a>
+      <a href="../index.html#skills" class="navlink">Skills</a>
+      <a href="../index.html#contact" class="navlink">Contact</a>
+    </div>
+    <button class="burger" id="burgerBtn"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div id="mobmenu">
+  <button id="mobclose">×</button>
+  <a href="../index.html">Work</a>
+  <a href="../index.html#research" data-mob-close>Research</a>
+  <a href="../index.html#skills" data-mob-close>Skills</a>
+  <a href="../index.html#contact" data-mob-close>Contact</a>
+</div>
+
+<section class="subhero">
+  <div class="sp">
+    <a href="../index.html#projects" class="back-link" data-a>&larr; All Projects</a>
+    <div class="eyebrow" data-a><span class="tick"></span>Project Case Study</div>
+    <div class="subtitle" data-a>RF-CPUE Bay of Bengal</div>
+    <p class="sublede" data-a>A Random Forest regression pipeline that predicts fisheries Catch Per Unit Effort (CPUE) across the Bay of Bengal from open oceanographic reanalysis and satellite data, turning scattered catch records into a basin-wide, decision-ready surface.</p>
+    <div class="meta-row" data-a>
+      <div class="meta-item"><span>Role</span><span>Independent Research Project</span></div>
+      <div class="meta-item"><span>Stack</span><span>Python · scikit-learn · GeoPandas · Rasterio</span></div>
+      <div class="meta-item"><span>Data Sources</span><span>GLORYS Reanalysis · MODIS</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="border-bottom:none">
+  <div class="sp">
+    <div class="prose" data-a>
+      <h3>Overview</h3>
+      <p>Estimating Catch Per Unit Effort (CPUE) is central to fisheries management, but catch records are sparse, unevenly distributed, and expensive to collect at sea. This project builds a machine-learning bridge between point-based catch observations and continuously available oceanographic data, so that CPUE can be estimated, and mapped, anywhere across the basin, not just where a boat happened to fish.</p>
+      <p>Five oceanographic predictors were assembled from open raster sources: mixed-layer thickness, salinity, chlorophyll concentration, sea surface temperature (SST), and surface current velocity, drawn from the GLORYS ocean reanalysis and MODIS satellite composites. These were spatially joined to catch records and used to train a Random Forest regression model, chosen for its robustness to non-linear, interacting environmental drivers of fish abundance.</p>
+      <p>To keep the evaluation honest, the pipeline uses grouped cross-validation, splitting by year and region rather than randomly, so the model is never quietly tested on locations or seasons it has effectively already seen. A second, geostatistical stage (Kriged-CPUE) then interpolates the point-level predictions into a continuous surface across the Bay of Bengal, extending the model's reach beyond the exact pixels it was trained on.</p>
+
+      <h3>Major Findings</h3>
+      <ol class="ms-list">
+        <li>Built a reproducible pipeline linking open oceanographic reanalysis (GLORYS) and satellite (MODIS) raster layers directly to point-based catch data through spatial joins, no proprietary or vessel-tracking data required.</li>
+        <li>Grouped, year/region-aware cross-validation was used specifically to guard against the spatial autocorrelation that inflates apparent accuracy in most naive marine CPUE models.</li>
+        <li>The Kriged-CPUE interpolation layer turns discrete point predictions into a continuous basin-wide surface, useful for flagging under-sampled areas that may hold untapped or overexploited potential.</li>
+        <li>The resulting workflow is a reusable template for pairing machine learning with geostatistics in other data-scarce, small-pelagic or demersal fisheries.</li>
+      </ol>
+    </div>
+
+    <div style="margin-top:56px;display:flex;gap:14px;flex-wrap:wrap">
+      <a href="https://github.com/MashrupHasan/RF-CPUE-BayOfBengal" target="_blank" class="btn btn-fill" data-magnet>VIEW ON GITHUB →</a>
+      <a href="../index.html#projects" class="btn btn-line" data-magnet>← BACK TO PROJECTS</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fwrap">
+    <div class="flinks">
+      <a href="https://linkedin.com/in/md-mashrup-hasan/" target="_blank">LinkedIn</a><span style="color:var(--line)">·</span>
+      <a href="https://github.com/MashrupHasan" target="_blank">GitHub</a><span style="color:var(--line)">·</span>
+      <a href="https://www.researchgate.net/profile/Mashrup-Hasan" target="_blank">ResearchGate</a>
+    </div>
+    <div class="fcopy">© 2026 Md. Mashrup Hasan · Built with intent.</div>
+    <div class="fgeo mono">DATUM WGS84 · EPSG:4326 · 23.8103°N 90.4125°E · DHAKA</div>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>

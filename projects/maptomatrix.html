@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MapToMatrix · Md. Mashrup Hasan</title>
+<meta name="description" content="A Google Earth Engine + Colab workflow that converts any AOI shapefile into a labeled, coordinate-annotated raster matrix text file.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<div id="cdot"></div>
+<div id="cring"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="#2C7A72" stroke-width="1"/><line x1="18" y1="0" x2="18" y2="6" stroke="#2C7A72" stroke-width="1"/><line x1="18" y1="30" x2="18" y2="36" stroke="#2C7A72" stroke-width="1"/><line x1="0" y1="18" x2="6" y2="18" stroke="#2C7A72" stroke-width="1"/><line x1="30" y1="18" x2="36" y2="18" stroke="#2C7A72" stroke-width="1"/></svg></div>
+<div id="pbar-track"><div id="pbar"></div></div>
+
+<nav id="nav">
+  <div class="ni">
+    <div class="logo-group">
+      <a href="../index.html" class="logo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.3" stroke="#2C7A72" stroke-width="1.2"/><path d="M12 3.3L14.2 11.3L12 12.5L9.8 11.3Z" fill="#2C7A72"/><path d="M12 20.7L9.8 12.7L12 11.5L14.2 12.7Z" fill="#AD5A2C"/><circle cx="12" cy="12" r="1.3" fill="#111417"/></svg>
+        Mashrup&#39;s Portfolio
+      </a>
+      <span class="nav-coord mono">DHAKA, BD</span>
+    </div>
+    <div class="desklinks">
+      <a href="../index.html" class="navlink">Work</a>
+      <a href="../index.html#research" class="navlink">Research</a>
+      <a href="../index.html#skills" class="navlink">Skills</a>
+      <a href="../index.html#contact" class="navlink">Contact</a>
+    </div>
+    <button class="burger" id="burgerBtn"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div id="mobmenu">
+  <button id="mobclose">×</button>
+  <a href="../index.html">Work</a>
+  <a href="../index.html#research" data-mob-close>Research</a>
+  <a href="../index.html#skills" data-mob-close>Skills</a>
+  <a href="../index.html#contact" data-mob-close>Contact</a>
+</div>
+
+<section class="subhero">
+  <div class="sp">
+    <a href="../index.html#projects" class="back-link" data-a>&larr; All Projects</a>
+    <div class="eyebrow" data-a><span class="tick"></span>Project Case Study · 03</div>
+    <div class="subtitle" data-a>MapToMatrix</div>
+    <p class="sublede" data-a>A generalized Google Earth Engine + Colab workflow that turns any AOI shapefile into a labeled raster grid, then a coordinate-annotated matrix text file, ready to feed straight into a script instead of a GIS.</p>
+    <div class="meta-row" data-a>
+      <div class="meta-item"><span>Role</span><span>Independent Tool</span></div>
+      <div class="meta-item"><span>Stack</span><span>Google Earth Engine (JS) · Python · Colab</span></div>
+      <div class="meta-item"><span>Output</span><span>Labeled AOI Matrix (.txt)</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="border-bottom:none">
+  <div class="sp">
+    <div class="prose" data-a>
+      <h3>Overview</h3>
+      <p>Most AOI (Area of Interest) workflows stop at a raster or vector layer sitting inside a GIS. MapToMatrix pushes one step further: it converts an AOI shapefile into a plain-text, human-and-script-readable matrix, where every cell is classified 0 (outside the AOI), 1 (inside), or 2 (boundary), and the matrix itself is annotated with latitude labels down the right edge and longitude labels along the bottom.</p>
+      <p>The pipeline splits cleanly across two free platforms. A Google Earth Engine script takes an uploaded shapefile asset and exports a classified raster grid to Google Drive at a chosen pixel resolution (3000&nbsp;m / ~3&nbsp;km by default). A Google Colab script then reads that GeoTIFF and writes it out as a coordinate-labeled <code>.txt</code> matrix, with adjustable label density so wide rasters don't end up with unreadably dense coordinate ticks.</p>
+
+      <figure class="fig-frame" style="overflow-x:auto">
+        <pre class="mono" style="font-size:9px;line-height:1.5;color:var(--ink-soft);white-space:pre;margin:0">00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000222000000000     25.209
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000002211200000000     25.206
+00000000000000000000000000000000000000000000000000000000000000222222222000000000000000222111120000000     25.203
+00000000000000000022200000000000000000000000000000020000222222111111112222222122000202211111122200000       25.2
+00000000000000000022222222222222000000000022222222222222211111111111111111112212222222111111111122200     25.198
+00000000000000000002111111111111222222222221111111111111111111111111111111111111111111111111111111122     25.195
+00000000000000000002211111111111111111111111111111111111111111111111111111111111111111111111111111222     25.192
+00000000000000000002211111111111111111111111111111111111111111111111111111111111111111111111111111200      25.19
+00000000000000000022111111111111111111111111111111111111111111111111111111111111111111111111111112200     25.187
+00000000000000000022111111111111111111111111111111111111111111111111111111111111111111111111111112000     25.184
+     91.02              91.05              91.08              91.10              91.13              91.16              91.18              91.21              91.24              91.26              91.29</pre>
+        <figcaption class="fig-caption">Excerpt of a real generated AOI matrix over an area near 91°E, 25°N: cells classified 0 (outside), 1 (inside), or 2 (boundary), with latitude labels on the right and longitude labels along the bottom. Full matrices run to the raster's actual dimensions; this is the top slice of one example run.</figcaption>
+      </figure>
+
+      <h3>How It Works</h3>
+      <ol class="ms-list">
+        <li>Upload an AOI shapefile to Google Earth Engine Assets, then point the GEE script at that asset path.</li>
+        <li>Run the GEE script with the chosen pixel size and export folder; it classifies every pixel (outside / inside / boundary) and exports the result as a GeoTIFF to Google Drive.</li>
+        <li>Run the Colab script against that GeoTIFF; it writes a labeled <code>.txt</code> matrix, with latitude values appended on the right and longitude values along the bottom, ready to load directly into any downstream script without a GIS in the loop.</li>
+      </ol>
+
+      <h3>Why It Matters</h3>
+      <p>A lot of downstream modelling work (custom raster processing, cellular-automata style simulations, quick spatial masks for non-GIS scripts) just needs a classified grid with known coordinates, not a full raster stack. MapToMatrix removes the GIS dependency from that last step, so an AOI defined once in a shapefile can be reused directly inside plain Python, MATLAB, or any language that can read a text matrix.</p>
+    </div>
+
+    <div style="margin-top:56px;display:flex;gap:14px;flex-wrap:wrap">
+      <a href="https://github.com/MashrupHasan/MapToMatrix" target="_blank" class="btn btn-fill" data-magnet>VIEW ON GITHUB →</a>
+      <a href="../index.html#projects" class="btn btn-line" data-magnet>← BACK TO PROJECTS</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fwrap">
+    <div class="flinks">
+      <a href="https://linkedin.com/in/md-mashrup-hasan/" target="_blank">LinkedIn</a><span style="color:var(--line)">·</span>
+      <a href="https://github.com/MashrupHasan" target="_blank">GitHub</a><span style="color:var(--line)">·</span>
+      <a href="https://www.researchgate.net/profile/Mashrup-Hasan" target="_blank">ResearchGate</a>
+    </div>
+    <div class="fcopy">© 2026 Md. Mashrup Hasan · Built with intent.</div>
+    <div class="fgeo mono">DATUM WGS84 · EPSG:4326 · 23.8103°N 90.4125°E · DHAKA</div>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>
