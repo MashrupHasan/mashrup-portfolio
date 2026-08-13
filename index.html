@@ -783,7 +783,8 @@
           </div>
           <div class="ig"><textarea id="fm" rows="5" placeholder=" " required></textarea><label for="fm">Message</label></div>
           <button type="submit" class="submit" data-magnet>SEND MESSAGE</button>
-          <div class="form-ok" id="formOk">Thanks for reaching out. Your email client should have opened with the message ready to send.</div>
+          <div class="form-ok" id="formOk">Thanks for reaching out — your message has been sent. I'll get back to you soon.</div>
+          <div class="form-err" id="formErr">Something went wrong sending that. Please email <a href="mailto:mashruphasan@gmail.com" style="color:inherit;text-decoration:underline">mashruphasan@gmail.com</a> directly.</div>
         </form>
       </div>
     </div>
@@ -1063,20 +1064,50 @@
   });
 })();
 
-/* ---------- contact form (mailto) ---------- */
+/* ---------- contact form (Web3Forms → mashruphasan@gmail.com) ---------- */
 (function(){
   const form=document.getElementById('cform');
   const ok=document.getElementById('formOk');
-  form.addEventListener('submit', e=>{
+  const err=document.getElementById('formErr');
+  const btn=form.querySelector('.submit');
+  const ACCESS_KEY='88c8c304-c83f-4c2f-848c-097fdef95126';
+
+  form.addEventListener('submit', async e=>{
     e.preventDefault();
+    ok.classList.remove('show');
+    err.classList.remove('show');
+
     const name=document.getElementById('fn').value;
     const email=document.getElementById('fe').value;
     const subj=document.getElementById('fs').value;
     const msg=document.getElementById('fm').value;
-    const body=encodeURIComponent('Name: '+name+'\nEmail: '+email+'\n\n'+msg);
-    window.location.href='mailto:mashruphasan@gmail.com?subject='+encodeURIComponent('Portfolio inquiry: '+(subj||'General'))+'&body='+body;
-    ok.classList.add('show');
-    form.reset();
+
+    const prevText=btn.textContent;
+    btn.disabled=true;
+    btn.textContent='SENDING…';
+
+    try{
+      const res=await fetch('https://api.web3forms.com/submit', {
+        method:'POST',
+        headers:{'Content-Type':'application/json', 'Accept':'application/json'},
+        body:JSON.stringify({
+          access_key:ACCESS_KEY,
+          name:name,
+          email:email,
+          subject:'Portfolio inquiry: '+(subj||'General'),
+          message:msg
+        })
+      });
+      const data=await res.json();
+      if(!res.ok || !data.success) throw new Error(data.message||'Send failed');
+      ok.classList.add('show');
+      form.reset();
+    }catch(ex){
+      err.classList.add('show');
+    }finally{
+      btn.disabled=false;
+      btn.textContent=prevText;
+    }
   });
 })();
 

@@ -435,6 +435,9 @@ a.bd-panel-item:hover span:last-child{text-decoration:underline;text-decoration-
 .submit:hover{background:var(--teal-deep);box-shadow:0 10px 26px rgba(44,122,114,.28)}
 .form-ok{display:none;font-size:14px;color:var(--teal);padding:18px 0 0;font-style:italic}
 .form-ok.show{display:block}
+.form-err{display:none;font-size:14px;color:var(--rust);padding:18px 0 0;font-style:italic}
+.form-err.show{display:block}
+.submit:disabled{opacity:.6;cursor:default}
 @media(max-width:1000px){.cinner{flex-direction:column}.cl{width:100%;border-right:none;padding-right:0;padding-bottom:40px;margin-bottom:40px}.cr{width:100%}}
 
 /* ---------- blog ---------- */
