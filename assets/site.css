@@ -294,12 +294,14 @@ a.bd-panel-item:hover span:last-child{text-decoration:underline;text-decoration-
 .badge.pub-yes{background:var(--teal-tint);color:var(--teal-deep);border-color:var(--teal)}
 .badge.pub-no{background:var(--ash-deep);color:var(--ink);border-color:var(--ink-soft)}
 .badge.pub-award{background:var(--white);color:var(--teal-deep);border-color:var(--teal)}
+.badge.pub-thesis{background:var(--rust-tint);color:var(--rust);border-color:var(--rust)}
 .pub-journal{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);font-weight:500}
 .pub-sep{color:var(--line);font-size:11px}
 .pub-year{font-size:11px;color:var(--ink-soft)}
 .pub-title{font-size:19px;color:var(--ink);font-style:italic;line-height:1.5;margin-bottom:10px;font-family:'Cormorant Garamond',serif;font-weight:400}
 .pub-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
 .pub-authors{font-size:13px;color:var(--ink-soft)}
+.pub-note{width:100%;font-size:12px;color:var(--ink-soft);font-style:italic;margin-top:6px}
 .pub-cta{display:flex;align-items:center;gap:8px;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);font-weight:600;white-space:nowrap}
 .pub-cta svg{transition:transform .2s;flex-shrink:0}
 .pub:hover .pub-cta svg{transform:translateX(4px)}
