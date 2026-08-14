@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flood-Induced Public Health Risk, Tahirpur · Mashrup Hasan</title>
+<meta name="description" content="An MS thesis integrating a feed-forward neural network flood exposure model with factor-analytic health sensitivity and adaptive capacity indices into a composite Flood Health Impact index for Tahirpur Upazila, Bangladesh.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="../assets/favicon-32.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<div id="cdot"></div>
+<div id="cring"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="#2C7A72" stroke-width="1"/><line x1="18" y1="0" x2="18" y2="6" stroke="#2C7A72" stroke-width="1"/><line x1="18" y1="30" x2="18" y2="36" stroke="#2C7A72" stroke-width="1"/><line x1="0" y1="18" x2="6" y2="18" stroke="#2C7A72" stroke-width="1"/><line x1="30" y1="18" x2="36" y2="18" stroke="#2C7A72" stroke-width="1"/></svg></div>
+<div id="pbar-track"><div id="pbar"></div></div>
+
+<nav id="nav">
+  <div class="ni">
+    <div class="logo-group">
+      <a href="../index.html" class="logo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.3" stroke="#2C7A72" stroke-width="1.2"/><path d="M12 3.3L14.2 11.3L12 12.5L9.8 11.3Z" fill="#2C7A72"/><path d="M12 20.7L9.8 12.7L12 11.5L14.2 12.7Z" fill="#AD5A2C"/><circle cx="12" cy="12" r="1.3" fill="#111417"/></svg>
+        Mashrup&#39;s Portfolio
+      </a>
+      <span class="nav-coord mono">DHAKA, BD</span>
+    </div>
+    <div class="desklinks">
+      <a href="../index.html" class="navlink">Work</a>
+      <a href="../index.html#research" class="navlink">Research</a>
+      <a href="../index.html#skills" class="navlink">Skills</a>
+      <a href="../index.html#contact" class="navlink">Contact</a>
+    </div>
+    <button class="burger" id="burgerBtn"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div id="mobmenu">
+  <button id="mobclose">×</button>
+  <a href="../index.html">Work</a>
+  <a href="../index.html#research" data-mob-close>Research</a>
+  <a href="../index.html#skills" data-mob-close>Skills</a>
+  <a href="../index.html#contact" data-mob-close>Contact</a>
+</div>
+
+<section class="subhero">
+  <div class="sp">
+    <a href="../index.html#research" class="back-link" data-a>&larr; All Research</a>
+    <div class="eyebrow" data-a><span class="tick"></span>MS Thesis · Manuscript in Preparation</div>
+    <div class="subtitle" data-a>Integrating Deep Learning and GIScience for Flood-Induced Public Health Risk Assessment in Tahirpur Upazila, Sunamganj</div>
+    <p class="sublede" data-a>A composite Flood Health Impact index that fuses a neural-network flood exposure model with survey-derived health sensitivity and adaptive capacity, mapping where flood exposure, disease burden, and weak health systems compound each other across Bangladesh's haor wetlands.</p>
+    <div class="meta-row" data-a>
+      <div class="meta-item"><span>Authors</span><span>Hasan, M. M., Islam, M. A., Basak, R., Sen, S. K., Kabir, M. N., &amp; Terao, T.</span></div>
+      <div class="meta-item"><span>Method</span><span>Feed-Forward Neural Network · Exploratory Factor Analysis · Sentinel-1/2 · Kriging</span></div>
+      <div class="meta-item"><span>Sample</span><span>384 households · 10 key informant interviews · 7 unions</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="border-bottom:none">
+  <div class="sp">
+    <div class="prose" data-a>
+      <h3>Overview</h3>
+      <p>Most flood-health studies in Bangladesh treat hazard, social vulnerability, and health outcomes as separate problems. This thesis integrates them: a feed-forward neural network (FFNN) estimates physical flood exposure from seven hydrotopographic and spectral predictors, while a household survey (n=384) run through exploratory factor analysis yields a Health Sensitivity Index (HSI) and a Health Adaptive Capacity Index (HACI). The three are fused multiplicatively, exposure &times; sensitivity, attenuated by adaptive capacity, following IPCC disaster-risk theory, into a single composite Flood Health Impact (FHI) surface for Tahirpur Upazila, Sunamganj.</p>
+      <p>The exposure model was independently corroborated against Sentinel-1 SAR-observed inundation from the 2022 Sunamganj flood (AUC = 0.82), rather than validated only against its own training data, and the composite index was cross-checked against respondents' self-reported post-flood disease burden.</p>
+
+      <figure class="fig-frame">
+        <img src="../assets/research/flood-health-research-framework.webp" alt="Research framework flowchart showing five stages: Research Preparation, Data Collection, Data Pre-Processing, Data Analysis (FFNN for the Flood Exposure Index, EFA for HSI/HACI, weighted linear combination), and Research Outcomes.">
+        <figcaption class="fig-caption">Fig. 1: The five-stage research framework linking satellite and survey data collection through to the composite risk index and its policy outcomes.</figcaption>
+      </figure>
+
+      <h3>Key Findings</h3>
+      <ol class="ms-list">
+        <li><strong>The exposure model validates against independent flood data, not just its own training set.</strong> The FFNN explained 84.3% of variance in the flood-susceptibility reference (R&sup2; = 0.843) and separately scored AUC = 0.82 against real Sentinel-1 SAR-observed inundation from the 2022 Sunamganj flood, confirming genuine flood-driven discrimination rather than a training artefact. Elevation and water-related spectral indices (NDWI, NDVI) were the dominant predictors.</li>
+        <li><strong>Risk is sharply concentrated, not evenly spread.</strong> Dakshin Sreepur and Uttar Sreepur are basin-floor hotspots, with 48.86% and 46.77% of their area respectively falling in the high-to-very-high FHI classes, while Uttar Badaghat, on higher, better-drained ground, remains 84.67% low-risk.</li>
+        <li><strong>Women carry disproportionately higher composite risk despite similar physical exposure.</strong> Female respondents showed markedly lower adaptive capacity (median HACI 0.36 vs. 0.43 for men) and higher composite risk (median FHI 0.36 vs. 0.29), even though health sensitivity itself did not differ significantly by gender.</li>
+        <li><strong>Risk peaks in the lower-middle-income band, not the poorest.</strong> Both health sensitivity and composite risk peaked among households earning 10,000&ndash;20,000 BDT/month rather than declining monotonically with income, a paradoxical exposure window invisible to single-domain assessments.</li>
+        <li><strong>Healthcare-access barriers are structural, not behavioural.</strong> Lack of service availability (37.7%) and transport interruptions (22.3%) dominated over cost and awareness; ignorance toward health risks accounted for just 2.7% of reported barriers, meaning infrastructure and service continuity, not public awareness campaigns, are the binding constraint during floods.</li>
+        <li><strong>Disease burden is dominated by water and vectors.</strong> Diarrhea (26.5%) and respiratory infection (23.1%) were the most-reported conditions; water- and vector-borne disease collectively accounted for 45.1% of cases, directly implicating WASH failure as the primary flood-health pathway.</li>
+      </ol>
+
+      <figure class="fig-frame">
+        <img src="../assets/research/flood-health-fhi-map.webp" alt="Map of Tahirpur Sub-district classified into five Flood Health Impact classes from Very Low to Very High, showing risk concentrated in Uttar Sreepur and Dakshin Sreepur in the west and low risk in Uttar Badal and Uttar Badaghat in the east.">
+        <figcaption class="fig-caption">Fig. 2: Composite Flood Health Impact index across Tahirpur's seven unions, reclassified into five risk categories by natural breaks.</figcaption>
+      </figure>
+
+      <figure class="fig-frame">
+        <img src="../assets/research/flood-health-accuracy-roc.webp" alt="Two-panel figure: a scatterplot of predicted versus reference flood susceptibility clustered tightly around the identity line (R squared = 0.843, MAE = 0.045), and an ROC curve with training AUC 0.954 and validation AUC 0.956, both far above the random-chance diagonal.">
+        <figcaption class="fig-caption">Fig. 3: FFNN validation, prediction accuracy against the held-out reference layer and ROC discrimination on training vs. validation partitions.</figcaption>
+      </figure>
+
+      <figure class="fig-frame">
+        <img src="../assets/research/flood-health-disease-prevalence.webp" alt="Bar chart of reported disease prevalence: Diarrhea 26.5%, Respiratory/Infections 23.1%, Skin Disease 14.2%, Malaria/Dengue 11.8%, Cholera 6.8%, Malnutrition 3.5%, Others 2.1%.">
+        <figcaption class="fig-caption">Fig. 4: Reported prevalence of flood-associated disease across surveyed households, water- and vector-borne conditions dominate.</figcaption>
+      </figure>
+
+      <figure class="fig-frame">
+        <img src="../assets/research/flood-health-access-barriers.webp" alt="Stacked bar charts of healthcare access challenges broken down by age, gender, and income, showing lack of availability and transportation issues as the largest segments across nearly every group.">
+        <figcaption class="fig-caption">Fig. 5: Healthcare-access barriers by age, gender, and income, supply-side constraints outweigh cost and awareness in every group.</figcaption>
+      </figure>
+
+      <h3>Why It Matters</h3>
+      <p>The findings point toward targeted, locally led interventions rather than generic flood response: surge-ready primary care and resilient WASH infrastructure in the Sreepur hotspots, telemedicine and community health workers reaching women specifically, and financial-inclusion support aimed at the lower-middle-income band rather than only the poorest. Because the framework is validated against independent satellite observation as well as self-reported outcomes, it is built to transfer to other haor, deltaic, and riverine settings facing the same compounding of physical exposure, health sensitivity, and thin adaptive capacity.</p>
+
+      <p class="fig-caption" style="margin-top:32px;font-style:italic">This page summarizes the thesis's key methodology and findings. The full manuscript, complete methodology, questionnaire items, and additional figures (feature-importance rankings, indicator correlation network, and demographic-disparity statistics) are available on request &mdash; <a href="../index.html#contact">get in touch</a>.</p>
+    </div>
+
+    <div style="margin-top:56px;display:flex;gap:14px;flex-wrap:wrap">
+      <a href="../index.html#contact" class="btn btn-fill" data-magnet>REQUEST FULL THESIS →</a>
+      <a href="../index.html#research" class="btn btn-line" data-magnet>← BACK TO RESEARCH</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fwrap">
+    <div class="flinks">
+      <a href="https://linkedin.com/in/md-mashrup-hasan/" target="_blank">LinkedIn</a><span style="color:var(--line)">·</span>
+      <a href="https://github.com/MashrupHasan" target="_blank">GitHub</a><span style="color:var(--line)">·</span>
+      <a href="https://www.researchgate.net/profile/Mashrup-Hasan" target="_blank">ResearchGate</a>
+    </div>
+    <div class="fcopy">© 2026 Mashrup Hasan · Built with intent.</div>
+    <div class="fgeo mono">DATUM WGS84 · EPSG:4326 · 23.8103°N 90.4125°E · DHAKA</div>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>
