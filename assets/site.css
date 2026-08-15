@@ -500,7 +500,7 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--white)}
 .poster-zoom{padding:16px 20px 20px}
 .poster-back{background:none;border:none;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);padding:0 0 14px;cursor:pointer}
 .poster-back:hover{color:var(--teal-deep)}
-.poster-zoom-frame{overflow:auto;border:1px solid var(--line);background:var(--ash);cursor:zoom-in;max-height:62vh;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.poster-zoom-frame{overflow:auto;border:1px solid var(--line);background:var(--ash);cursor:zoom-in;height:58vh;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
 .poster-zoom-frame.is-zoomed{cursor:grab}
 .poster-zoom-frame.is-dragging{cursor:grabbing}
 .poster-zoom-frame img{display:block;width:100%;max-width:none;height:auto;user-select:none;-webkit-user-drag:none}
@@ -516,4 +516,5 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--white)}
   .poster-modal-inner{max-height:100vh;height:100%}
   .poster-seg span{font-size:9px;padding:6px 10px;text-align:center}
   .poster-zoom-label{min-width:0}
+  .poster-zoom-frame{height:46vh}
 }
