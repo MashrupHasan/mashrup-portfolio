@@ -532,7 +532,7 @@
       </button>
       <div class="ms-body" id="confBody">
         <ol class="ms-list">
-          <li>Hasan, M. M., Islam, H. M. R., &amp; Al Shariar, M. (Jun 2025): <em>Unregulated gher expansion and agrarian transition in Shyamnagar Upazila, Bangladesh</em> · ISCCC · Poster · <a href="assets/research/ocg-symposium-poster.webp" target="_blank">View Poster ↗</a></li>
+          <li>Hasan, M. M., Islam, H. M. R., &amp; Al Shariar, M. (Jun 2025): <em>Unregulated gher expansion and agrarian transition in Shyamnagar Upazila, Bangladesh</em> · ISCCC · Poster · <a href="#" class="poster-open-btn" data-poster-open>View Poster ↗</a></li>
           <li>Talukder, A. A., Hasan, M. M., Nishat, N. A., &amp; Basak, R. (Dec 2025): <em>Industrial land conversion and local economic growth: Causal evidence from Olipur, Habiganj</em> · ICLESSD-2025 · Oral</li>
           <li>Hossain, M. A., Rahman, M. M., Huda, R. B., Sani, M. S. S., &amp; Hasan, M. M. (Nov 2025): <em>Exploring vertical growth patterns and regulatory compliance of high-rise mixed-use buildings in Dhaka South City Corporation</em> · ICGSDG · Oral</li>
           <li>Sharmin, I., Nishat, N. A., Jaman, F., Sultan, F., &amp; Hasan, M. M. (Apr 2025): <em>Carbon storage and vegetation dynamics in Ratargul Swamp Forest: A GIS-remote sensing approach</em> · ICERIE 2025 · Oral</li>
@@ -831,6 +831,40 @@
   </div>
 </footer>
 
+<div id="posterModal" class="poster-modal" aria-hidden="true">
+  <div class="poster-modal-backdrop" data-poster-close></div>
+  <div class="poster-modal-inner">
+    <button class="poster-modal-close" data-poster-close aria-label="Close poster viewer">×</button>
+    <div class="poster-modal-head">
+      <div class="poster-modal-title">Unregulated Gher Expansion and Agrarian Transition in Shyamnagar Upazila, Bangladesh</div>
+      <div class="poster-modal-sub mono">ISCCC 2025 · Poster · Click a section to zoom in</div>
+    </div>
+    <div class="poster-stage">
+      <div class="poster-overview" id="posterOverview">
+        <img src="assets/research/ocg-symposium-poster.webp" alt="Full OCG Symposium poster: Unregulated Gher Expansion and Agrarian Transition in Shyamnagar Upazila">
+        <button class="poster-seg" data-seg="header" style="top:0%;height:12.2%"><span>Title &amp; Authors</span></button>
+        <button class="poster-seg" data-seg="problem" style="top:12.2%;height:12.11%"><span>Problem Statement &amp; Objectives</span></button>
+        <button class="poster-seg" data-seg="methodology" style="top:24.31%;height:24.07%"><span>Methodology</span></button>
+        <button class="poster-seg" data-seg="lulc" style="top:48.38%;height:12.59%"><span>Land Use / Land Cover Maps</span></button>
+        <button class="poster-seg" data-seg="biophysical" style="top:60.97%;height:12.41%"><span>Bio-physical Suitability</span></button>
+        <button class="poster-seg" data-seg="conflicts" style="top:73.38%;height:11.95%"><span>Land-Use Conflicts</span></button>
+        <button class="poster-seg" data-seg="findings" style="top:85.33%;height:14.67%"><span>Key Findings &amp; References</span></button>
+      </div>
+      <div class="poster-zoom" id="posterZoom" hidden>
+        <button class="poster-back" data-poster-back>&larr; All Sections</button>
+        <div class="poster-zoom-frame">
+          <img id="posterZoomImg" src="" alt="">
+        </div>
+        <div class="poster-zoom-nav">
+          <button class="poster-nav-btn" data-poster-prev aria-label="Previous section">&larr;</button>
+          <span class="poster-zoom-label mono" id="posterZoomLabel"></span>
+          <button class="poster-nav-btn" data-poster-next aria-label="Next section">&rarr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="assets/site.js"></script>
 <script src="assets/bd-map-data.js"></script>
@@ -1035,6 +1069,89 @@
   }
   wireToggle('moreResearchToggle','moreResearchBody','moreResearchArrow');
   wireToggle('confToggle','confBody','confArrow');
+})();
+
+/* ---------- poster modal: segmented newspaper-style zoom viewer ---------- */
+(function(){
+  const modal=document.getElementById('posterModal');
+  if(!modal) return;
+  const SEGMENTS=[
+    {key:'header',label:'Title & Authors',src:'assets/research/poster-seg-header.webp'},
+    {key:'problem',label:'Problem Statement & Objectives',src:'assets/research/poster-seg-problem.webp'},
+    {key:'methodology',label:'Methodology',src:'assets/research/poster-seg-methodology.webp'},
+    {key:'lulc',label:'Land Use / Land Cover Maps',src:'assets/research/poster-seg-lulc.webp'},
+    {key:'biophysical',label:'Bio-physical Suitability',src:'assets/research/poster-seg-biophysical.webp'},
+    {key:'conflicts',label:'Land-Use Conflicts',src:'assets/research/poster-seg-conflicts.webp'},
+    {key:'findings',label:'Key Findings & References',src:'assets/research/poster-seg-findings.webp'}
+  ];
+  const overview=document.getElementById('posterOverview');
+  const zoom=document.getElementById('posterZoom');
+  const zoomImg=document.getElementById('posterZoomImg');
+  const zoomLabel=document.getElementById('posterZoomLabel');
+  const openBtn=document.querySelector('[data-poster-open]');
+  let idx=0;
+
+  function openModal(){
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+    showOverview();
+  }
+  function showOverview(){
+    zoom.hidden=true;
+    zoom.classList.remove('zoom-in');
+    overview.hidden=false;
+  }
+  function renderZoom(){
+    const seg=SEGMENTS[idx];
+    zoomImg.src=seg.src;
+    zoomImg.alt=seg.label+' — cropped poster section';
+    zoomLabel.textContent=(idx+1)+' / '+SEGMENTS.length+' · '+seg.label;
+    overview.hidden=true;
+    zoom.hidden=false;
+    zoom.classList.remove('zoom-in');
+    void zoom.offsetWidth;
+    zoom.classList.add('zoom-in');
+  }
+
+  if(openBtn){
+    openBtn.addEventListener('click', e=>{
+      e.preventDefault();
+      openModal();
+      showOverview();
+    });
+  }
+  modal.querySelectorAll('[data-poster-close]').forEach(el=>el.addEventListener('click', closeModal));
+  const backBtn=modal.querySelector('[data-poster-back]');
+  if(backBtn) backBtn.addEventListener('click', showOverview);
+  const prevBtn=modal.querySelector('[data-poster-prev]');
+  const nextBtn=modal.querySelector('[data-poster-next]');
+  if(prevBtn) prevBtn.addEventListener('click', ()=>{ idx=(idx-1+SEGMENTS.length)%SEGMENTS.length; renderZoom(); });
+  if(nextBtn) nextBtn.addEventListener('click', ()=>{ idx=(idx+1)%SEGMENTS.length; renderZoom(); });
+
+  overview.querySelectorAll('.poster-seg').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const key=btn.getAttribute('data-seg');
+      const found=SEGMENTS.findIndex(s=>s.key===key);
+      idx=found<0?0:found;
+      renderZoom();
+    });
+  });
+
+  document.addEventListener('keydown', e=>{
+    if(!modal.classList.contains('open')) return;
+    if(e.key==='Escape') closeModal();
+    if(!zoom.hidden){
+      if(e.key==='ArrowRight'){ idx=(idx+1)%SEGMENTS.length; renderZoom(); }
+      if(e.key==='ArrowLeft'){ idx=(idx-1+SEGMENTS.length)%SEGMENTS.length; renderZoom(); }
+      if(e.key==='Backspace'){ showOverview(); }
+    }
+  });
 })();
 
 /* ---------- skills: bento box isolate-on-click ---------- */
