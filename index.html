@@ -852,9 +852,10 @@
       </div>
       <div class="poster-zoom" id="posterZoom" hidden>
         <button class="poster-back" data-poster-back>&larr; All Sections</button>
-        <div class="poster-zoom-frame">
+        <div class="poster-zoom-frame" id="posterZoomFrame">
           <img id="posterZoomImg" src="" alt="">
         </div>
+        <div class="poster-zoom-hint mono">Click or scroll to zoom in · Drag to pan</div>
         <div class="poster-zoom-nav">
           <button class="poster-nav-btn" data-poster-prev aria-label="Previous section">&larr;</button>
           <span class="poster-zoom-label mono" id="posterZoomLabel"></span>
@@ -1086,10 +1087,59 @@
   ];
   const overview=document.getElementById('posterOverview');
   const zoom=document.getElementById('posterZoom');
+  const zoomFrame=document.getElementById('posterZoomFrame');
   const zoomImg=document.getElementById('posterZoomImg');
   const zoomLabel=document.getElementById('posterZoomLabel');
   const openBtn=document.querySelector('[data-poster-open]');
   let idx=0;
+  let curScale=1, dragActive=false, dragMoved=false, startX=0, startY=0, startL=0, startT=0;
+
+  function resetPanZoom(){
+    curScale=1;
+    zoomImg.style.width='100%';
+    zoomFrame.scrollLeft=0;
+    zoomFrame.scrollTop=0;
+    zoomFrame.classList.remove('is-zoomed');
+  }
+  function setScale(next, clientX, clientY){
+    const rect=zoomFrame.getBoundingClientRect();
+    const px=clientX!=null?clientX-rect.left:rect.width/2;
+    const py=clientY!=null?clientY-rect.top:rect.height/2;
+    const old=curScale;
+    const oldL=zoomFrame.scrollLeft, oldT=zoomFrame.scrollTop;
+    curScale=Math.min(3.2, Math.max(1, next));
+    zoomImg.style.width=(curScale*100)+'%';
+    const ratio=curScale/old;
+    zoomFrame.scrollLeft=(oldL+px)*ratio-px;
+    zoomFrame.scrollTop=(oldT+py)*ratio-py;
+    zoomFrame.classList.toggle('is-zoomed', curScale>1.02);
+  }
+  zoomFrame.addEventListener('click', e=>{
+    if(dragMoved){ dragMoved=false; return; }
+    setScale(curScale<1.4?2.2:1, e.clientX, e.clientY);
+  });
+  zoomFrame.addEventListener('wheel', e=>{
+    e.preventDefault();
+    setScale(curScale-curScale*e.deltaY*0.0016, e.clientX, e.clientY);
+  }, {passive:false});
+  zoomFrame.addEventListener('mousedown', e=>{
+    if(curScale<=1) return;
+    dragActive=true; dragMoved=false;
+    startX=e.clientX; startY=e.clientY;
+    startL=zoomFrame.scrollLeft; startT=zoomFrame.scrollTop;
+    zoomFrame.classList.add('is-dragging');
+  });
+  window.addEventListener('mousemove', e=>{
+    if(!dragActive) return;
+    const dx=e.clientX-startX, dy=e.clientY-startY;
+    if(Math.abs(dx)>3||Math.abs(dy)>3) dragMoved=true;
+    zoomFrame.scrollLeft=startL-dx;
+    zoomFrame.scrollTop=startT-dy;
+  });
+  window.addEventListener('mouseup', ()=>{
+    dragActive=false;
+    zoomFrame.classList.remove('is-dragging');
+  });
 
   function openModal(){
     modal.classList.add('open');
@@ -1106,9 +1156,11 @@
     zoom.hidden=true;
     zoom.classList.remove('zoom-in');
     overview.hidden=false;
+    resetPanZoom();
   }
   function renderZoom(){
     const seg=SEGMENTS[idx];
+    resetPanZoom();
     zoomImg.src=seg.src;
     zoomImg.alt=seg.label+' — cropped poster section';
     zoomLabel.textContent=(idx+1)+' / '+SEGMENTS.length+' · '+seg.label;
