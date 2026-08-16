@@ -1077,13 +1077,13 @@
   const modal=document.getElementById('posterModal');
   if(!modal) return;
   const SEGMENTS=[
-    {key:'header',label:'Title & Authors',src:'assets/research/poster-seg-header.webp'},
-    {key:'problem',label:'Problem Statement & Objectives',src:'assets/research/poster-seg-problem.webp'},
-    {key:'methodology',label:'Methodology',src:'assets/research/poster-seg-methodology.webp'},
-    {key:'lulc',label:'Land Use / Land Cover Maps',src:'assets/research/poster-seg-lulc.webp'},
-    {key:'biophysical',label:'Bio-physical Suitability',src:'assets/research/poster-seg-biophysical.webp'},
-    {key:'conflicts',label:'Land-Use Conflicts',src:'assets/research/poster-seg-conflicts.webp'},
-    {key:'findings',label:'Key Findings & References',src:'assets/research/poster-seg-findings.webp'}
+    {key:'header',label:'Title & Authors',src:'assets/research/poster-seg-header.webp',ratio:0.1708},
+    {key:'problem',label:'Problem Statement & Objectives',src:'assets/research/poster-seg-problem.webp',ratio:0.1698},
+    {key:'methodology',label:'Methodology',src:'assets/research/poster-seg-methodology.webp',ratio:0.3373},
+    {key:'lulc',label:'Land Use / Land Cover Maps',src:'assets/research/poster-seg-lulc.webp',ratio:0.1765},
+    {key:'biophysical',label:'Bio-physical Suitability',src:'assets/research/poster-seg-biophysical.webp',ratio:0.1741},
+    {key:'conflicts',label:'Land-Use Conflicts',src:'assets/research/poster-seg-conflicts.webp',ratio:0.1673},
+    {key:'findings',label:'Key Findings & References',src:'assets/research/poster-seg-findings.webp',ratio:0.2058}
   ];
   const overview=document.getElementById('posterOverview');
   const zoom=document.getElementById('posterZoom');
@@ -1100,6 +1100,9 @@
     zoomFrame.scrollLeft=0;
     zoomFrame.scrollTop=0;
     zoomFrame.classList.remove('is-zoomed');
+  }
+  function fitFrameHeight(ratio){
+    zoomFrame.style.height=Math.round(zoomFrame.clientWidth*ratio)+'px';
   }
   function setScale(next, clientX, clientY){
     const rect=zoomFrame.getBoundingClientRect();
@@ -1169,6 +1172,7 @@
     zoom.classList.remove('zoom-in');
     void zoom.offsetWidth;
     zoom.classList.add('zoom-in');
+    fitFrameHeight(seg.ratio);
   }
 
   if(openBtn){
