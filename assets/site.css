@@ -497,6 +497,15 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--white)}
 .poster-seg:hover::before{border-color:var(--teal)}
 .poster-seg span{opacity:0;transform:translateY(6px) scale(.96);transition:opacity .2s,transform .2s;background:var(--ink);color:var(--white);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.04em;padding:8px 16px;text-transform:uppercase;box-shadow:0 10px 24px -8px rgba(0,0,0,.4)}
 .poster-seg:hover span,.poster-seg:focus-visible span{opacity:1;transform:translateY(0) scale(1)}
+.poster-gallery{padding:20px 24px 24px;border-top:1px solid var(--line)}
+.poster-gallery-label{font-size:11px;letter-spacing:.08em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:14px}
+.poster-gallery-row{display:flex;gap:10px;overflow-x:auto;scrollbar-width:thin;padding-bottom:4px}
+.poster-gallery-row a{flex:0 0 auto;display:block;height:150px;overflow:hidden;border:1px solid var(--line)}
+.poster-gallery-row img{display:block;height:100%;width:auto;transition:transform .3s ease}
+.poster-gallery-row a:hover img{transform:scale(1.06)}
+@media(max-width:640px){
+  .poster-gallery-row a{height:110px}
+}
 .poster-zoom{padding:16px 20px 20px}
 .poster-back{background:none;border:none;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);padding:0 0 14px;cursor:pointer}
 .poster-back:hover{color:var(--teal-deep)}
