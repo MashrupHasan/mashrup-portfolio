@@ -852,16 +852,7 @@
       </div>
       <div class="poster-gallery">
         <div class="poster-gallery-label mono">Event Photos · ISCCC 2025</div>
-        <div class="poster-gallery-row">
-          <a href="assets/research/ocg-event-01-group-photo.webp" target="_blank"><img src="assets/research/ocg-event-01-group-photo.webp" alt="Group photo of ISCCC 2025 attendees and organizers on stage at Shahjalal University of Science and Technology, Sylhet."></a>
-          <a href="assets/research/ocg-event-02-keynote.webp" target="_blank"><img src="assets/research/ocg-event-02-keynote.webp" alt="A speaker addressing the audience from the podium at the ISCCC 2025 opening session."></a>
-          <a href="assets/research/ocg-event-03-panel.webp" target="_blank"><img src="assets/research/ocg-event-03-panel.webp" alt="Panel discussion on stage at ISCCC 2025 with the Coast, Climate and Community banners in the background."></a>
-          <a href="assets/research/ocg-event-04-panel-closeup.webp" target="_blank"><img src="assets/research/ocg-event-04-panel-closeup.webp" alt="Panelist speaking into a microphone during the ISCCC 2025 discussion session."></a>
-          <a href="assets/research/ocg-event-05-poster-session.webp" target="_blank"><img src="assets/research/ocg-event-05-poster-session.webp" alt="Mashrup Hasan presenting his poster on unregulated gher expansion to an attendee during the ISCCC 2025 poster session."></a>
-          <a href="assets/research/ocg-event-06-poster-session.webp" target="_blank"><img src="assets/research/ocg-event-06-poster-session.webp" alt="Mashrup Hasan discussing his poster with attendees at the ISCCC 2025 poster session."></a>
-          <a href="assets/research/ocg-event-07-poster-discussion.webp" target="_blank"><img src="assets/research/ocg-event-07-poster-discussion.webp" alt="Group conversation in front of the gher expansion poster at ISCCC 2025."></a>
-          <a href="assets/research/ocg-event-08-networking.webp" target="_blank"><img src="assets/research/ocg-event-08-networking.webp" alt="Mashrup Hasan networking with a colleague between sessions at ISCCC 2025."></a>
-        </div>
+        <div class="poster-gallery-row" id="posterGalleryRow"></div>
       </div>
       <div class="poster-zoom" id="posterZoom" hidden>
         <button class="poster-back" data-poster-back>&larr; All Sections</button>
@@ -877,6 +868,17 @@
       </div>
     </div>
   </div>
+</div>
+
+<div id="photoLightbox" class="photo-lightbox" aria-hidden="true">
+  <div class="photo-lightbox-backdrop" data-lightbox-close></div>
+  <button class="photo-lightbox-close" data-lightbox-close aria-label="Close photo viewer">×</button>
+  <button class="photo-lightbox-nav prev" data-lightbox-prev aria-label="Previous photo">&larr;</button>
+  <figure class="photo-lightbox-frame">
+    <img id="lightboxImg" src="" alt="">
+    <figcaption class="photo-lightbox-count mono" id="lightboxCount"></figcaption>
+  </figure>
+  <button class="photo-lightbox-nav next" data-lightbox-next aria-label="Next photo">&rarr;</button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -1214,12 +1216,83 @@
 
   document.addEventListener('keydown', e=>{
     if(!modal.classList.contains('open')) return;
+    const lb=document.getElementById('photoLightbox');
+    if(lb && lb.classList.contains('open')) return; // the photo lightbox owns keyboard input while it's open
     if(e.key==='Escape') closeModal();
     if(!zoom.hidden){
       if(e.key==='ArrowRight'){ idx=(idx+1)%SEGMENTS.length; renderZoom(); }
       if(e.key==='ArrowLeft'){ idx=(idx-1+SEGMENTS.length)%SEGMENTS.length; renderZoom(); }
       if(e.key==='Backspace'){ showOverview(); }
     }
+  });
+})();
+
+/* ---------- OCG symposium event-photo gallery + lightbox ---------- */
+(function(){
+  const galleryRow=document.getElementById('posterGalleryRow');
+  const lightbox=document.getElementById('photoLightbox');
+  if(!galleryRow || !lightbox) return;
+
+  const PHOTOS=[
+    {src:'assets/research/ocg-event-01-group-photo.webp', alt:'Group photo of ISCCC 2025 attendees and organizers on stage at Shahjalal University of Science and Technology, Sylhet.'},
+    {src:'assets/research/ocg-event-02-keynote.webp', alt:'A speaker addressing the audience from the podium at the ISCCC 2025 opening session.'},
+    {src:'assets/research/ocg-event-03-panel.webp', alt:'Panel discussion on stage at ISCCC 2025 with the Coast, Climate and Community banners in the background.'},
+    {src:'assets/research/ocg-event-04-panel-closeup.webp', alt:'Panelist speaking into a microphone during the ISCCC 2025 discussion session.'},
+    {src:'assets/research/ocg-event-05-poster-session.webp', alt:'Mashrup Hasan presenting his poster on unregulated gher expansion to an attendee during the ISCCC 2025 poster session.'},
+    {src:'assets/research/ocg-event-06-poster-session.webp', alt:'Mashrup Hasan discussing his poster with attendees at the ISCCC 2025 poster session.'},
+    {src:'assets/research/ocg-event-07-poster-discussion.webp', alt:'Group conversation in front of the gher expansion poster at ISCCC 2025.'},
+    {src:'assets/research/ocg-event-08-networking.webp', alt:'Mashrup Hasan networking with a colleague between sessions at ISCCC 2025.'}
+  ];
+
+  // Fisher-Yates shuffle — a fresh order each time the page loads
+  for(let i=PHOTOS.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [PHOTOS[i],PHOTOS[j]]=[PHOTOS[j],PHOTOS[i]];
+  }
+
+  PHOTOS.forEach((p,i)=>{
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.setAttribute('aria-label','Open photo '+(i+1)+' of '+PHOTOS.length);
+    const img=document.createElement('img');
+    img.src=p.src; img.alt=p.alt; img.loading='lazy';
+    btn.appendChild(img);
+    btn.addEventListener('click', ()=>openLightbox(i));
+    galleryRow.appendChild(btn);
+  });
+
+  const lbImg=document.getElementById('lightboxImg');
+  const lbCount=document.getElementById('lightboxCount');
+  let curIdx=0;
+
+  function renderLightbox(){
+    const p=PHOTOS[curIdx];
+    lbImg.src=p.src;
+    lbImg.alt=p.alt;
+    lbCount.textContent=(curIdx+1)+' / '+PHOTOS.length;
+  }
+  function openLightbox(i){
+    curIdx=i;
+    renderLightbox();
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden','false');
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden','true');
+  }
+  function nextPhoto(){ curIdx=(curIdx+1)%PHOTOS.length; renderLightbox(); }
+  function prevPhoto(){ curIdx=(curIdx-1+PHOTOS.length)%PHOTOS.length; renderLightbox(); }
+
+  lightbox.querySelectorAll('[data-lightbox-close]').forEach(el=>el.addEventListener('click', closeLightbox));
+  lightbox.querySelector('[data-lightbox-next]').addEventListener('click', nextPhoto);
+  lightbox.querySelector('[data-lightbox-prev]').addEventListener('click', prevPhoto);
+
+  document.addEventListener('keydown', e=>{
+    if(!lightbox.classList.contains('open')) return;
+    if(e.key==='Escape'){ closeLightbox(); }
+    if(e.key==='ArrowRight'){ nextPhoto(); }
+    if(e.key==='ArrowLeft'){ prevPhoto(); }
   });
 })();
 
