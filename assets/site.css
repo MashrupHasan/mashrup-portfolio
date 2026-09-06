@@ -177,8 +177,8 @@ nav[data-s="true"]{background:rgba(255,255,255,.9);backdrop-filter:blur(16px);-w
 /* ---------- about: bangladesh research-coverage map ---------- */
 .bd-map-block{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
 .bd-map-lbl{font-size:9px;letter-spacing:.12em;color:var(--ink-soft);opacity:.55;display:block;margin-bottom:12px;font-weight:600;text-transform:uppercase}
-.bd-map-row{display:flex;gap:16px;align-items:flex-start}
-#bdMap{width:195px;flex-shrink:0}
+.bd-map-row{display:flex;gap:16px;align-items:stretch}
+#bdMap{width:170px;height:240px;flex-shrink:0}
 .bd-svg{width:100%;height:auto;display:block;overflow:visible}
 .bd-national{fill:var(--ash);stroke:var(--ash-deep);stroke-width:1}
 .bd-dist{fill:var(--teal);fill-opacity:.28;stroke:var(--teal);stroke-width:.8;stroke-opacity:.65;transition:fill-opacity .2s,stroke-opacity .2s;cursor:pointer;outline:none}
@@ -189,9 +189,12 @@ nav[data-s="true"]{background:rgba(255,255,255,.9);backdrop-filter:blur(16px);-w
 .bd-bay:hover .bd-bay-ring,.bd-bay:focus-visible .bd-bay-ring,.bd-bay.active .bd-bay-ring{stroke-opacity:1;r:13}
 .bd-bay:hover .bd-bay-dot,.bd-bay:focus-visible .bd-bay-dot,.bd-bay.active .bd-bay-dot{r:4.2}
 
-.bd-map-panel{flex:1;min-width:0;padding:12px 14px;background:var(--ash);border:1px solid var(--line);min-height:80px;max-height:220px;overflow-y:auto}
-.bd-panel-idle{font-size:12px;line-height:1.6;color:var(--ink-soft)}
-.bd-panel-count{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--teal);font-weight:500}
+.bd-map-panel{flex:1;min-width:0;height:240px;padding:14px 16px;background:var(--ash);border:1px solid var(--line);overflow-y:auto}
+.bd-panel-idle{display:flex;flex-direction:column;height:100%;font-size:12px;line-height:1.6;color:var(--ink-soft)}
+.bd-panel-summary{color:var(--ink);font-size:13px}
+.bd-panel-count{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--teal);font-weight:500;line-height:1;margin-right:7px}
+.bd-panel-total{font-size:11px;color:var(--ink-soft);margin-top:4px}
+.bd-panel-breakdown{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;margin-bottom:14px}
 .bd-panel-hint{opacity:.65;font-size:10px}
 .bd-panel-name{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--ink);margin-bottom:7px;letter-spacing:-.01em;position:sticky;top:0;background:var(--ash);padding-bottom:2px}
 .bd-panel-items{display:flex;flex-direction:column;gap:6px}
@@ -203,7 +206,7 @@ a.bd-panel-item:hover span:last-child{text-decoration:underline;text-decoration-
 .bd-tag.k-ms{color:var(--ink);border-color:var(--ink-soft);background:var(--ash-deep)}
 .bd-tag.k-conf{color:var(--rust);border-color:var(--rust);background:var(--rust-tint)}
 .bd-tag.k-thesis{color:var(--ink-soft);border-color:var(--line);background:var(--white)}
-@media(max-width:460px){.bd-map-row{flex-direction:column;align-items:stretch}#bdMap{width:100%;max-width:230px}}
+@media(max-width:460px){.bd-map-row{flex-direction:column;align-items:stretch}#bdMap{width:100%;max-width:230px;height:auto}.bd-map-panel{height:auto;max-height:220px}.bd-panel-idle{height:auto}}
 
 /* ---------- experience ---------- */
 .exp-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:64px;flex-wrap:wrap}

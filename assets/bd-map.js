@@ -27,7 +27,20 @@
 
   function renderPanel(name){
     if(!name){
-      panel.innerHTML = `<div class="bd-panel-idle"><span class="bd-panel-count">${names.length}</span> districts &amp; the Bay of Bengal, spanning ${Object.values(DATA.research).reduce((a,b)=>a+b.length,0) + DATA.bay.items.length} research items.<br><span class="bd-panel-hint">Hover or tap a highlighted area to explore.</span></div>`;
+      const allItems = Object.values(DATA.research).flat().concat(DATA.bay.items);
+      const totalItems = allItems.length;
+      const counts = {};
+      allItems.forEach(it => { counts[it.k] = (counts[it.k]||0) + 1; });
+      const chips = ['pub','ms','conf','thesis']
+        .filter(k => counts[k])
+        .map(k => `<span class="bd-tag ${KIND_CLASS[k]}">${counts[k]} ${KIND_LABEL[k]}</span>`)
+        .join('');
+      panel.innerHTML = `<div class="bd-panel-idle">
+        <div class="bd-panel-summary"><span class="bd-panel-count">${names.length}</span> districts &amp; the Bay of Bengal</div>
+        <div class="bd-panel-total">${totalItems} research items mapped</div>
+        <div class="bd-panel-breakdown">${chips}</div>
+        <div class="bd-panel-hint">Hover or tap a highlighted area to explore.</div>
+      </div>`;
       return;
     }
     const items = name === '__bay__' ? DATA.bay.items : (DATA.research[name] || []);
