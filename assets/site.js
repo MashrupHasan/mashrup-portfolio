@@ -2,6 +2,7 @@
 (function(){
   const dot=document.getElementById('cdot'), ring=document.getElementById('cring');
   if(!dot||!ring) return;
+  if(window.matchMedia('(hover:none), (pointer:coarse)').matches) return;
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove', e=>{
     mx=e.clientX; my=e.clientY;
