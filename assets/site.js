@@ -78,7 +78,56 @@
       }
     });
   },{threshold:0.08, rootMargin:'0px 0px -32px 0px'});
-  document.querySelectorAll('[data-a],[data-al]').forEach(el=>io.observe(el));
+
+  // Content that should reveal individually rather than as one block. 'fade' skips the
+  // translate so it can't fight the inline transform that data-tilt/data-magnet write.
+  const TARGETS=[
+    ['.pub',''], ['.tl-item',''], ['.egrid > .card',''], ['.pcard','fade'], ['.acard','fade'],
+    ['.skill-box','fade'], ['.bcard','fade'], ['.awrow > div','fade'],
+    ['.prose > h3',''], ['.prose > p',''], ['.prose > ol',''], ['.prose > ul',''],
+    ['.fig-frame',''], ['.pshow',''], ['.ms-list > li',''],
+    ['.clinks > a',''], ['.clinks > div',''], ['.stats > div',''], ['.meta-row > .meta-item',''],
+    ['.filmtags-grid > .filmtag','fade'], ['.ptags > span','fade'], ['.fwrap > div','']
+  ];
+  // Blocks that wrap the above: drop their own reveal so children animate instead of double-fading.
+  const UNWRAP='.prose, .skills-bento-wrap, .clinks, .stats, .meta-row, .awrow, .egrid';
+  const SKIP='.hero, nav, #mobmenu, #dotnav, .poster-modal, .photo-lightbox, .gal-lightbox, .gal-item';
+
+  function tag(root){
+    (root||document).querySelectorAll(UNWRAP).forEach(el=>{
+      if(el.hasAttribute('data-a')){ el.removeAttribute('data-a'); el.classList.add('vis'); }
+    });
+    TARGETS.forEach(([sel,variant])=>{
+      (root||document).querySelectorAll(sel).forEach(el=>{
+        if(el.hasAttribute('data-a')||el.hasAttribute('data-al')) return;
+        if(el.closest(SKIP)) return;
+        el.setAttribute('data-a', variant);
+      });
+    });
+    // stagger siblings so groups cascade instead of landing all at once
+    const groups=new Map();
+    (root||document).querySelectorAll('[data-a],[data-al]').forEach(el=>{
+      if(el.classList.contains('vis')||el._rv) return;
+      const list=groups.get(el.parentNode)||[];
+      list.push(el); groups.set(el.parentNode, list);
+    });
+    groups.forEach(list=>{
+      list.forEach((el,i)=>{
+        el._rv=true;
+        if(list.length>1) el.style.setProperty('--rd', Math.min(i,6)*65+'ms');
+        io.observe(el);
+      });
+    });
+  }
+  tag(document);
+
+  // pick up anything rendered later (blog cards, re-rendered lists)
+  let pending=null;
+  new MutationObserver(muts=>{
+    if(pending) return;
+    if(!muts.some(m=>m.addedNodes.length)) return;
+    pending=setTimeout(()=>{ pending=null; tag(document); }, 120);
+  }).observe(document.body,{childList:true,subtree:true});
 
   const co=new IntersectionObserver(entries=>{
     entries.forEach(e=>{
