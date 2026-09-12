@@ -20,28 +20,37 @@
   });
 })();
 
-/* ---------- magnetic buttons ---------- */
+/* ---------- fluid pointer motion: magnetic buttons + 3D tilt cards ---------- */
 (function(){
-  document.querySelectorAll('[data-magnet]').forEach(btn=>{
-    btn.addEventListener('mousemove', e=>{
-      const r=btn.getBoundingClientRect();
-      const x=e.clientX-r.left-r.width/2, y=e.clientY-r.top-r.height/2;
-      btn.style.transform='translate('+(x*0.18)+'px,'+(y*0.35)+'px)';
-    });
-    btn.addEventListener('mouseleave', ()=>{ btn.style.transform=''; });
-  });
-})();
+  if(window.matchMedia('(hover:none), (pointer:coarse)').matches) return;
 
-/* ---------- 3D tilt cards ---------- */
-(function(){
-  document.querySelectorAll('[data-tilt]').forEach(card=>{
-    card.addEventListener('mousemove', e=>{
-      const r=card.getBoundingClientRect();
-      const px=(e.clientX-r.left)/r.width-0.5, py=(e.clientY-r.top)/r.height-0.5;
-      card.style.transform='perspective(900px) rotateX('+(py*-5)+'deg) rotateY('+(px*5)+'deg) translateY(-3px)';
+  // each element eases toward its pointer target every frame and glides home on leave,
+  // then clears its inline transform so CSS (reveal, hover) owns it again
+  function track(el, kind){
+    const s={tx:0,ty:0,x:0,y:0,tl:0,l:0,running:false};
+    const eps=kind==='magnet'?0.05:0.0008;
+    function step(){
+      const k=s.tl?0.15:0.085;
+      s.x+=(s.tx-s.x)*k; s.y+=(s.ty-s.y)*k; s.l+=(s.tl-s.l)*k;
+      if(!s.tl && Math.abs(s.x)<eps && Math.abs(s.y)<eps && s.l<0.005){
+        el.style.transform=''; s.running=false; return;
+      }
+      el.style.transform = kind==='magnet'
+        ? 'translate('+s.x.toFixed(2)+'px,'+s.y.toFixed(2)+'px)'
+        : 'perspective(900px) rotateX('+(s.y*-6).toFixed(3)+'deg) rotateY('+(s.x*6).toFixed(3)+'deg) translateY('+(s.l*-4).toFixed(2)+'px)';
+      requestAnimationFrame(step);
+    }
+    function kick(){ if(!s.running){ s.running=true; requestAnimationFrame(step); } }
+    el.addEventListener('mousemove', e=>{
+      const r=el.getBoundingClientRect();
+      if(kind==='magnet'){ s.tx=(e.clientX-r.left-r.width/2)*0.22; s.ty=(e.clientY-r.top-r.height/2)*0.38; }
+      else { s.tx=(e.clientX-r.left)/r.width-0.5; s.ty=(e.clientY-r.top)/r.height-0.5; }
+      s.tl=1; kick();
     });
-    card.addEventListener('mouseleave', ()=>{ card.style.transform=''; });
-  });
+    el.addEventListener('mouseleave', ()=>{ s.tx=0; s.ty=0; s.tl=0; kick(); });
+  }
+  document.querySelectorAll('[data-magnet]').forEach(el=>track(el,'magnet'));
+  document.querySelectorAll('[data-tilt]').forEach(el=>track(el,'tilt'));
 })();
 
 /* ---------- scroll: progress bar, nav shrink, hero parallax, hud ---------- */
@@ -54,15 +63,23 @@
   const hudScroll=document.getElementById('hudScroll');
   const globeWrap=document.querySelector('.globe-wrap');
 
-  function onScroll(){
-    const sy=window.scrollY;
+  // scroll-linked visuals trail the real scroll position slightly so they glide
+  let cur=window.scrollY, target=cur, running=false;
+  function render(){
+    cur+=(target-cur)*0.14;
+    if(Math.abs(target-cur)<0.4) cur=target;
     const max=document.body.scrollHeight-window.innerHeight;
-    pbar.style.width=(max>0?sy/max*100:0)+'%';
-    nav.dataset.s = sy>80;
-    if(heroName) heroName.style.transform='translateY('+(sy*0.06)+'px)';
-    if(heroPhotoCol) heroPhotoCol.style.transform='translateY('+(sy*-0.05)+'px)';
-    if(globeWrap) globeWrap.style.transform='translateY('+(sy*0.08)+'px)';
-    if(hudScroll) hudScroll.textContent='Y '+String(Math.round(sy)).padStart(4,'0')+'px';
+    pbar.style.width=(max>0?cur/max*100:0)+'%';
+    if(heroName) heroName.style.transform='translate3d(0,'+(cur*0.06).toFixed(2)+'px,0)';
+    if(heroPhotoCol) heroPhotoCol.style.transform='translate3d(0,'+(cur*-0.05).toFixed(2)+'px,0)';
+    if(globeWrap) globeWrap.style.transform='translate3d(0,'+(cur*0.08).toFixed(2)+'px,0)';
+    if(cur!==target) requestAnimationFrame(render); else running=false;
+  }
+  function onScroll(){
+    target=window.scrollY;
+    nav.dataset.s = target>80;
+    if(hudScroll) hudScroll.textContent='Y '+String(Math.round(target)).padStart(4,'0')+'px';
+    if(!running){ running=true; requestAnimationFrame(render); }
   }
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
@@ -73,11 +90,16 @@
   const io=new IntersectionObserver(entries=>{
     entries.forEach(e=>{
       if(e.isIntersecting){
-        e.target.classList.add('vis');
-        io.unobserve(e.target);
+        const el=e.target;
+        el.classList.add('vis');
+        io.unobserve(el);
+        // once settled, hand the element back to its own CSS so hover transitions
+        // aren't slowed by the reveal's long duration or stagger delay
+        const d=parseFloat(el.style.getPropertyValue('--rd'))||0;
+        setTimeout(()=>{ el.removeAttribute('data-a'); el.removeAttribute('data-al'); el.style.removeProperty('--rd'); }, d+1300);
       }
     });
-  },{threshold:0.08, rootMargin:'0px 0px -32px 0px'});
+  },{threshold:0.08, rootMargin:'0px 0px -40px 0px'});
 
   // Content that should reveal individually rather than as one block. 'fade' skips the
   // translate so it can't fight the inline transform that data-tilt/data-magnet write.
@@ -99,7 +121,7 @@
     });
     TARGETS.forEach(([sel,variant])=>{
       (root||document).querySelectorAll(sel).forEach(el=>{
-        if(el.hasAttribute('data-a')||el.hasAttribute('data-al')) return;
+        if(el._rv||el.hasAttribute('data-a')||el.hasAttribute('data-al')) return;
         if(el.closest(SKIP)) return;
         el.setAttribute('data-a', variant);
       });
@@ -114,7 +136,7 @@
     groups.forEach(list=>{
       list.forEach((el,i)=>{
         el._rv=true;
-        if(list.length>1) el.style.setProperty('--rd', Math.min(i,6)*65+'ms');
+        if(list.length>1) el.style.setProperty('--rd', Math.min(i,6)*85+'ms');
         io.observe(el);
       });
     });
