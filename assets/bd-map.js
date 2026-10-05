@@ -25,20 +25,21 @@
   const distEls = {};
   const names = Object.keys(DATA.districts);
 
+  const legendEl = document.getElementById('bdLegend');
+  if(legendEl){
+    const present = new Set(Object.values(DATA.research).flat().concat(DATA.bay.items).map(it => it.k));
+    legendEl.innerHTML = ['pub','ms','conf','thesis','proj']
+      .filter(k => present.has(k))
+      .map(k => `<li><i class="bd-key ${KIND_CLASS[k]}"></i>${KIND_LABEL[k]}</li>`)
+      .join('');
+  }
+
   function renderPanel(name){
     if(!name){
       const allItems = Object.values(DATA.research).flat().concat(DATA.bay.items);
-      const totalItems = allItems.length;
-      const counts = {};
-      allItems.forEach(it => { counts[it.k] = (counts[it.k]||0) + 1; });
-      const chips = ['pub','ms','conf','thesis','proj']
-        .filter(k => counts[k])
-        .map(k => `<span class="bd-tag ${KIND_CLASS[k]}">${counts[k]} ${KIND_LABEL[k]}</span>`)
-        .join('');
       panel.innerHTML = `<div class="bd-panel-idle">
         <div class="bd-panel-summary"><span class="bd-panel-count">${names.length}</span> districts &amp; the Bay of Bengal</div>
-        <div class="bd-panel-total">${totalItems} research items mapped</div>
-        <div class="bd-panel-breakdown">${chips}</div>
+        <div class="bd-panel-total">${allItems.length} research items mapped</div>
         <div class="bd-panel-hint">Hover or tap a highlighted area to explore.</div>
       </div>`;
       return;
