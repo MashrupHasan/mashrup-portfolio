@@ -13,8 +13,8 @@
   svg.setAttribute('class', 'bd-svg');
   mount.appendChild(svg);
 
-  const KIND_LABEL = {pub:'Published', ms:'Manuscript', conf:'Conference', thesis:'Thesis / Project'};
-  const KIND_CLASS = {pub:'k-pub', ms:'k-ms', conf:'k-conf', thesis:'k-thesis'};
+  const KIND_LABEL = {pub:'Published', ms:'Manuscript', conf:'Conference', thesis:'Thesis / Project', proj:'Professional Research Project'};
+  const KIND_CLASS = {pub:'k-pub', ms:'k-ms', conf:'k-conf', thesis:'k-thesis', proj:'k-proj'};
 
   // national silhouette
   const nat = document.createElementNS(svgNS, 'path');
@@ -31,7 +31,7 @@
       const totalItems = allItems.length;
       const counts = {};
       allItems.forEach(it => { counts[it.k] = (counts[it.k]||0) + 1; });
-      const chips = ['pub','ms','conf','thesis']
+      const chips = ['pub','ms','conf','thesis','proj']
         .filter(k => counts[k])
         .map(k => `<span class="bd-tag ${KIND_CLASS[k]}">${counts[k]} ${KIND_LABEL[k]}</span>`)
         .join('');
@@ -47,9 +47,10 @@
     const label = name === '__bay__' ? 'Bay of Bengal' : name;
     const rows = items.map(it => {
       const kindTag = `<span class="bd-tag ${KIND_CLASS[it.k]}">${KIND_LABEL[it.k]}</span>`;
+      const stack = it.k === 'proj' ? ' bd-panel-item-stack' : '';
       return it.u
-        ? `<a href="${it.u}" class="bd-panel-item">${kindTag}<span>${it.t}</span></a>`
-        : `<div class="bd-panel-item bd-panel-item-static">${kindTag}<span>${it.t}</span></div>`;
+        ? `<a href="${it.u}" class="bd-panel-item${stack}">${kindTag}<span>${it.t}</span></a>`
+        : `<div class="bd-panel-item bd-panel-item-static${stack}">${kindTag}<span>${it.t}</span></div>`;
     }).join('');
     panel.innerHTML = `<div class="bd-panel-name">${label}</div><div class="bd-panel-items">${rows}</div>`;
   }

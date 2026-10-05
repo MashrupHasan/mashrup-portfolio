@@ -212,6 +212,10 @@ a.bd-panel-item:hover span:last-child{text-decoration:underline;text-decoration-
 .bd-tag.k-ms{color:var(--ink);border-color:var(--ink-soft);background:var(--ash-deep)}
 .bd-tag.k-conf{color:var(--rust);border-color:var(--rust);background:var(--rust-tint)}
 .bd-tag.k-thesis{color:var(--ink-soft);border-color:var(--line);background:var(--white)}
+.bd-tag.k-proj{color:var(--teal-deep);border-color:var(--teal-deep);background:var(--white)}
+.bd-panel-item-stack{flex-direction:column;gap:4px}
+.bd-panel-item-stack .bd-tag{align-self:flex-start}
+.bd-panel-breakdown .bd-tag{white-space:normal;max-width:100%;border-radius:10px}
 @media(max-width:460px){.bd-map-row{flex-direction:column;align-items:stretch}#bdMap{width:100%;max-width:230px;height:auto}.bd-map-panel{height:auto;max-height:220px}.bd-panel-idle{height:auto}}
 
 /* ---------- experience ---------- */
