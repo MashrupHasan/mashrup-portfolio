@@ -614,3 +614,51 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--white)}
   .gal-lightbox-next{right:8px}
   .gal-lightbox-close{top:14px;right:14px}
 }
+
+/* ---------- research slideshow (gallery) ---------- */
+.rs-lede{font-size:16px;color:var(--ink-soft);margin-bottom:40px;max-width:620px;line-height:1.7}
+.rs-stage{position:relative;aspect-ratio:16/9;background:var(--ink);overflow:hidden;border:1px solid var(--line);cursor:pointer}
+.rs-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.1s cubic-bezier(.22,1,.36,1);will-change:opacity}
+.rs-slide.on{opacity:1}
+.rs-slide img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02)}
+.rs-slide.on img{animation:rsKen 7.5s linear forwards}
+@keyframes rsKen{from{transform:scale(1.015) translate3d(0,0,0)}to{transform:scale(1.085) translate3d(-1.2%,-0.8%,0)}}
+.rs-veil{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(10,12,14,.82) 0%,rgba(10,12,14,.34) 32%,rgba(10,12,14,0) 62%);pointer-events:none}
+.rs-cap{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:34px 40px 30px;pointer-events:none;display:flex;flex-direction:column;gap:9px}
+.rs-cap-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-tint);opacity:.92}
+.rs-cap-txt{font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:300;line-height:1.35;color:#fff;max-width:760px;letter-spacing:-.01em}
+.rs-cap-tag,.rs-cap-txt{opacity:0;transform:translateY(14px);transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1)}
+.rs-stage.ready .rs-cap-tag{opacity:.92;transform:none;transition-delay:.18s}
+.rs-stage.ready .rs-cap-txt{opacity:1;transform:none;transition-delay:.28s}
+.rs-count{position:absolute;top:26px;right:30px;z-index:4;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;color:#fff;opacity:.72;pointer-events:none}
+.rs-count b{font-weight:400;color:var(--teal-tint)}
+.rs-bar{position:absolute;bottom:0;left:0;height:2px;background:var(--teal);width:0;z-index:3}
+.rs-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:48px;height:48px;border:1px solid rgba(255,255,255,.34);background:rgba(10,12,14,.3);color:#fff;font-size:17px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:opacity .3s,background .25s,border-color .25s}
+.rs-stage:hover .rs-nav,.rs-nav:focus-visible{opacity:1}
+.rs-nav:hover{background:var(--teal);border-color:var(--teal)}
+.rs-prev{left:22px}
+.rs-next{right:22px}
+.rs-play{position:absolute;top:22px;left:26px;z-index:4;display:flex;align-items:center;gap:8px;padding:7px 14px;border:1px solid rgba(255,255,255,.3);background:rgba(10,12,14,.32);color:#fff;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .25s,border-color .25s}
+.rs-play:hover{background:var(--teal);border-color:var(--teal)}
+.rs-play svg{display:block}
+.rs-film{display:flex;gap:9px;margin-top:14px;overflow-x:auto;scrollbar-width:thin;padding-bottom:4px;scroll-behavior:smooth}
+.rs-film button{flex:0 0 auto;width:112px;aspect-ratio:16/9;padding:0;border:1px solid var(--line);background:var(--ash);overflow:hidden;cursor:pointer;opacity:.5;transition:opacity .3s,border-color .3s,transform .3s}
+.rs-film button img{width:100%;height:100%;object-fit:cover;display:block}
+.rs-film button:hover{opacity:.85;transform:translateY(-2px)}
+.rs-film button.on{opacity:1;border-color:var(--teal)}
+.rs-film button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.rs-hint{margin-top:14px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);opacity:.6}
+@media(max-width:700px){
+  .rs-cap{padding:20px 20px 18px}
+  .rs-cap-txt{font-size:17px}
+  .rs-count{top:16px;right:16px;font-size:10px}
+  .rs-play{top:14px;left:16px}
+  .rs-nav{opacity:1;width:38px;height:38px;font-size:14px}
+  .rs-prev{left:10px}
+  .rs-next{right:10px}
+  .rs-film button{width:84px}
+}
+@media (prefers-reduced-motion: reduce){
+  .rs-slide.on img{animation:none;transform:none}
+  .rs-slide{transition:opacity .25s linear}
+}
