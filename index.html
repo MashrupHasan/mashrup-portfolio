@@ -149,15 +149,17 @@
   <span class="ghost-num">01</span>
   <div class="sp">
     <div class="eyebrow" data-al><span class="idx">01</span><span class="tick"></span>About</div>
-    <div class="pull about-pull" data-a>&ldquo;From satellite to survey to solution.&rdquo;</div>
-    <div class="about-grid">
-      <p class="bio" data-a>Geospatial researcher working at the intersection of GIScience, GeoAI, and spatial data science, with a research record spanning flood and disaster risk, environmental health, climate vulnerability and migration, land-use dynamics, and vision-based geospatial analytics. My research integrates remote sensing, geoinformatics, and machine learning to investigate human-environment interactions across terrestrial and coastal systems, developing scalable methods for environmental monitoring, hazard and health risk assessment, ecosystem analysis, and spatial decision support, in both academic research and applied policy work. The throughline is using multi-source geospatial data and AI to understand landscape change, quantify its drivers and impacts, and generate evidence that supports climate resilience, disaster risk reduction, and sustainable environmental management.</p>
-      <div class="about-side">
-        <div class="stats" data-a>
+    <div class="about-head">
+      <div class="pull about-pull" data-a>&ldquo;From satellite to survey to solution.&rdquo;</div>
+      <div class="stats about-stats" data-a>
           <div><div class="stat-n" data-count="3" data-suffix="+">0+</div><div class="stat-l">Years Experience</div></div>
           <div><div class="stat-n" data-count="4" data-suffix="">0</div><div class="stat-l">Journal Publications</div></div>
           <div><div class="stat-n" data-count="6" data-suffix="">0</div><div class="stat-l">Conference Presentations</div></div>
         </div>
+    </div>
+    <div class="about-grid">
+      <div class="about-main">
+        <p class="bio" data-a>Geospatial researcher working at the intersection of GIScience, GeoAI, and spatial data science, with a research record spanning flood and disaster risk, environmental health, climate vulnerability and migration, land-use dynamics, and vision-based geospatial analytics. My research integrates remote sensing, geoinformatics, and machine learning to investigate human-environment interactions across terrestrial and coastal systems, developing scalable methods for environmental monitoring, hazard and health risk assessment, ecosystem analysis, and spatial decision support, in both academic research and applied policy work. The throughline is using multi-source geospatial data and AI to understand landscape change, quantify its drivers and impacts, and generate evidence that supports climate resilience, disaster risk reduction, and sustainable environmental management.</p>
         <div class="focus-row" data-a>
           <span class="focus-lbl mono">FOCUS AREAS</span>
           <div class="focus-pills">
@@ -165,32 +167,24 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="atlas" id="atlas" data-a>
-      <div class="atlas-head">
-        <div>
-          <span class="atlas-lbl">Research Atlas &middot; Bangladesh</span>
-          <div class="atlas-title">Where the work is grounded</div>
+      <div class="atlas" id="atlas" data-a>
+        <div class="atlas-head">
+          <span class="atlas-lbl">Research coverage &middot; Bangladesh</span>
+          <span class="atlas-stats" id="atlasStats"></span>
         </div>
-        <div class="atlas-stats" id="atlasStats"></div>
-      </div>
-      <div class="atlas-body">
-        <div class="atlas-plate geo-grid">
-          <div class="atlas-north" aria-hidden="true"><svg viewBox="0 0 16 26"><path d="M8 1L13 13H3Z" fill="currentColor"/><path d="M8 25L3 13H13Z" fill="none" stroke="currentColor" stroke-width="1"/></svg><span>N</span></div>
-          <div id="bdMap"></div>
-          <div class="atlas-tip" id="atlasTip" hidden></div>
-          <div class="atlas-key">
-            <span class="atlas-key-lbl">Studies per district</span>
-            <span class="atlas-key-sw"><i class="lv1"></i>1</span>
-            <span class="atlas-key-sw"><i class="lv2"></i>2</span>
-            <span class="atlas-key-sw"><i class="lv3"></i>3+</span>
-            <span class="atlas-key-sw"><i class="sea"></i>Marine</span>
+        <div class="atlas-body">
+          <div class="atlas-map">
+            <div class="atlas-north" aria-hidden="true"><svg viewBox="0 0 16 26"><path d="M8 1L13 13H3Z" fill="currentColor"/><path d="M8 25L3 13H13Z" fill="none" stroke="currentColor" stroke-width="1"/></svg><span>N</span></div>
+            <div id="bdMap"></div>
+            <div class="atlas-key">
+              <span class="atlas-key-sw"><i class="lv1"></i>1</span>
+              <span class="atlas-key-sw"><i class="lv2"></i>2</span>
+              <span class="atlas-key-sw"><i class="lv3"></i>3+ studies</span>
+              <span class="atlas-key-sw"><i class="sea"></i>Marine</span>
+            </div>
           </div>
-        </div>
-        <div class="atlas-index-wrap">
-          <p class="atlas-hint">Hover a district to see its studies, or a study to see where it was done. Click to pin.</p>
-          <div class="atlas-index" id="atlasIndex"></div>
+          <div class="atlas-panel" id="atlasPanel" aria-live="polite"></div>
         </div>
       </div>
     </div>
