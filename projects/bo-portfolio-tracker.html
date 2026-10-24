@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>StockTrek · Mashrup Hasan</title>
-<meta name="description" content="StockTrek: browser-based multi-account investment dashboard for Bangladesh stock-market (DSE/CSE) investors.">
+<meta name="description" content="StockTrek: multi-account investment dashboard for Bangladesh stock-market (DSE/CSE) investors, with live price sync, an allocation planner, and risk and dividend analytics on phone and laptop.">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="../assets/favicon-32.png" type="image/png">
 <link rel="apple-touch-icon" href="../assets/favicon-180.png">
@@ -53,10 +53,10 @@
     <a href="../index.html#projects" class="back-link" data-a>&larr; All Projects</a>
     <div class="eyebrow" data-a><span class="tick"></span>Project Case Study · 01</div>
     <div class="subtitle" data-a>StockTrek</div>
-    <p class="sublede" data-a>A browser-based investment dashboard that consolidates multiple Beneficiary Owner (BO) accounts for Bangladesh stock-market (DSE/CSE) investors into one unified view of gain/loss, allocation, and dividend history.</p>
+    <p class="sublede" data-a>An investment platform that consolidates multiple Beneficiary Owner (BO) accounts for Bangladesh stock-market (DSE/CSE) investors into one view, then adds live market data, allocation planning, and risk and dividend analytics, on phone and laptop.</p>
     <div class="meta-row" data-a>
       <div class="meta-item"><span>Role</span><span>Independent Project</span></div>
-      <div class="meta-item"><span>Stack</span><span>JavaScript · Chart.js · localStorage</span></div>
+      <div class="meta-item"><span>Stack</span><span>JavaScript · Chart.js · Firebase (Auth, Firestore, Hosting)</span></div>
       <div class="meta-item"><span>Market</span><span>DSE / CSE, Bangladesh</span></div>
     </div>
   </div>
@@ -67,40 +67,52 @@
     <div class="prose" data-a>
       <h3>Overview</h3>
       <p>Retail investors in Bangladesh's stock market often hold securities across more than one Beneficiary Owner (BO) account with different brokers, with no single place to see combined performance. Reconciling gain/loss, allocation, and dividend income across accounts is typically a manual, spreadsheet-driven chore repeated at every broker's end-of-day statement.</p>
-      <p>StockTrek runs as a single self-contained HTML file, no install, no build step, no backend. Chart.js handles the visualizations and every update is written straight to the browser's <code>localStorage</code>, so it opens and runs immediately and all data stays on the user's machine.</p>
+      <p>StockTrek started as a single-file dashboard and has grown into a full portfolio platform (the current release is v2.02). The interface is still one HTML file with no build step, with Chart.js for the visualizations, now hosted on Firebase. Users sign in with email or Google, and each portfolio syncs to its own Firestore space and is mirrored in the browser, which also keeps a daily restore point for the last 10 days.</p>
 
       <figure class="pshow" data-a>
         <div class="pshow-frame">
-          <img class="pshow-slide active" src="../assets/projects/stocktrek-ss-signin.webp" alt="StockTrek sign-in screen with email/password fields and a Google sign-in option.">
-          <img class="pshow-slide" src="../assets/projects/stocktrek-ss-dashboard.webp" alt="StockTrek consolidated portfolio dashboard showing total market value, cost basis, gain/loss, and a breakdown across three BO accounts.">
-          <img class="pshow-slide" src="../assets/projects/stocktrek-ss-settings.webp" alt="StockTrek settings and accounts panel for editing the workspace profile and managing BO brokerage accounts.">
-          <img class="pshow-slide" src="../assets/projects/stocktrek-ss-account.webp" alt="StockTrek single-account view for Lanka Bangla Securities showing market value, top holdings, and a portfolio breakdown chart.">
+          <img class="pshow-slide active" src="../assets/projects/stocktrek-v2-dashboard.webp" alt="StockTrek consolidated dashboard: sidebar of views and BO accounts, a live ticker, today's intraday P/L and breadth, total market value, cost basis, gain/loss and a lifetime realized-profit table, shown for a sample portfolio.">
+          <img class="pshow-slide" src="../assets/projects/stocktrek-v2-market.webp" alt="StockTrek Live DSE/CSE Market Pulse: market breadth across 395 scrips, top gainers, losers and volume leaders, and a portfolio intraday heatmap of colour-coded holding tiles.">
+          <img class="pshow-slide" src="../assets/projects/stocktrek-v2-planner.webp" alt="StockTrek Stock and BO Allocation Planner: portfolio value, fresh cash to invest, brokerage commission, and a funding plan with target share and capital for each of three BO accounts.">
+          <img class="pshow-slide" src="../assets/projects/stocktrek-v2-risk.webp" alt="StockTrek Risk, Sector and Dividend Intelligence lab: concentration index, win/loss count, break-even rally, an interactive market stress-test slider, a sector allocation donut and unrealized gain or loss by sector.">
         </div>
         <div class="pshow-dots">
-          <button class="pshow-dot active" aria-label="Sign In"></button>
-          <button class="pshow-dot" aria-label="Consolidated Dashboard"></button>
-          <button class="pshow-dot" aria-label="Settings &amp; Accounts"></button>
-          <button class="pshow-dot" aria-label="Account Detail"></button>
+          <button class="pshow-dot active" aria-label="Consolidated Dashboard"></button>
+          <button class="pshow-dot" aria-label="Live Market Pulse"></button>
+          <button class="pshow-dot" aria-label="Allocation Planner"></button>
+          <button class="pshow-dot" aria-label="Risk &amp; Dividend Lab"></button>
         </div>
-        <figcaption class="fig-caption pshow-cap">Sign In</figcaption>
+        <figcaption class="fig-caption pshow-cap">Consolidated Dashboard</figcaption>
       </figure>
+      <p class="fig-caption" style="margin:-24px 0 36px">Screenshots show an invented sample portfolio (not real accounts) priced with live DSE data.</p>
 
-      <h3>Features</h3>
+      <h3>Core Features</h3>
       <ol class="ms-list">
-        <li><strong>Multi-account consolidation</strong> — merges holdings across every BO account into one view, with weighted-average cost and unified P&amp;L.</li>
-        <li><strong>PDF statement import</strong> — auto-detects the account by BOID and syncs prices, shares, cost basis, cash, and dividends straight from LankaBangla Securities, Royal Capital, or Shanta Securities statements.</li>
-        <li><strong>Manual trade entry</strong> — buy, sell, or overwrite any holding, including mutual/unit funds and cash positions.</li>
-        <li><strong>Dividend &amp; historical tracking</strong> — every update is saved as a timestamped snapshot, so each holding and account carries its own price and P&amp;L history.</li>
-        <li><strong>Charts &amp; analytics</strong> — asset-allocation donut, broker-allocation bars, top-10 holdings by market value, and gain/loss breakdowns.</li>
-        <li><strong>Export, print, and single-level undo</strong> — CSV export, browser print, and a safety net for the most recent destructive action.</li>
+        <li><strong>Multi-account consolidation</strong> — merges holdings across every BO account into one view, with weighted-average cost and unified P&amp;L, plus a separate Mutual Funds dashboard with a concentration check.</li>
+        <li><strong>Statement import</strong> — reads LankaBangla Securities, Royal Capital and Shanta Securities statements from PDF, Excel or pasted text. Pasted statements are checked so that quantity &times; average cost and quantity &times; rate add up to the statement totals, and every import shows a preview first, with undo afterwards.</li>
+        <li><strong>Manual trades and dividends</strong> — buy, sell, or overwrite any holding, including mutual and unit funds and cash positions, with dividend and realized-gain tracking per account.</li>
+        <li><strong>Reports and export</strong> — a clean report-style A4 print view and a multi-sheet Excel report with live formulas.</li>
       </ol>
+
+      <h3>What's New in v2</h3>
+      <ol class="ms-list">
+        <li><strong>Live Market Pulse.</strong> One-click or automatic (every 1, 3 or 5 minutes) price sync from the live DSE feed updates every holding across all accounts. A market terminal shows DSE trading hours and countdown, advance/decline breadth, top gainers, losers and volume leaders, a portfolio intraday heatmap, and a searchable DSE/CSE screener with a circuit-breaker radar. The dashboard adds a live ticker tape and today's intraday P/L against the previous close.</li>
+        <li><strong>Advanced analysis and planning.</strong> A Stock &amp; BO Allocation Planner turns target weights into an action plan: cash to deposit or withdraw per BO account, shares to buy or sell, brokerage cost, and the projected new average cost. Average-down, target-cost and exit-price calculators sit alongside it, and a Watchlist adds buy-zone, fair-value and stop-loss alerts with a dated trade-thesis journal.</li>
+        <li><strong>Risk, sector and dividend intelligence.</strong> Automatic sector classification with sector-cap guardrails, a six-metric portfolio risk scorecard, a crash and rally stress-test (including the rally needed to break even), a Bangladesh dividend AIT tax estimator, and a multi-year DRIP compounding projector.</li>
+        <li><strong>Built for phone and laptop.</strong> On laptops, a sidebar holds every view. On phones it becomes a slide-in menu with a bottom navigation bar (Home, Market, Planner, Watchlist, All Menu), with larger readable type, and print works on phones too.</li>
+      </ol>
+
+      <figure class="fig-frame">
+        <img src="../assets/projects/stocktrek-v2-mobile.webp" alt="Two phone screenshots of StockTrek: the consolidated dashboard with intraday P/L and breadth cards, and the Live Market Pulse view, each with a bottom navigation bar for Home, Market, Planner, Watchlist and All Menu.">
+        <figcaption class="fig-caption">The same app on a phone: a menu button replaces the sidebar, and a bottom bar (Home, Market, Planner, Watchlist, All Menu) keeps the main views a thumb away. Sample portfolio.</figcaption>
+      </figure>
 
       <h3>Key Outcomes</h3>
       <ol class="ms-list">
         <li>Consolidates holdings from multiple BO accounts into a single gain/loss and asset-allocation view, a workflow most retail DSE/CSE investors otherwise build by hand in spreadsheets.</li>
-        <li>Automated PDF import and dividend tracking remove manual bookkeeping steps that are easy to lose track of across several brokers.</li>
-        <li>Historical performance charts let a user compare account-level returns over time instead of relying on isolated end-of-day broker statements.</li>
-        <li>Ships as a single client-side file with no backend to run or maintain, keeping it free to use and straightforward to extend.</li>
+        <li>Statement import with built-in reconciliation checks removes manual bookkeeping steps that are easy to get wrong across several brokers.</li>
+        <li>Live prices, the planner and the risk tools take a portfolio from record-keeping to decision support: what is happening today, what to buy or sell to reach a target, and how it would hold up in a crash.</li>
+        <li>Works as the same product on a phone and a laptop, with each investor's data kept in their own account.</li>
       </ol>
     </div>
 
