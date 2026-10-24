@@ -370,17 +370,37 @@ a.ap-row:hover .ap-row-t{text-decoration:underline;text-decoration-color:var(--t
 .clip-desc{font-size:14px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px}
 .clip-byline{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.02em;color:var(--ink-soft);opacity:.7;padding-top:14px;border-top:1px solid var(--line)}
 
-/* ---------- looping icon animations ---------- */
-@keyframes icoDrop{0%,100%{transform:translateY(-2px);opacity:.35}50%{transform:translateY(4px);opacity:1}}
-.ico-drop{animation:icoDrop 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-@keyframes icoWave{0%,100%{transform:translateX(0)}50%{transform:translateX(3px)}}
-.ico-wave{animation:icoWave 3.4s ease-in-out infinite}
-@keyframes icoSway{0%,100%{transform:rotate(0deg)}50%{transform:rotate(6deg)}}
-.ico-sway{animation:icoSway 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:bottom center}
-@keyframes icoPulse{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
-.ico-pulse{animation:icoPulse 1.9s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-@keyframes icoSpin{to{transform:rotate(360deg)}}
-.ico-spin{animation:icoSpin 1.4s linear infinite;transform-box:fill-box;transform-origin:center}
+/* ---------- card icon system: calm at rest, micro-motion on hover/focus ---------- */
+.pub-visual svg [class*="ic-"],.pcard-visual svg [class*="ic-"]{transform-box:fill-box;transform-origin:center}
+.pub-visual svg .ic-grow,.pcard-visual svg .ic-grow{transform-origin:bottom}
+.pub-visual svg .ic-sway,.pcard-visual svg .ic-sway{transform-origin:bottom center}
+@media (prefers-reduced-motion: no-preference){
+  @keyframes icoBob{0%,100%{transform:translateY(-1.6px)}50%{transform:translateY(1.6px)}}
+  @keyframes icoFall{0%{transform:translateY(-7px);opacity:0}18%{opacity:1}82%{opacity:1}100%{transform:translateY(9px);opacity:0}}
+  @keyframes icoRise{0%,100%{transform:translateY(1.6px)}50%{transform:translateY(-2px)}}
+  @keyframes icoPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.16);opacity:1}}
+  @keyframes icoScan{0%{transform:translateY(-9px);opacity:0}25%,75%{opacity:.9}100%{transform:translateY(10px);opacity:0}}
+  @keyframes icoFlow{to{stroke-dashoffset:-22}}
+  @keyframes icoDrift{0%,100%{transform:translateX(-2.4px)}50%{transform:translateX(2.4px)}}
+  @keyframes icoSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  @keyframes icoGrow{0%{transform:scaleY(.35)}100%{transform:scaleY(1)}}
+  @keyframes icoDraw{from{stroke-dashoffset:var(--dl,120)}to{stroke-dashoffset:0}}
+  .pub:hover .ic-bob,.pub:focus-visible .ic-bob{animation-name:icoBob;animation-duration:3s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+  .pub:hover .ic-fall,.pub:focus-visible .ic-fall{animation-name:icoFall;animation-duration:1.5s;animation-timing-function:ease-in;animation-iteration-count:infinite}
+  .pub:hover .ic-rise,.pub:focus-visible .ic-rise{animation-name:icoRise;animation-duration:3.2s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+  .pub:hover .ic-pulse,.pub:focus-visible .ic-pulse{animation-name:icoPulse;animation-duration:1.9s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+  .pub:hover .ic-scan,.pub:focus-visible .ic-scan{animation-name:icoScan;animation-duration:2.2s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+  .pub:hover .ic-flow,.pub:focus-visible .ic-flow{animation-name:icoFlow;animation-duration:2.4s;animation-timing-function:linear;animation-iteration-count:infinite}
+  .pub:hover .ic-drift,.pub:focus-visible .ic-drift{animation-name:icoDrift;animation-duration:3.4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+  .pub:hover .ic-sway,.pub:focus-visible .ic-sway{animation-name:icoSway;animation-duration:3s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+  .pcard:hover .ic-bob{animation-name:icoBob;animation-duration:3s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+  .pcard:hover .ic-fall{animation-name:icoFall;animation-duration:1.5s;animation-timing-function:ease-in;animation-iteration-count:infinite}
+  .pcard:hover .ic-pulse{animation-name:icoPulse;animation-duration:1.9s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+  .pcard:hover .ic-scan{animation-name:icoScan;animation-duration:2.2s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+  .pcard:hover .ic-flow{animation-name:icoFlow;animation-duration:2.4s;animation-timing-function:linear;animation-iteration-count:infinite}
+  .pcard:hover .ic-grow{animation-name:icoGrow;animation-duration:.7s;animation-timing-function:cubic-bezier(.22,1,.36,1);animation-fill-mode:both}
+  .pcard:hover .ic-draw{animation-name:icoDraw;animation-duration:1s;animation-timing-function:ease-out;animation-fill-mode:both}
+}
 .ms-toggle{display:flex;align-items:center;gap:14px;background:none;border:none;padding:22px 0;width:100%;border-top:1px solid var(--line)}
 .ms-toggle:hover{opacity:.65}
 .ms-txt{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-soft);font-weight:600}
@@ -431,7 +451,7 @@ a.ap-row:hover .ap-row-t{text-decoration:underline;text-decoration-color:var(--t
 
 /* ---------- rotating screenshot slideshow ---------- */
 .pshow{border:1px solid var(--line);padding:20px;background:var(--white);margin:8px 0 40px;max-width:900px}
-.pshow-frame{position:relative;width:100%;aspect-ratio:1600/735;overflow:hidden;background:var(--ink)}
+.pshow-frame{position:relative;width:100%;aspect-ratio:1600/1000;overflow:hidden;background:var(--ink)}
 .pshow-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease}
 .pshow-slide.active{opacity:1}
 .pshow-dots{display:flex;gap:9px;justify-content:center;margin-top:16px}
