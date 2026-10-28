@@ -63,6 +63,18 @@
   const hudScroll=document.getElementById('hudScroll');
   const globeWrap=document.querySelector('.globe-wrap');
 
+  // hero name: each line rises out of its own mask on load (CSS drives the timing)
+  if(heroName && !heroName.querySelector('.ln')){
+    heroName.innerHTML=heroName.innerHTML.split(/<br\s*\/?>/i)
+      .map(t=>'<span class="ln"><span>'+t.trim()+'</span></span>').join('');
+  }
+
+  // oversized section numbers drift against the scroll for depth
+  const ghosts=[...document.querySelectorAll('.ghost-num')].map(el=>({el, top:0}));
+  function measureGhosts(){ ghosts.forEach(g=>{ g.top=g.el.parentElement.getBoundingClientRect().top+window.scrollY; }); }
+  const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(ghosts.length && !reduceMotion){ measureGhosts(); window.addEventListener('resize', measureGhosts); window.addEventListener('load', measureGhosts); }
+
   // scroll-linked visuals trail the real scroll position slightly so they glide
   let cur=window.scrollY, target=cur, running=false;
   function render(){
@@ -73,6 +85,10 @@
     if(heroName) heroName.style.transform='translate3d(0,'+(cur*0.06).toFixed(2)+'px,0)';
     if(heroPhotoCol) heroPhotoCol.style.transform='translate3d(0,'+(cur*-0.05).toFixed(2)+'px,0)';
     if(globeWrap) globeWrap.style.transform='translate3d(0,'+(cur*0.08).toFixed(2)+'px,0)';
+    if(!reduceMotion) ghosts.forEach(g=>{
+      const d=cur-g.top;
+      if(d>-window.innerHeight*1.2 && d<window.innerHeight*1.6) g.el.style.transform='translate3d(0,'+(d*-0.1).toFixed(2)+'px,0)';
+    });
     if(cur!==target) requestAnimationFrame(render); else running=false;
   }
   function onScroll(){
@@ -125,6 +141,11 @@
         if(el.closest(SKIP)) return;
         el.setAttribute('data-a', variant);
       });
+    });
+    // headings get an inner span that rises through a clip (see .rv-in in site.css)
+    (root||document).querySelectorAll('.h2[data-a],.subtitle[data-a],.cheading[data-a]').forEach(h=>{
+      if(h.classList.contains('vis')||h.querySelector(':scope > .rv-in')) return;
+      h.innerHTML='<span class="rv-in">'+h.innerHTML+'</span>';
     });
     // stagger siblings so groups cascade instead of landing all at once
     const groups=new Map();
@@ -184,6 +205,20 @@
   document.querySelectorAll('[data-nav-home]').forEach(el=>el.addEventListener('click', e=>{e.preventDefault(); showHome();}));
   document.querySelectorAll('[data-nav-blog]').forEach(el=>el.addEventListener('click', e=>{e.preventDefault(); showBlog();}));
   document.querySelectorAll('[data-mob-close]').forEach(el=>el.addEventListener('click', ()=>mob.classList.remove('open')));
+
+  // highlight the nav link of the section currently in view (homepage anchors only)
+  const spy=[...document.querySelectorAll('.desklinks a.navlink[href^="#"]')]
+    .map(a=>({a, sec:document.getElementById(a.getAttribute('href').slice(1))})).filter(x=>x.sec);
+  if(spy.length){
+    const seen=new Map();
+    const sio=new IntersectionObserver(entries=>{
+      entries.forEach(e=>seen.set(e.target, e.isIntersecting));
+      let on=null;
+      spy.forEach(x=>{ if(seen.get(x.sec)) on=x; });
+      spy.forEach(x=>x.a.classList.toggle('is-active', x===on));
+    },{rootMargin:'-45% 0px -50% 0px'});
+    spy.forEach(x=>sio.observe(x.sec));
+  }
 
   const burgerBtn=document.getElementById('burgerBtn');
   const mobClose=document.getElementById('mobclose');
