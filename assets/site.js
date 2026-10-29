@@ -94,7 +94,11 @@
   function onScroll(){
     target=window.scrollY;
     nav.dataset.s = target>80;
-    if(hudScroll) hudScroll.textContent='Y '+String(Math.round(target)).padStart(4,'0')+'px';
+    if(hudScroll){
+      hudScroll.textContent='Y '+String(Math.round(target)).padStart(4,'0')+'px';
+      // the hero already shows location; keep the corner readout out of its fact strip
+      if(heroName) hudScroll.parentElement.classList.toggle('hud-off', target<window.innerHeight*0.6);
+    }
     if(!running){ running=true; requestAnimationFrame(render); }
   }
   window.addEventListener('scroll', onScroll, {passive:true});
