@@ -847,38 +847,77 @@ a.pub:hover .pub-visual{background:rgba(44,122,114,.16)}
   .btn::before,.pub,.card,.pcard,.acard,.skill-box{transition:none !important}
 }
 
-/* ---------- opening page: three-column grid, framed portrait, bottom fact strip ---------- */
-.hero{padding-top:104px}
-.hero-main{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr) auto;align-items:center;gap:64px;padding:24px 48px 32px}
-.hero-photo-col{width:auto;position:relative}
-.photo-fx-wrap{background:var(--ash);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;padding:40px 26px 0}
-.photo-fx-wrap .hero-figure{filter:none;width:100%;margin:0 auto}
-.hero-photo-col .geo-tag{position:absolute;left:12px;bottom:12px;margin:0;padding:6px 10px;background:rgba(255,255,255,.88);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:4px;opacity:1;font-size:9.5px}
-.hero-copy-col{padding-bottom:8px}
-.hero .kicker{flex-wrap:nowrap}
-.hero-name-solid{font-size:clamp(50px,6.2vw,104px);margin-bottom:22px}
-.hero .tagline{margin-bottom:32px}
-.globe-wrap{position:relative;top:auto;right:auto;align-self:center;margin-right:8px}
+/* ---------- opening page: transparent portrait standing on the ground line, orbit + satellite globe ---------- */
+.hero{padding-top:96px}
+.hero-main{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:end;gap:72px;padding:0 48px}
+.hero-copy-col{align-self:center;padding:32px 0 56px}
 
-.hero-meta{position:relative;z-index:3;max-width:1280px;width:100%;margin:0 auto;padding:0 48px 34px}
-.hero-meta-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;align-items:end;gap:32px;border-top:1px solid var(--line);padding-top:20px}
+/* portrait: no frame, the cut-out stands on the fact strip's hairline */
+.hero-photo-col{width:auto;position:relative;align-self:end;display:flex;justify-content:center}
+.photo-fx-wrap{position:relative;width:fit-content;max-width:100%;line-height:0}
+.photo-fx-wrap picture{position:relative;z-index:2;display:block}
+.photo-fx-wrap .hero-figure{display:block;width:auto;max-width:100%;max-height:min(66vh,560px);filter:drop-shadow(0 18px 28px rgba(17,20,23,.14))}
+
+/* orbit rings behind the head, with a marker that circles slowly */
+.hero-orbit{position:absolute;z-index:0;left:50%;top:-4%;width:96%;aspect-ratio:1;transform:translateX(-50%);pointer-events:none}
+.hero-orbit-ring{position:absolute;inset:0;border:1px solid var(--line);border-radius:50%}
+.hero-orbit-ring.is-inner{inset:13%;border-style:dashed;border-color:var(--ash-deep)}
+.hero-orbit-dot{position:absolute;inset:0;border-radius:50%}
+.hero-orbit-dot::before{content:'';position:absolute;left:50%;top:-4px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px var(--teal-tint)}
+@media (prefers-reduced-motion: no-preference){.hero-orbit-dot{animation:orbitSpin 38s linear infinite}}
+@keyframes orbitSpin{to{transform:rotate(360deg)}}
+
+/* globe becomes the portrait's satellite, top-right of the orbit */
+.hero-main{position:relative}
+.hero-main > .globe-wrap{position:absolute;z-index:1;top:42%;right:64px;translate:0 -50%;scale:.72;transform-origin:center right;margin:0}
+
+/* coordinates read as a vertical map label beside the portrait */
+.hero-photo-col .geo-tag{position:absolute;left:-22px;bottom:22px;margin:0;padding:0;background:none;border:none;writing-mode:vertical-rl;transform:rotate(180deg);font-size:9.5px;letter-spacing:.14em;opacity:.6;gap:8px}
+.hero-photo-col .geo-tag svg{transform:rotate(90deg)}
+
+/* copy column */
+.hero .kicker{display:inline-flex;flex-wrap:nowrap;padding:7px 14px 7px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);margin-bottom:26px;font-size:10px;letter-spacing:.16em}
+.hero-name-solid{font-size:clamp(56px,7.2vw,120px);line-height:.9;letter-spacing:-.025em;margin-bottom:24px}
+.hero .tagline{margin-bottom:34px;max-width:560px}
+.hero-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px 22px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line);max-width:520px}
+.hl-k{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+.hero-links a{position:relative;font-size:12.5px;color:var(--ink-soft);text-decoration:none;transition:color .25s}
+.hero-links a::after{content:'\2197';margin-left:4px;font-size:10px;color:var(--teal);opacity:.0;transition:opacity .25s}
+.hero-links a:hover{color:var(--ink)}
+.hero-links a:hover::after{opacity:1}
+
+/* fact strip: its top hairline is the ground the portrait stands on */
+.hero-meta{position:relative;z-index:3;max-width:1280px;width:100%;margin:0 auto;padding:0 48px 32px}
+.hero-meta-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;align-items:end;gap:32px;border-top:1px solid var(--ink-soft);border-top-color:rgba(17,20,23,.18);padding-top:20px}
 .hm-k{display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
 .hm-v{font-size:14px;color:var(--ink);letter-spacing:.005em}
 .hero-meta .scrollcue{margin:0;flex-direction:row;align-items:center;gap:12px;animation:none}
 .hero-meta .scrollcue .ln{width:36px;height:1px;opacity:.45;transform-origin:left;animation:cueLine 2.2s var(--ease-io) infinite}
 .hero-meta .scrollcue .tx{opacity:.55}
 @keyframes cueLine{0%{transform:scaleX(.2)}50%{transform:scaleX(1)}100%{transform:scaleX(.2)}}
+
 @media (prefers-reduced-motion: no-preference){
-  .hero .photo-fx-wrap{animation:heroRise 1.1s var(--ease) .05s backwards}
+  .hero .hero-orbit{animation:heroFade 1.6s var(--ease) .2s backwards}
+  .hero-links{animation:heroRise 1.1s var(--ease) .8s backwards}
   .hero-meta-row{animation:heroFade 1.2s var(--ease) 1s backwards}
 }
 @media (prefers-reduced-motion: reduce){.hero-meta .scrollcue .ln{animation:none}}
 
-@media(max-width:1120px){.hero-main{grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:48px}}
+#hud{transition:opacity .45s var(--ease)}
+#hud.hud-off{opacity:0}
+
+@media(max-width:1400px){.hero-main{gap:56px}.hero-main > .globe-wrap{right:104px;scale:.58}}
+@media(max-width:1120px){.hero-main{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:44px}}
 @media(max-width:1000px){
-  .hero{padding-top:92px}
-  .hero-main{grid-template-columns:1fr;justify-items:center;gap:32px;padding:16px 24px 32px}
-  .hero-photo-col{width:min(300px,72vw)}
+  .hero{padding-top:88px}
+  .hero-main{grid-template-columns:1fr;justify-items:center;gap:8px;padding:0 24px}
+  .hero-copy-col{order:2;padding:4px 0 32px;display:flex;flex-direction:column;align-items:center}
+  .hero-photo-col{order:1;width:min(250px,64vw);padding-top:12px}
+  .photo-fx-wrap .hero-figure{max-height:none}
+  .hero-photo-col .geo-tag{display:none}
+  .hero .kicker{max-width:100%;white-space:normal;text-align:center;justify-content:center;text-wrap:balance;font-size:9.5px;letter-spacing:.12em;line-height:1.5}
+  .hero .kicker .dot{display:none}
+  .hero-links{justify-content:center}
   .hero-meta{padding:0 24px 28px}
   .hero-meta-row{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;text-align:center}
   .hero-meta .scrollcue{display:none}
@@ -886,8 +925,8 @@ a.pub:hover .pub-visual{background:rgba(44,122,114,.16)}
 @media(max-width:600px){
   .hero-meta-row{grid-template-columns:1fr;gap:12px}
   .hm-v{font-size:13px}
+  .hero-links{gap:6px 16px}
+  .hl-k{width:100%;text-align:center}
 }
-#hud{transition:opacity .45s var(--ease)}
-#hud.hud-off{opacity:0}
-@media(min-width:1121px) and (max-width:1400px){.hero-main{padding-right:96px;gap:44px}.hero .kicker{letter-spacing:.16em}}
-@media(max-width:1000px){.hero .kicker .dot{display:none}}
+
+@media(max-width:1000px){.hero-photo-col{border-bottom:1px solid rgba(17,20,23,.18)}.photo-fx-wrap .hero-figure{filter:none}}
