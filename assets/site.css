@@ -726,7 +726,7 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--white)}
 :root{
   --ease:cubic-bezier(.22,1,.36,1);
   --ease-io:cubic-bezier(.65,0,.35,1);
-  --r-lg:18px; --r-md:14px; --r-sm:10px;
+  --r-lg:6px; --r-md:5px; --r-sm:3px;
   --shadow-rest:0 1px 2px rgba(17,20,23,.04);
   --shadow-lift:0 2px 6px rgba(17,20,23,.04),0 18px 44px -18px rgba(17,20,23,.20);
 }
@@ -742,11 +742,11 @@ html{scrollbar-width:thin;scrollbar-color:var(--ash-deep) transparent}
 
 /* ---------- floating capsule nav ---------- */
 nav{transition:padding .5s var(--ease)}
-nav .ni{border:1px solid transparent;border-radius:999px;transition:background .5s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease),padding .5s var(--ease),max-width .6s var(--ease)}
+nav .ni{border:1px solid transparent;border-radius:10px;transition:background .5s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease),padding .5s var(--ease),max-width .6s var(--ease)}
 nav[data-s="true"]{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;padding:12px 24px}
 nav[data-s="true"] .ni{max-width:1140px;padding:9px 12px 9px 22px;background:rgba(255,255,255,.78);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-color:var(--line);box-shadow:0 10px 30px -14px rgba(17,20,23,.18)}
 .desklinks{gap:6px}
-.navlink{padding:9px 15px;border-radius:999px;transition:color .25s,background .25s}
+.navlink{padding:9px 15px;border-radius:5px;transition:color .25s,background .25s}
 .navlink::after{display:none}
 .navlink:hover{background:var(--ash);color:var(--ink)}
 .navlink.is-active{background:var(--teal-tint);color:var(--teal-deep)}
@@ -762,23 +762,23 @@ nav[data-s="true"] .ni{max-width:1140px;padding:9px 12px 9px 22px;background:rgb
 /* ---------- section dots: elongated active pill, labels only on hover ---------- */
 .dot-mark{transition:height .45s var(--ease),opacity .3s,background .3s,border-color .3s;transform:none !important}
 .dot-item.active .dot-mark{height:22px;border-radius:999px}
-.dot-lbl{padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.92);border:1px solid var(--line);box-shadow:0 6px 16px -10px rgba(17,20,23,.25)}
+.dot-lbl{padding:4px 10px;border-radius:4px;background:rgba(255,255,255,.92);border:1px solid var(--line);box-shadow:0 6px 16px -10px rgba(17,20,23,.25)}
 .dot-item.active .dot-lbl{opacity:0}
 .dot-item:hover .dot-lbl{opacity:1;color:var(--ink)}
 
 /* ---------- pill controls ---------- */
-.btn{border-radius:999px;overflow:hidden;isolation:isolate;transition:box-shadow .3s,color .35s var(--ease),border-color .35s}
+.btn{border-radius:5px;overflow:hidden;isolation:isolate;transition:box-shadow .3s,color .35s var(--ease),border-color .35s}
 .btn-line{background:transparent}
 .btn-line::before{content:'';position:absolute;inset:0;z-index:-1;background:var(--ink);border-radius:inherit;transform:scaleY(0);transform-origin:50% 100%;transition:transform .5s var(--ease)}
 .btn-line:hover{background:transparent;color:var(--white)}
 .btn-line:hover::before{transform:scaleY(1)}
 .btn-fill::before{content:'';position:absolute;inset:0;z-index:-1;background:var(--teal-deep);border-radius:inherit;transform:scaleY(0);transform-origin:50% 100%;transition:transform .5s var(--ease)}
 .btn-fill:hover::before{transform:scaleY(1)}
-.submit{border-radius:999px}
-.badge,.ptags span,.focus-pills span,.s-tile,.s-subtile,.ayear,.filmtag,.tl-now,.radar-tooltip{border-radius:999px}
+.submit{border-radius:5px}
+.badge,.ptags span,.focus-pills span,.s-tile,.s-subtile,.ayear,.filmtag,.tl-now,.radar-tooltip{border-radius:3px}
 .s-tile-group{border-radius:var(--r-sm)}
-.poster-nav-btn,.rs-nav,.photo-lightbox-nav,.photo-lightbox-close,.poster-modal-close{border-radius:50%}
-.rs-play{border-radius:999px}
+.poster-nav-btn,.rs-nav,.photo-lightbox-nav,.photo-lightbox-close,.poster-modal-close{border-radius:5px}
+.rs-play{border-radius:4px}
 
 /* ---------- Pinterest-style soft cards: separated, rounded, lift on hover ---------- */
 .egrid,.pgrid,.awrow{gap:20px;background:none}
@@ -804,7 +804,7 @@ a.pub:hover .pub-visual{background:rgba(44,122,114,.16)}
 .fig-frame{overflow:hidden}
 .atlas-panel{border-radius:var(--r-md)}
 .rs-stage{border-radius:var(--r-lg);isolation:isolate}
-.rs-film button{border-radius:8px}
+.rs-film button{border-radius:3px}
 .gal-item,.bthumb{border-radius:var(--r-md)}
 .gal-item{isolation:isolate}
 .bthumb.has-img img{transition:transform .8s var(--ease)}
