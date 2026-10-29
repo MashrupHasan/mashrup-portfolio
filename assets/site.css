@@ -307,6 +307,7 @@ a.ap-row:hover .ap-row-t{text-decoration:underline;text-decoration-color:var(--t
 [data-cat="uav"]{--dot:var(--teal)}
 [data-cat="stats"]{--dot:var(--rust)}
 [data-cat="design"]{--dot:var(--ink)}
+[data-cat="docs"]{--dot:var(--teal)}
 .skills-meta{font-size:13px;color:var(--ink-soft);margin-bottom:36px}
 .skills-meta .mono{color:var(--teal-deep)}
 .skills-bento-wrap{display:flex;flex-direction:column;gap:1px}
