@@ -799,6 +799,32 @@ div.pub:hover{background:var(--white);border-left-color:var(--line)}
 .pub-visual{border-radius:var(--r-md);margin:14px 0 14px 14px;transition:background .5s var(--ease)}
 a.pub:hover .pub-visual{background:rgba(44,122,114,.16)}
 
+/* ---------- research icon tiles: crafted chips, ambient life, richer hover ---------- */
+.pub-visual{
+  position:relative;overflow:hidden;
+  background:linear-gradient(145deg,#E9F2F0,#DBE8E5);
+  box-shadow:inset 0 0 0 1px rgba(44,122,114,.08);
+  transition:background .5s var(--ease),box-shadow .5s var(--ease);
+}
+.pub-visual::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(62% 62% at 50% 44%,rgba(44,122,114,.22),transparent 72%);
+  opacity:0;transform:scale(.55);
+  transition:opacity .55s var(--ease),transform .55s var(--ease);
+}
+.pub-visual svg{position:relative;z-index:1;transform-origin:center}
+a.pub:hover .pub-visual{
+  background:linear-gradient(145deg,rgba(44,122,114,.15),rgba(44,122,114,.24));
+  box-shadow:inset 0 0 0 1px rgba(44,122,114,.26);
+}
+a.pub:hover .pub-visual::before{opacity:1;transform:scale(1)}
+@media (prefers-reduced-motion: no-preference){
+  @keyframes icoBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+  @keyframes icoBreatheHover{0%,100%{transform:scale(1.03)}50%{transform:scale(1.12)}}
+  .pub-visual svg{animation:icoBreathe 6.5s ease-in-out infinite}
+  .pub:hover .pub-visual svg,.pub:focus-visible .pub-visual svg{animation:icoBreatheHover 2.9s ease-in-out infinite}
+}
+
 /* ---------- media: rounded frames ---------- */
 .fig-frame,.pshow,.radar-block,.clip-block,.atlas{border-radius:var(--r-lg)}
 .fig-frame img,.fig-frame video,.pshow-frame{border-radius:var(--r-sm)}
