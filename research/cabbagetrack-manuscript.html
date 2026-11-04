@@ -110,6 +110,17 @@
         <figcaption class="fig-caption">How the model was derived on the development flights: each step fixed the largest remaining cause of missed plants, found by tracing every miss back through the pipeline.</figcaption>
       </figure>
 
+      <h3>Demonstration videos</h3>
+      <p>The method running on the flights: plant identities are overlaid as the drone passes over each bed and returns, often from the opposite direction and minutes later.</p>
+      <div class="video-grid">
+        <figure class="video-item">
+          <div class="video-embed">
+            <iframe src="https://www.youtube.com/embed/ySEjaB1Dmok" title="CabbageTrack demonstration — plant re-identification across repeated UAV passes" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <figcaption class="video-cap">The method re-identifying plants across passes on one flight.</figcaption>
+        </figure>
+      </div>
+
       <h3>Limits and Next Steps</h3>
       <p>This is a proof of concept: four flights at one site, two crops, in daylight during one season. The held-out test is a single flight, and its detector had been trained on frames of that flight, so a second held-out flight with a detector that has never seen it is the next test. The method currently runs at about 7 frames per second on a consumer GPU, which suits post-survey analysis; running it on board a drone, coupling the video map with GNSS where the signal is poor, and transfer to other row crops remain future work.</p>
 
