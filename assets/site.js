@@ -125,7 +125,7 @@
   // translate so it can't fight the inline transform that data-tilt/data-magnet write.
   const TARGETS=[
     ['.pub',''], ['.tl-item',''], ['.egrid > .card',''], ['.pcard','fade'], ['.acard','fade'],
-    ['.skill-box','fade'], ['.bcard','fade'], ['.awrow > div','fade'],
+    ['.skill-box','fade'], ['.bcard','fade'], ['.gfx-item','fade'], ['.awrow > div','fade'],
     ['.prose > h3',''], ['.prose > p',''], ['.prose > ol',''], ['.prose > ul',''],
     ['.fig-frame',''], ['.pshow',''], ['.ms-list > li',''],
     ['.clinks > a',''], ['.clinks > div',''], ['.stats > div',''], ['.meta-row > .meta-item',''],
@@ -230,6 +230,51 @@
   if(mobClose) mobClose.addEventListener('click', ()=>mob.classList.remove('open'));
 })();
 
+/* ---------- lightbox (shared by the home gallery and the Contributions > Graphics tab) ---------- */
+(function(){
+  const lb=document.getElementById('galLightbox');
+  if(!lb) return;
+  const lbImg=document.getElementById('galLightboxImg');
+  const lbTag=document.getElementById('galLightboxTag');
+  const lbText=document.getElementById('galLightboxText');
+  const lbCounter=document.getElementById('galLightboxCounter');
+  let list=[], idx=0;
+
+  function render(){
+    const it=list[idx];
+    lbImg.src=it.full;
+    lbImg.alt=it.alt||'';
+    lbTag.textContent=it.tag||'';
+    lbText.textContent=it.cap||'';
+    lbCounter.textContent=(idx+1)+' / '+list.length;
+  }
+  function close(){
+    lb.classList.remove('open');
+    document.documentElement.style.overflow='';
+  }
+  function nav(dir){
+    idx=(idx+dir+list.length)%list.length;
+    render();
+  }
+  window.openLightbox=function(items, i){
+    if(!items.length) return;
+    list=items; idx=i; render();
+    lb.classList.add('open');
+    document.documentElement.style.overflow='hidden';
+  };
+
+  document.getElementById('galLightboxClose').addEventListener('click', close);
+  document.getElementById('galLightboxBackdrop').addEventListener('click', close);
+  document.getElementById('galLightboxPrev').addEventListener('click', ()=>nav(-1));
+  document.getElementById('galLightboxNext').addEventListener('click', ()=>nav(1));
+  document.addEventListener('keydown', e=>{
+    if(!lb.classList.contains('open')) return;
+    if(e.key==='Escape') close();
+    if(e.key==='ArrowLeft') nav(-1);
+    if(e.key==='ArrowRight') nav(1);
+  });
+})();
+
 /* ---------- gallery ---------- */
 (function(){
   const grid=document.getElementById('galGrid');
@@ -258,61 +303,10 @@
     });
   }));
 
-  // lightbox
-  const lb=document.getElementById('galLightbox');
-  const lbImg=document.getElementById('galLightboxImg');
-  const lbTag=document.getElementById('galLightboxTag');
-  const lbText=document.getElementById('galLightboxText');
-  const lbCounter=document.getElementById('galLightboxCounter');
-  const lbClose=document.getElementById('galLightboxClose');
-  const lbBackdrop=document.getElementById('galLightboxBackdrop');
-  const lbPrev=document.getElementById('galLightboxPrev');
-  const lbNext=document.getElementById('galLightboxNext');
-  let activeList=items;
-  let idx=0;
-
-  function currentVisible(){
-    return items.filter(it=>!it.classList.contains('gal-hide'));
-  }
-
-  function openAt(list, i){
-    activeList=list;
-    idx=i;
-    render();
-    lb.classList.add('open');
-    document.documentElement.style.overflow='hidden';
-  }
-  function render(){
-    const it=activeList[idx];
-    lbImg.src=it.dataset.full;
-    lbImg.alt=it.querySelector('img').alt;
-    lbTag.textContent=it.dataset.tag;
-    lbText.textContent=it.dataset.cap;
-    lbCounter.textContent=(idx+1)+' / '+activeList.length;
-  }
-  function close(){
-    lb.classList.remove('open');
-    document.documentElement.style.overflow='';
-  }
-  function nav(dir){
-    idx=(idx+dir+activeList.length)%activeList.length;
-    render();
-  }
-
   items.forEach(it=>it.addEventListener('click', ()=>{
-    const list=currentVisible();
-    openAt(list, list.indexOf(it));
+    const visible=items.filter(x=>!x.classList.contains('gal-hide'));
+    window.openLightbox(visible.map(x=>({
+      full:x.dataset.full, tag:x.dataset.tag, cap:x.dataset.cap, alt:x.querySelector('img').alt
+    })), visible.indexOf(it));
   }));
-
-  lbClose.addEventListener('click', close);
-  lbBackdrop.addEventListener('click', close);
-  lbPrev.addEventListener('click', ()=>nav(-1));
-  lbNext.addEventListener('click', ()=>nav(1));
-
-  document.addEventListener('keydown', e=>{
-    if(!lb.classList.contains('open')) return;
-    if(e.key==='Escape') close();
-    if(e.key==='ArrowLeft') nav(-1);
-    if(e.key==='ArrowRight') nav(1);
-  });
 })();

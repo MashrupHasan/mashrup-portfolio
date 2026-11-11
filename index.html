@@ -914,7 +914,9 @@
       <button class="fbtn" data-filter="TUTORIALS">TUTORIALS</button>
       <button class="fbtn" data-filter="OPINION">OPINION</button>
       <button class="fbtn" data-filter="MEDIA">MEDIA</button>
-    </div></div>
+      <button class="fbtn" data-filter="GRAPHICS">GRAPHICS</button>
+    </div>
+    <div class="gfx-chips" id="gfxChips" hidden></div></div>
   </div>
   <div class="sec" style="padding:76px 0 120px;border-bottom:none">
     <div class="sp">
@@ -989,6 +991,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="assets/site.js"></script>
 <script src="assets/bd-map-data.js"></script>
+<script src="assets/graphics-data.js"></script>
 <script src="assets/bd-map.js"></script>
 <script>
 /* ---------- cursor grid reveal (hero only) ---------- */
@@ -1502,11 +1505,48 @@
   }
   render(posts);
 
+  const chipsEl=document.getElementById('gfxChips');
+  const GFX=window.GRAPHICS||[], CATS=window.GRAPHIC_CATS||{};
+  let gfxCat='all';
+
+  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+  function gfxLabel(g){ return g.client ? g.title+' · '+g.client : g.title; }
+
+  function renderGraphics(){
+    const list=gfxCat==='all'?GFX:GFX.filter(g=>g.cat===gfxCat);
+    grid.className='gfx-grid';
+    grid.innerHTML=list.map((g,i)=>
+      '<button class="gfx-item" data-i="'+i+'" aria-label="'+esc(gfxLabel(g))+'">'+
+        '<img src="assets/graphics/'+g.slug+'-thumb.webp" width="'+g.w+'" height="'+g.h+'" alt="'+esc(gfxLabel(g))+'" loading="lazy">'+
+        '<span class="gfx-cap"><b>'+esc(g.title)+'</b>'+(g.client?'<i>'+esc(g.client)+'</i>':'')+'</span>'+
+      '</button>').join('');
+    grid.querySelectorAll('.gfx-item').forEach(el=>el.addEventListener('click',()=>{
+      window.openLightbox(list.map(g=>({
+        full:'assets/graphics/'+g.slug+'.webp', tag:CATS[g.cat]||'Graphic', cap:gfxLabel(g), alt:gfxLabel(g)
+      })), +el.dataset.i);
+    }));
+  }
+
+  function renderChips(){
+    const used=Object.keys(CATS).filter(k=>GFX.some(g=>g.cat===k));
+    chipsEl.innerHTML=['all'].concat(used).map(k=>
+      '<button class="gfx-chip'+(k===gfxCat?' active':'')+'" data-gcat="'+k+'">'+(k==='all'?'All':CATS[k])+'</button>').join('');
+    chipsEl.querySelectorAll('.gfx-chip').forEach(c=>c.addEventListener('click',()=>{
+      gfxCat=c.dataset.gcat; renderChips(); renderGraphics();
+    }));
+  }
+
   document.querySelectorAll('.fbtn').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
       const f=btn.dataset.filter;
+      if(f==='GRAPHICS'){
+        gfxCat='all'; chipsEl.hidden=false; renderChips(); renderGraphics();
+        return;
+      }
+      chipsEl.hidden=true;
+      grid.className='bgrid';
       render(f==='all'?posts:posts.filter(p=>p.cat===f));
     });
   });
