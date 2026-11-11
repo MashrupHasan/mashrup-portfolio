@@ -550,8 +550,9 @@ a.bcard:hover .bread{color:var(--teal-deep)}
 .gfx-chip{font-family:'Inter',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:.09em;font-weight:600;padding:8px 15px;background:var(--white);border:1px solid var(--line);color:var(--ink-soft);border-radius:30px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
 .gfx-chip:hover{border-color:var(--ink-soft);color:var(--ink)}
 .gfx-chip.active{background:var(--ink);border-color:var(--ink);color:var(--white)}
-.gfx-grid{columns:3 280px;column-gap:20px}
-.gfx-item{display:block;width:100%;padding:0;border:0;margin:0 0 20px;break-inside:avoid;position:relative;overflow:hidden;cursor:pointer;background:var(--ash);border-radius:var(--r-md)}
+.gfx-grid{display:flex;gap:20px;align-items:flex-start}
+.gfx-col{flex:1;min-width:0}
+.gfx-item{display:block;width:100%;padding:0;border:0;margin:0 0 20px;position:relative;overflow:hidden;cursor:pointer;background:var(--ash);border-radius:var(--r-md)}
 .gfx-item img{display:block;width:100%;height:auto;transition:transform .7s var(--ease,cubic-bezier(.22,1,.36,1))}
 .gfx-item:hover img,.gfx-item:focus-visible img{transform:scale(1.04)}
 .gfx-cap{position:absolute;left:0;right:0;bottom:0;padding:16px 18px;background:rgba(17,20,23,.72);color:var(--white);display:flex;flex-direction:column;gap:2px;text-align:left;opacity:0;transform:translateY(8px);transition:opacity .3s,transform .3s}
@@ -559,7 +560,7 @@ a.bcard:hover .bread{color:var(--teal-deep)}
 .gfx-cap i{font-style:normal;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-tint)}
 .gfx-item:hover .gfx-cap,.gfx-item:focus-visible .gfx-cap{opacity:1;transform:none}
 @media(hover:none){.gfx-cap{opacity:1;transform:none;padding:10px 12px}.gfx-cap i{display:none}}
-@media(max-width:700px){.gfx-grid{columns:2 150px;column-gap:12px}.gfx-item{margin-bottom:12px}}
+@media(max-width:700px){.gfx-grid{gap:12px}.gfx-item{margin-bottom:12px}}
 
 /* ---------- footer ---------- */
 footer{border-top:1px solid var(--line);padding:44px 0;background:var(--white)}

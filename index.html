@@ -1512,20 +1512,30 @@
   function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
   function gfxLabel(g){ return g.client ? g.title+' · '+g.client : g.title; }
 
+  function gfxCols(){ return window.innerWidth<=700?2:3; }
+  let gfxShown=false, gfxColsNow=0;
+
   function renderGraphics(){
     const list=gfxCat==='all'?GFX:GFX.filter(g=>g.cat===gfxCat);
-    grid.className='gfx-grid';
-    grid.innerHTML=list.map((g,i)=>
-      '<button class="gfx-item" data-i="'+i+'" aria-label="'+esc(gfxLabel(g))+'">'+
+    const n=gfxColsNow=gfxCols();
+    const cols=Array.from({length:n},()=>({h:0,html:''}));
+    list.forEach((g,i)=>{
+      const c=cols.reduce((m,x)=>x.h<m.h-0.001?x:m,cols[0]);
+      c.h+=g.h/g.w;
+      c.html+='<button class="gfx-item" data-i="'+i+'" aria-label="'+esc(gfxLabel(g))+'">'+
         '<img src="assets/graphics/'+g.slug+'-thumb.webp" width="'+g.w+'" height="'+g.h+'" alt="'+esc(gfxLabel(g))+'" loading="lazy">'+
         '<span class="gfx-cap"><b>'+esc(g.title)+'</b>'+(g.client?'<i>'+esc(g.client)+'</i>':'')+'</span>'+
-      '</button>').join('');
+      '</button>';
+    });
+    grid.className='gfx-grid';
+    grid.innerHTML=cols.map(c=>'<div class="gfx-col">'+c.html+'</div>').join('');
     grid.querySelectorAll('.gfx-item').forEach(el=>el.addEventListener('click',()=>{
       window.openLightbox(list.map(g=>({
         full:'assets/graphics/'+g.slug+'.webp', tag:CATS[g.cat]||'Graphic', cap:gfxLabel(g), alt:gfxLabel(g)
       })), +el.dataset.i);
     }));
   }
+  window.addEventListener('resize',()=>{ if(gfxShown && gfxCols()!==gfxColsNow) renderGraphics(); });
 
   function renderChips(){
     const used=Object.keys(CATS).filter(k=>GFX.some(g=>g.cat===k));
@@ -1542,10 +1552,10 @@
       btn.classList.add('active');
       const f=btn.dataset.filter;
       if(f==='GRAPHICS'){
-        gfxCat='all'; chipsEl.hidden=false; renderChips(); renderGraphics();
+        gfxCat='all'; gfxShown=true; chipsEl.hidden=false; renderChips(); renderGraphics();
         return;
       }
-      chipsEl.hidden=true;
+      gfxShown=false; chipsEl.hidden=true;
       grid.className='bgrid';
       render(f==='all'?posts:posts.filter(p=>p.cat===f));
     });

@@ -4,7 +4,7 @@
     python scripts/add_graphic.py path/to/design.png "Event poster" --client "Shikorh" --cat illus
 
 Writes a 720px thumbnail and a 1400px full image (WebP) into assets/graphics/
-and puts the entry at the top of assets/graphics-data.js (newest first).
+and puts the entry at the top of assets/graphics-data.js (at the top of the list; move the line to reposition it).
 Categories: pack, illus, ps, ui, banner, thumb, tee (see GRAPHIC_CATS in the data file).
 Needs Pillow:  pip install pillow
 """
