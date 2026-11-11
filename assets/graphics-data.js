@@ -16,7 +16,6 @@ window.GRAPHICS = [
   {"slug": "alteryouth-advertisement", "title": "Graphic advertisement", "client": "AlterYouth", "cat": "illus", "w": 720, "h": 720},
   {"slug": "alani-independence-day", "title": "Independence Day post", "client": "Alani Bangladesh", "cat": "illus", "w": 720, "h": 720},
   {"slug": "t-shirt-designs", "title": "T-shirt designs", "client": "", "cat": "tee", "w": 720, "h": 405},
-  {"slug": "rac-drmc-birthday", "title": "Birthday post", "client": "RAC, DRMC", "cat": "ps", "w": 720, "h": 720},
   {"slug": "shikorh-committee-intro", "title": "Committee introduction", "client": "Shikorh", "cat": "ps", "w": 720, "h": 720},
   {"slug": "unimart-eid-event", "title": "Event graphic", "client": "Unimart Sylhet", "cat": "illus", "w": 720, "h": 720},
   {"slug": "shadhin-fm-webinar", "title": "Webinar promo", "client": "Shadhin FM 92.4", "cat": "illus", "w": 720, "h": 720},
