@@ -521,6 +521,17 @@ a.ap-row:hover .ap-row-t{text-decoration:underline;text-decoration-color:var(--t
 #blogpage.open{display:block}
 #home.hide{display:none}
 .blog-hero{padding:160px 0 84px;border-bottom:1px solid var(--line)}
+.cr-cta{display:inline-flex;align-items:center;gap:16px;margin-top:30px;padding:10px 24px 10px 10px;background:var(--teal);color:#fff;border-radius:var(--r-lg);text-decoration:none;box-shadow:0 10px 26px -10px rgba(44,122,114,.55);transition:background .3s,box-shadow .3s,transform .3s var(--ease,ease)}
+.cr-cta:hover{background:var(--teal-deep);box-shadow:0 16px 34px -12px rgba(31,92,86,.6);transform:translateY(-2px)}
+.cr-cta-ico{width:48px;height:48px;border-radius:4px;background:var(--rust);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cr-cta-txt{display:flex;flex-direction:column;gap:3px;text-align:left}
+.cr-cta-txt b{font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.cr-cta-txt i{font-style:normal;font-size:12px;letter-spacing:.05em;opacity:.85}
+.cr-cta-arrow{display:flex;margin-left:8px;animation:crNudge 1.8s ease-in-out infinite}
+.cr-cta:hover .cr-cta-arrow{animation-duration:.9s}
+@keyframes crNudge{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+@media(prefers-reduced-motion:reduce){.cr-cta-arrow{animation:none}}
+@media(max-width:560px){.cr-cta{gap:12px;padding-right:16px}.cr-cta-txt b{font-size:12.5px;letter-spacing:.1em}}
 .blog-title{font-family:'Cormorant Garamond',serif;font-size:clamp(60px,10vw,130px);font-weight:200;color:var(--ink);letter-spacing:-.04em;line-height:.86;margin-bottom:32px}
 .filters{border-bottom:1px solid var(--line);background:var(--white);position:sticky;top:60px;z-index:100}
 .filters .row{display:flex;overflow-x:auto}
