@@ -3,6 +3,8 @@ window.VIDEO_CATS = {story:'Visual Storytelling', anim:'Animated'};
 window.VIDEOS = [
   {"id": "QF0v99L-fBk", "title": "Animated music video", "sub": "Fire and Ice, Stoic Bliss", "cat": "anim"},
   {"id": "cprd-unfccc-handbook", "file": "assets/videos/cprd-unfccc-handbook.mp4", "title": "UNFCCC handbook animation", "sub": "CPRD", "cat": "anim"},
+  {"id": "disdata-video-pitch", "file": "assets/videos/disdata-video-pitch.mp4", "title": "DISDATA video pitch", "sub": "Team Nimbostratus", "cat": "story"},
+  {"id": "_swy8C_NL0A", "title": "App introduction", "sub": "Scholify", "cat": "anim"},
   {"id": "gX4cyIvxxAs", "title": "Joler Gaan concert promo", "sub": "", "cat": "anim"},
   {"id": "0MfllAhkbyE", "title": "Hult Prize SUST introduction", "sub": "", "cat": "anim"},
   {"id": "FF2-FJDS7Ao", "title": "Department introduction", "sub": "GEE, SUST", "cat": "story"},
@@ -20,11 +22,11 @@ window.VIDEOS = [
   {"id": "kaTC2mq0jcU", "title": "Full-length recorded program", "sub": "", "cat": "story"},
   {"id": "Wgx-7PgJAD8", "title": "Project introduction", "sub": "", "cat": "story"},
   {"id": "cIx8MvYDGHA", "title": "Lyrics video", "sub": "", "cat": "anim"},
-  {"id": "_swy8C_NL0A", "title": "App introduction", "sub": "Scholify", "cat": "anim"},
   {"id": "4cLJUx_Ijgg", "title": "App walkthrough", "sub": "", "cat": "anim"},
   {"id": "-mzkadfqmRU", "title": "Social media advertisements", "sub": "Unimart", "cat": "anim"},
   {"id": "Q4AUptJjTHg", "title": "Logo animation", "sub": "Color Blind", "cat": "anim"},
   {"id": "iOwT3g28Knc", "title": "Music visualizer", "sub": "Personal project", "cat": "anim"},
   {"id": "DSraw1bNqWs", "title": "Typographic promotional", "sub": "Scholify", "cat": "anim"},
+  {"id": "cprd-logo-animation", "file": "assets/videos/cprd-logo-animation.mp4", "title": "Logo animation", "sub": "CPRD", "cat": "anim"},
   {"id": "UygymoAVnws", "title": "Logo animation", "sub": "Scholify", "cat": "anim"},
 ];

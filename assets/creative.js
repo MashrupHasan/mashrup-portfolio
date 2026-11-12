@@ -5,7 +5,7 @@
   const esc=t=>String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 
   function chipBar(el, cats, data, onChange){
-    if(!el) return;
+    if(!el) return {reset(){}};
     let cur='all';
     const used=Object.keys(cats).filter(k=>data.some(x=>x.cat===k));
     function draw(){
@@ -14,16 +14,35 @@
       el.querySelectorAll('.gfx-chip').forEach(b=>b.addEventListener('click',()=>{ cur=b.dataset.c; draw(); onChange(cur); }));
     }
     draw();
+    return {reset(){ cur='all'; draw(); }};
+  }
+
+  // Optional "see more" button: shows the first o.limit items, and the rest (plus filters) only after a click.
+  function expander(o, rerender){
+    const st={open:!o.more};
+    if(!o.more) return st;
+    if(o.chips) o.chips.hidden=true;
+    o.more.setAttribute('aria-expanded','false');
+    o.more.addEventListener('click',()=>{
+      st.open=!st.open;
+      o.more.textContent=st.open?o.lessLabel:o.moreLabel;
+      o.more.setAttribute('aria-expanded',String(st.open));
+      if(o.chips) o.chips.hidden=!st.open;
+      rerender(!st.open);
+      if(!st.open && o.section) o.section.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+    return st;
   }
 
   function graphics(o){
     const base=o.base||'', all=window.GRAPHICS||[], cats=window.GRAPHIC_CATS||{};
     const label=g=>g.client?g.title+' · '+g.client:g.title;
-    let cat='all', colsNow=0;
+    let cat='all', colsNow=0, bar;
     const cols=()=>window.innerWidth<=700?2:3;
+    const ex=expander(o,collapsed=>{ if(collapsed){ cat='all'; bar.reset(); } render(); });
     function render(){
       let list=cat==='all'?all:all.filter(g=>g.cat===cat);
-      if(o.limit) list=list.slice(0,o.limit);
+      if(!ex.open) list=all.slice(0,o.limit);
       const n=colsNow=cols();
       const cs=Array.from({length:n},()=>({h:0,html:''}));
       list.forEach((g,i)=>{
@@ -40,7 +59,7 @@
       }));
     }
     window.addEventListener('resize',()=>{ if(cols()!==colsNow) render(); });
-    chipBar(o.chips, cats, all, c=>{ cat=c; render(); });
+    bar=chipBar(o.chips, cats, all, c=>{ cat=c; render(); });
     render();
   }
 
@@ -69,9 +88,11 @@
     modal.querySelectorAll('[data-vid-close]').forEach(el=>el.addEventListener('click',close));
     document.addEventListener('keydown',e=>{ if(e.key==='Escape' && modal.classList.contains('open')) close(); });
 
-    let cat='all';
+    let cat='all', bar;
+    const ex=expander(o,collapsed=>{ if(collapsed){ cat='all'; bar.reset(); } render(); });
     function render(){
-      const list=cat==='all'?all:all.filter(v=>v.cat===cat);
+      let list=cat==='all'?all:all.filter(v=>v.cat===cat);
+      if(!ex.open) list=all.slice(0,o.limit);
       o.grid.className='vid-grid';
       o.grid.innerHTML=list.map((v,i)=>
         '<button class="vid-item" data-i="'+i+'" aria-label="Play: '+esc(label(v))+'">'+
@@ -80,7 +101,7 @@
           '<span class="vid-meta"><b>'+esc(v.title)+'</b>'+(v.sub?'<i>'+esc(v.sub)+'</i>':'')+'</span></button>').join('');
       o.grid.querySelectorAll('.vid-item').forEach(el=>el.addEventListener('click',()=>open(list[+el.dataset.i])));
     }
-    chipBar(o.chips, cats, all, c=>{ cat=c; render(); });
+    bar=chipBar(o.chips, cats, all, c=>{ cat=c; render(); });
     render();
   }
 

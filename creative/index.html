@@ -63,39 +63,29 @@
   </div>
 </section>
 
-<section class="sec" id="selected">
-  <div class="sp">
-    <div class="eyebrow" data-al><span class="idx">01</span><span class="tick"></span>Selected work</div>
-    <div class="h2" data-a style="margin-bottom:44px">A few favourites</div>
-    <div id="selGrid"></div>
-    <div style="margin-top:36px;display:flex;gap:14px;flex-wrap:wrap">
-      <a href="#graphics" class="btn btn-line" data-magnet>SEE ALL GRAPHICS ↓</a>
-      <a href="#videos" class="btn btn-line" data-magnet>WATCH THE VIDEOS ↓</a>
-    </div>
-  </div>
-</section>
-
 <section class="sec" id="graphics">
   <div class="sp">
-    <div class="eyebrow" data-al><span class="idx">02</span><span class="tick"></span>Graphics</div>
-    <div class="h2" data-a style="margin-bottom:28px">Graphic design</div>
-    <div class="gfx-chips" id="gfxChips" style="padding:0 0 28px"></div>
+    <div class="eyebrow" data-al><span class="idx">01</span><span class="tick"></span>Graphics</div>
+    <div class="h2" data-a style="margin-bottom:44px">A few favourites</div>
+    <div class="gfx-chips" id="gfxChips" style="padding:0 0 28px" hidden></div>
     <div id="gfxGrid"></div>
+    <div style="margin-top:36px"><button type="button" class="btn btn-line" id="gfxMore" style="background:transparent;cursor:pointer" data-magnet>SEE SOME MORE FAVOURITES ↓</button></div>
   </div>
 </section>
 
 <section class="sec" id="videos">
   <div class="sp">
-    <div class="eyebrow" data-al><span class="idx">03</span><span class="tick"></span>Videos</div>
-    <div class="h2" data-a style="margin-bottom:28px">Video &amp; motion</div>
-    <div class="gfx-chips" id="vidChips" style="padding:0 0 28px"></div>
+    <div class="eyebrow" data-al><span class="idx">02</span><span class="tick"></span>Videos</div>
+    <div class="h2" data-a style="margin-bottom:44px">Some favourite videos</div>
+    <div class="gfx-chips" id="vidChips" style="padding:0 0 28px" hidden></div>
     <div id="vidGrid"></div>
+    <div style="margin-top:36px"><button type="button" class="btn btn-line" id="vidMore" style="background:transparent;cursor:pointer" data-magnet>SEE MORE VIDEOS ↓</button></div>
   </div>
 </section>
 
 <section class="sec" id="clients">
   <div class="sp">
-    <div class="eyebrow" data-al><span class="idx">04</span><span class="tick"></span>Clients &amp; collaborators</div>
+    <div class="eyebrow" data-al><span class="idx">03</span><span class="tick"></span>Clients &amp; collaborators</div>
     <div class="h2" data-a style="margin-bottom:34px">Who I&#39;ve made work for</div>
     <div class="cr-clients" data-a>
       <span>CPRD</span><span>British Educare</span><span>Scholify</span><span>Shikorh</span><span>Unimart</span>
@@ -108,7 +98,7 @@
 
 <section class="sec" id="contact" style="border-bottom:none">
   <div class="sp">
-    <div class="eyebrow" data-al><span class="idx">05</span><span class="tick"></span>Contact</div>
+    <div class="eyebrow" data-al><span class="idx">04</span><span class="tick"></span>Contact</div>
     <div class="cheading" data-a style="margin-bottom:36px">Let&#39;s make something<br>together.</div>
     <div class="clinks" data-a>
       <a href="mailto:mashruphasan@gmail.com"><span>Email</span>mashruphasan@gmail.com</a>
@@ -161,9 +151,16 @@
 <script src="../assets/site.js"></script>
 <script src="../assets/creative.js"></script>
 <script>
-CreativeGallery.graphics({grid:document.getElementById('selGrid'), limit:6, base:'../'});
-CreativeGallery.graphics({grid:document.getElementById('gfxGrid'), chips:document.getElementById('gfxChips'), base:'../'});
-CreativeGallery.videos({grid:document.getElementById('vidGrid'), chips:document.getElementById('vidChips'), base:'../'});
+CreativeGallery.graphics({
+  grid:document.getElementById('gfxGrid'), chips:document.getElementById('gfxChips'),
+  more:document.getElementById('gfxMore'), moreLabel:'SEE SOME MORE FAVOURITES ↓', lessLabel:'SHOW FEWER ↑',
+  limit:9, section:document.getElementById('graphics'), base:'../'
+});
+CreativeGallery.videos({
+  grid:document.getElementById('vidGrid'), chips:document.getElementById('vidChips'),
+  more:document.getElementById('vidMore'), moreLabel:'SEE MORE VIDEOS ↓', lessLabel:'SHOW FEWER ↑',
+  limit:9, section:document.getElementById('videos'), base:'../'
+});
 </script>
 </body>
 </html>
