@@ -125,7 +125,7 @@
   // translate so it can't fight the inline transform that data-tilt/data-magnet write.
   const TARGETS=[
     ['.pub',''], ['.tl-item',''], ['.egrid > .card',''], ['.pcard','fade'], ['.acard','fade'],
-    ['.skill-box','fade'], ['.bcard','fade'], ['.gfx-item','fade'], ['.awrow > div','fade'],
+    ['.skill-box','fade'], ['.bcard','fade'], ['.gfx-item','fade'], ['.vid-item','fade'], ['.awrow > div','fade'],
     ['.prose > h3',''], ['.prose > p',''], ['.prose > ol',''], ['.prose > ul',''],
     ['.fig-frame',''], ['.pshow',''], ['.ms-list > li',''],
     ['.clinks > a',''], ['.clinks > div',''], ['.stats > div',''], ['.meta-row > .meta-item',''],
