@@ -38,7 +38,8 @@
       <a href="#" class="navlink" data-nav-home>Work</a>
       <a href="#research" class="navlink">Research</a>
       <a href="#skills" class="navlink">Skills</a>
-      <a href="#" class="navlink" data-nav-blog>Contributions</a>
+      <a href="#" class="navlink" data-nav-blog>Outreach</a>
+      <a href="creative/" class="navlink navlink-cta">Creatives</a>
       <a href="#contact" class="navlink">Contact</a>
     </div>
     <button class="burger" id="burgerBtn"><span></span><span></span><span></span></button>
@@ -50,7 +51,8 @@
   <a href="#" data-nav-home>Work</a>
   <a href="#research" data-mob-close>Research</a>
   <a href="#skills" data-mob-close>Skills</a>
-  <a href="#" data-nav-blog>Contributions</a>
+  <a href="#" data-nav-blog>Outreach</a>
+  <a href="creative/">Creatives</a>
   <a href="#contact" data-mob-close>Contact</a>
 </div>
 
@@ -911,14 +913,9 @@
 <div id="blogpage">
   <section class="blog-hero">
     <div class="sp">
-      <div class="eyebrow"><span class="idx">N</span><span class="tick"></span>Contributions</div>
-      <div class="blog-title">CONTRIBUTIONS</div>
+      <div class="eyebrow"><span class="idx">N</span><span class="tick"></span>Outreach</div>
+      <div class="blog-title">OUTREACH</div>
       <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;font-style:italic;color:var(--ink-soft)">Courses, reports, and other public-facing work.</div>
-      <a class="cr-cta" href="creative/" data-magnet>
-        <span class="cr-cta-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 20l1.2-4.4L16.5 4.3a1.8 1.8 0 012.5 0l.7.7a1.8 1.8 0 010 2.5L8.4 18.8 4 20z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/><path d="M14.5 6.3l3.2 3.2" stroke="#fff" stroke-width="1.6"/></svg></span>
-        <span class="cr-cta-txt"><b>Creative Portfolio</b><i>Graphic designer &middot; Video editor</i></span>
-        <span class="cr-cta-arrow" aria-hidden="true"><svg width="20" height="14" viewBox="0 0 20 14" fill="none"><path d="M0 7h18M18 7l-6-6M18 7l-6 6" stroke="currentColor" stroke-width="1.8"/></svg></span>
-      </a>
     </div>
   </section>
   <div class="filters">
@@ -929,10 +926,7 @@
       <button class="fbtn" data-filter="TUTORIALS">TUTORIALS</button>
       <button class="fbtn" data-filter="OPINION">OPINION</button>
       <button class="fbtn" data-filter="MEDIA">MEDIA</button>
-      <button class="fbtn" data-filter="GRAPHICS">GRAPHICS</button>
-      <button class="fbtn" data-filter="VIDEOS">VIDEOS</button>
-    </div>
-    <div class="gfx-chips" id="gfxChips" hidden></div></div>
+    </div></div>
   </div>
   <div class="sec" style="padding:76px 0 120px;border-bottom:none">
     <div class="sp">
@@ -1004,20 +998,9 @@
   <button class="photo-lightbox-nav next" data-lightbox-next aria-label="Next photo">&rarr;</button>
 </div>
 
-<div id="vidModal" class="vid-modal" aria-hidden="true">
-  <div class="vid-modal-backdrop" data-vid-close></div>
-  <button class="vid-modal-close" data-vid-close aria-label="Close video">&times;</button>
-  <div class="vid-modal-inner">
-    <div class="vid-modal-frame"><video id="vidFile" controls playsinline preload="metadata" hidden></video><iframe id="vidFrame" title="Video player" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
-    <div class="vid-modal-cap" id="vidCap"></div>
-  </div>
-</div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="assets/site.js"></script>
 <script src="assets/bd-map-data.js"></script>
-<script src="assets/graphics-data.js"></script>
-<script src="assets/videos-data.js"></script>
 <script src="assets/bd-map.js"></script>
 <script>
 /* ---------- cursor grid reveal (hero only) ---------- */
@@ -1531,101 +1514,11 @@
   }
   render(posts);
 
-  const chipsEl=document.getElementById('gfxChips');
-  const GFX=window.GRAPHICS||[], CATS=window.GRAPHIC_CATS||{};
-  const VID=window.VIDEOS||[], VCATS=window.VIDEO_CATS||{};
-  let mode=null, subCat='all';   // mode: 'graphics' | 'videos' | null
-
-  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
-  function gfxLabel(g){ return g.client ? g.title+' · '+g.client : g.title; }
-  function vidLabel(v){ return v.sub ? v.title+' · '+v.sub : v.title; }
-
-  function gfxCols(){ return window.innerWidth<=700?2:3; }
-  let gfxColsNow=0;
-
-  function renderGraphics(){
-    const list=subCat==='all'?GFX:GFX.filter(g=>g.cat===subCat);
-    const n=gfxColsNow=gfxCols();
-    const cols=Array.from({length:n},()=>({h:0,html:''}));
-    list.forEach((g,i)=>{
-      const c=cols.reduce((m,x)=>x.h<m.h-0.001?x:m,cols[0]);
-      c.h+=g.h/g.w;
-      c.html+='<button class="gfx-item" data-i="'+i+'" aria-label="'+esc(gfxLabel(g))+'">'+
-        '<img src="assets/graphics/'+g.slug+'-thumb.webp" width="'+g.w+'" height="'+g.h+'" alt="'+esc(gfxLabel(g))+'" loading="lazy">'+
-        '<span class="gfx-cap"><b>'+esc(g.title)+'</b>'+(g.client?'<i>'+esc(g.client)+'</i>':'')+'</span>'+
-      '</button>';
-    });
-    grid.className='gfx-grid';
-    grid.innerHTML=cols.map(c=>'<div class="gfx-col">'+c.html+'</div>').join('');
-    grid.querySelectorAll('.gfx-item').forEach(el=>el.addEventListener('click',()=>{
-      window.openLightbox(list.map(g=>({
-        full:'assets/graphics/'+g.slug+'.webp', tag:CATS[g.cat]||'Graphic', cap:gfxLabel(g), alt:gfxLabel(g)
-      })), +el.dataset.i);
-    }));
-  }
-
-  // ----- videos -----
-  const vm=document.getElementById('vidModal'), vf=document.getElementById('vidFrame'), vc=document.getElementById('vidCap');
-  const vfile=document.getElementById('vidFile');
-  function openVideo(v){
-    if(v.file){
-      vf.hidden=true; vfile.hidden=false;
-      vfile.poster='assets/videos/'+v.id+'.webp'; vfile.src=v.file;
-      vfile.play().catch(()=>{});
-    } else {
-      vfile.hidden=true; vf.hidden=false;
-      vf.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(v.id)+'?autoplay=1&rel=0&modestbranding=1';
-    }
-    vc.textContent=vidLabel(v);
-    vm.classList.add('open'); vm.setAttribute('aria-hidden','false');
-    document.documentElement.style.overflow='hidden';
-  }
-  function closeVideo(){
-    vm.classList.remove('open'); vm.setAttribute('aria-hidden','true');
-    vf.src='about:blank';
-    vfile.pause(); vfile.removeAttribute('src'); vfile.load();
-    document.documentElement.style.overflow='';
-  }
-  vm.querySelectorAll('[data-vid-close]').forEach(el=>el.addEventListener('click',closeVideo));
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape' && vm.classList.contains('open')) closeVideo(); });
-
-  function renderVideos(){
-    const list=subCat==='all'?VID:VID.filter(v=>v.cat===subCat);
-    grid.className='vid-grid';
-    grid.innerHTML=list.map((v,i)=>
-      '<button class="vid-item" data-i="'+i+'" aria-label="Play: '+esc(vidLabel(v))+'">'+
-        '<span class="vid-thumb"><img src="assets/videos/'+v.id+'.webp" width="640" height="360" alt="" loading="lazy">'+
-          '<span class="vid-play"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg></span></span>'+
-        '<span class="vid-meta"><b>'+esc(v.title)+'</b>'+(v.sub?'<i>'+esc(v.sub)+'</i>':'')+'</span>'+
-      '</button>').join('');
-    grid.querySelectorAll('.vid-item').forEach(el=>el.addEventListener('click',()=>openVideo(list[+el.dataset.i])));
-  }
-
-  function renderCurrent(){ if(mode==='graphics') renderGraphics(); else if(mode==='videos') renderVideos(); }
-  window.addEventListener('resize',()=>{ if(mode==='graphics' && gfxCols()!==gfxColsNow) renderGraphics(); });
-
-  function renderChips(){
-    const data=mode==='videos'?VID:GFX, cats=mode==='videos'?VCATS:CATS;
-    const used=Object.keys(cats).filter(k=>data.some(x=>x.cat===k));
-    chipsEl.innerHTML=['all'].concat(used).map(k=>
-      '<button class="gfx-chip'+(k===subCat?' active':'')+'" data-gcat="'+k+'">'+(k==='all'?'All':cats[k])+'</button>').join('');
-    chipsEl.querySelectorAll('.gfx-chip').forEach(c=>c.addEventListener('click',()=>{
-      subCat=c.dataset.gcat; renderChips(); renderCurrent();
-    }));
-  }
-
   document.querySelectorAll('.fbtn').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
       const f=btn.dataset.filter;
-      if(f==='GRAPHICS' || f==='VIDEOS'){
-        mode=f==='VIDEOS'?'videos':'graphics'; subCat='all';
-        chipsEl.hidden=false; renderChips(); renderCurrent();
-        return;
-      }
-      mode=null; chipsEl.hidden=true;
-      grid.className='bgrid';
       render(f==='all'?posts:posts.filter(p=>p.cat===f));
     });
   });

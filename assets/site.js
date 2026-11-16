@@ -230,7 +230,7 @@
   if(mobClose) mobClose.addEventListener('click', ()=>mob.classList.remove('open'));
 })();
 
-/* ---------- lightbox (shared by the home gallery and the Contributions > Graphics tab) ---------- */
+/* ---------- lightbox (shared by the home gallery and the creative page) ---------- */
 (function(){
   const lb=document.getElementById('galLightbox');
   if(!lb) return;

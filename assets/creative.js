@@ -1,6 +1,6 @@
 /* Graphics and video galleries for creative/index.html.
-   Data comes from assets/graphics-data.js and assets/videos-data.js (the same files the
-   Contributions tabs use), so adding a graphic or video with the scripts updates both pages. */
+   Data comes from assets/graphics-data.js and assets/videos-data.js; add items with
+   scripts/add_graphic.py and scripts/add_video.py. */
 (function(){
   const esc=t=>String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 

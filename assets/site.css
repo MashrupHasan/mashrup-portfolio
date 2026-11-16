@@ -521,17 +521,6 @@ a.ap-row:hover .ap-row-t{text-decoration:underline;text-decoration-color:var(--t
 #blogpage.open{display:block}
 #home.hide{display:none}
 .blog-hero{padding:160px 0 84px;border-bottom:1px solid var(--line)}
-.cr-cta{display:inline-flex;align-items:center;gap:16px;margin-top:30px;padding:10px 24px 10px 10px;background:var(--teal);color:#fff;border-radius:var(--r-lg);text-decoration:none;box-shadow:0 10px 26px -10px rgba(44,122,114,.55);transition:background .3s,box-shadow .3s,transform .3s var(--ease,ease)}
-.cr-cta:hover{background:var(--teal-deep);box-shadow:0 16px 34px -12px rgba(31,92,86,.6);transform:translateY(-2px)}
-.cr-cta-ico{width:48px;height:48px;border-radius:4px;background:var(--rust);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.cr-cta-txt{display:flex;flex-direction:column;gap:3px;text-align:left}
-.cr-cta-txt b{font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
-.cr-cta-txt i{font-style:normal;font-size:12px;letter-spacing:.05em;opacity:.85}
-.cr-cta-arrow{display:flex;margin-left:8px;animation:crNudge 1.8s ease-in-out infinite}
-.cr-cta:hover .cr-cta-arrow{animation-duration:.9s}
-@keyframes crNudge{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
-@media(prefers-reduced-motion:reduce){.cr-cta-arrow{animation:none}}
-@media(max-width:560px){.cr-cta{gap:12px;padding-right:16px}.cr-cta-txt b{font-size:12.5px;letter-spacing:.1em}}
 .blog-title{font-family:'Cormorant Garamond',serif;font-size:clamp(60px,10vw,130px);font-weight:200;color:var(--ink);letter-spacing:-.04em;line-height:.86;margin-bottom:32px}
 .filters{border-bottom:1px solid var(--line);background:var(--white);position:sticky;top:60px;z-index:100}
 .filters .row{display:flex;overflow-x:auto}
@@ -555,7 +544,7 @@ a.bcard:hover .btitle{color:var(--teal-deep)}
 a.bcard:hover .bread{color:var(--teal-deep)}
 @media(max-width:1000px){.bgrid{grid-template-columns:1fr}}
 
-/* ---------- contributions: graphics tab ---------- */
+/* ---------- graphics gallery (creative page) ---------- */
 .gfx-chips{display:flex;gap:8px;flex-wrap:wrap;padding:12px 0 16px}
 .gfx-chips[hidden]{display:none}
 .gfx-chip{font-family:'Inter',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:.09em;font-weight:600;padding:8px 15px;background:var(--white);border:1px solid var(--line);color:var(--ink-soft);border-radius:30px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
@@ -573,7 +562,7 @@ a.bcard:hover .bread{color:var(--teal-deep)}
 @media(hover:none){.gfx-cap{opacity:1;transform:none;padding:10px 12px}.gfx-cap i{display:none}}
 @media(max-width:700px){.gfx-grid{gap:12px}.gfx-item{margin-bottom:12px}}
 
-/* ---------- contributions: videos tab ---------- */
+/* ---------- video grid and player (creative page) ---------- */
 .vid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px 22px}
 .vid-item{display:flex;flex-direction:column;gap:12px;padding:0;border:0;background:transparent;text-align:left;cursor:pointer;color:inherit}
 .vid-thumb{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;background:var(--ash);border-radius:var(--r-md)}
@@ -812,6 +801,10 @@ nav[data-s="true"] .ni{max-width:1140px;padding:9px 12px 9px 22px;background:rgb
 .navlink::after{display:none}
 .navlink:hover{background:var(--ash);color:var(--ink)}
 .navlink.is-active{background:var(--teal-tint);color:var(--teal-deep)}
+.navlink-cta{border:1px solid var(--teal);color:var(--teal-deep);font-weight:600}
+.navlink-cta::after{display:none}
+.navlink-cta:hover{background:var(--teal);color:#fff}
+.navlink-cta.is-active{background:var(--teal);color:#fff}
 @media(max-width:1000px){nav[data-s="true"]{padding:10px 14px}nav[data-s="true"] .ni{padding:8px 10px 8px 18px}}
 
 #mobmenu.open{animation:mobIn .5s var(--ease) both}
