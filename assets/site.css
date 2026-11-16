@@ -801,10 +801,6 @@ nav[data-s="true"] .ni{max-width:1140px;padding:9px 12px 9px 22px;background:rgb
 .navlink::after{display:none}
 .navlink:hover{background:var(--ash);color:var(--ink)}
 .navlink.is-active{background:var(--teal-tint);color:var(--teal-deep)}
-.navlink-cta{border:1px solid var(--teal);color:var(--teal-deep);font-weight:600}
-.navlink-cta::after{display:none}
-.navlink-cta:hover{background:var(--teal);color:#fff}
-.navlink-cta.is-active{background:var(--teal);color:#fff}
 @media(max-width:1000px){nav[data-s="true"]{padding:10px 14px}nav[data-s="true"] .ni{padding:8px 10px 8px 18px}}
 
 #mobmenu.open{animation:mobIn .5s var(--ease) both}
