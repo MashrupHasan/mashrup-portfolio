@@ -10,6 +10,7 @@ window.GRAPHICS = [
   {"slug": "stocktrek-portfolio-tracker", "title": "StockTrek portfolio tracker", "client": "", "cat": "ui", "w": 405, "h": 720},
   {"slug": "scholify-new-year-2021", "title": "New year post 2021", "client": "Scholify", "cat": "illus", "w": 720, "h": 720},
   {"slug": "pinwheel-restaurant", "title": "Restaurant graphic", "client": "Pinwheel", "cat": "ps", "w": 720, "h": 720},
+  {"slug": "cprd-press-conference-at-cop31", "title": "Press conference at COP31", "client": "CPRD", "cat": "banner", "w": 720, "h": 376},
   {"slug": "shikorh-awareness-post", "title": "Awareness post", "client": "Shikorh", "cat": "illus", "w": 720, "h": 720},
   {"slug": "player-showdown", "title": "Player showdown graphic", "client": "", "cat": "ps", "w": 720, "h": 720},
   {"slug": "skillspark-course-promo", "title": "Course promotional", "client": "Skillspark", "cat": "illus", "w": 720, "h": 720},
