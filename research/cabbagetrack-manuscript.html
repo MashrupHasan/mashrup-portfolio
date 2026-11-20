@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CabbageTrack Plant Re-Identification · Mashrup Hasan</title>
-<meta name="description" content="In revision at Computers and Electronics in Agriculture: CabbageTrack re-identifies individual plants across repeated UAV passes from video alone, using phase correlation odometry and cross-pass image registration.">
+<meta name="description" content="Under review at Computers and Electronics in Agriculture: CabbageTrack re-identifies individual plants across repeated UAV passes from video alone, using phase correlation odometry and cross-pass image registration.">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="../assets/favicon-32.png" type="image/png">
 <link rel="apple-touch-icon" href="../assets/favicon-180.png">
@@ -53,12 +53,12 @@
 <section class="subhero">
   <div class="sp">
     <a href="../index.html#research" class="back-link" data-a>&larr; All Research</a>
-    <div class="eyebrow" data-a><span class="tick"></span><span class="badge pub-no" style="margin-right:10px">In Revision</span>Computers and Electronics in Agriculture</div>
+    <div class="eyebrow" data-a><span class="tick"></span><span class="badge pub-no" style="margin-right:10px">Under Review</span>Computers and Electronics in Agriculture</div>
     <div class="subtitle" data-a>Vision-Only Re-Identification of Individual Plants Across Repeated UAV Passes</div>
     <p class="sublede" data-a>A drone that flies the same crop beds more than once has to recognise every plant again, often from the opposite direction and minutes after it left the view. CabbageTrack does it from the video alone, where neighbouring plants look identical and GNSS cannot tell one cabbage from the next.</p>
     <div class="meta-row" data-a>
       <div class="meta-item"><span>Authors</span><span>Niam, S., Hasan, M. M., &amp; Uddin, M. M.</span></div>
-      <div class="meta-item"><span>Journal</span><span>Computers and Electronics in Agriculture (submitted, in revision)</span></div>
+      <div class="meta-item"><span>Journal</span><span>Computers and Electronics in Agriculture (revised version resubmitted)</span></div>
       <div class="meta-item"><span>Method</span><span>Phase Correlation Odometry · YOLOv9c-seg · Cross-Pass Image Registration</span></div>
     </div>
   </div>
@@ -70,7 +70,7 @@
       <h3>Overview</h3>
       <p>Cabbage plants are visually near-identical, so a plant's identity cannot come from its appearance. It has to come from where it is, and a crop field offers few landmarks to fix that position. Storing GNSS coordinates does not solve it either: without RTK correction the drone used here holds its position only to about &plusmn;0.5 m, roughly the spacing between neighbouring cabbages.</p>
       <p>CabbageTrack segments plants with YOLOv9c-seg, tracks them within each pass with BoT-SORT, and follows the drone's movement by phase correlation of consecutive video frames. That path drifts, and placing the remembered plants by the path alone re-identified only 75 % of sampled plants. So the path is used only to find earlier views of the same ground. For each such view, the shift between the two images is measured directly by phase correlation after correcting the camera rotation, and the remembered plants are moved by that measured shift. This one change raised re-identification to 93 %.</p>
-      <p>The system was developed on three flights over cabbage and cauliflower, frozen, and run once on a held-out flight over a new cabbage field. All flights were flown by hand with a DJI Mavic 3E at commercial vegetable fields near Sylhet, so they include the speed changes, sideways drift and turns of real field work.</p>
+      <p>The system was developed on three flights over cabbage and cauliflower, frozen, and run once on a held-out flight over a new cabbage field. Although named after the crop it was built on, the method is not specific to cabbage: with a retrained plant detector it also ran on a cauliflower flight, and the paper treats transfer to other row crops as a hypothesis for future tests. All flights were flown by hand with a DJI Mavic 3E at commercial vegetable fields near Sylhet, so they include the speed changes, sideways drift and turns of real field work.</p>
 
       <figure class="fig-frame">
         <img src="../assets/research/cabbagetrack-v2-concept.webp" alt="Schematic of two beds of five plant lines each, flown by a drone in four passes: passes 1 and 2 assign plant identity numbers, and the reversed passes 3 and 4 must recognise the same plants from video alone, up to about 4.5 minutes later.">
@@ -113,14 +113,18 @@
       </figure>
 
       <h3>Limits and Next Steps</h3>
-      <p>This is a proof of concept: four flights at one site, two crops, in daylight during one season. The held-out test is a single flight, and its detector had been trained on frames of that flight, so a second held-out flight with a detector that has never seen it is the next test. The method currently runs at about 7 frames per second on a consumer GPU, which suits post-survey analysis; running it on board a drone, coupling the video map with GNSS where the signal is poor, and transfer to other row crops remain future work.</p>
+      <p>This is a proof of concept: four flights at one site, two crops, in daylight during one season. The held-out test is a single flight, and its detector had been trained on frames of that flight, so a second held-out flight with a detector that has never seen it is the next test. Of the 10 wrong links on the held-out flight, 8 involved a plant cut by the image edge in one of the two sightings, so holding back such links until the plant is fully in view is a direct target for improvement. The method currently runs at about 7 frames per second on a consumer GPU, which suits post-survey analysis; running it on board a drone, coupling the video map with GNSS where the signal is poor, and transfer to other row crops remain future work.</p>
+
+      <h3>Open Data &amp; Code</h3>
+      <p>The four flight videos, the drone flight logs, the annotated detector frames, the detector weights, the annotation tools with the answers of both annotators, and every run reported in the paper are archived on <a href="https://doi.org/10.5281/zenodo.23582580" target="_blank" rel="noopener">Zenodo</a> under a CC BY 4.0 licence. The code of the method, the annotation tools and every analysis, table and figure is on <a href="https://github.com/saqlineniam/CabbageTrack" target="_blank" rel="noopener">GitHub</a> under AGPL-3.0.</p>
 
       <h3>Status</h3>
-      <p>This manuscript was submitted to <em>Computers and Electronics in Agriculture</em> and is being revised in response to reviewer comments. This page summarises the revised version, which has a new title and a new held-out evaluation, so the numbers differ from the originally submitted draft. They may still change before publication.</p>
+      <p>This manuscript was submitted to <em>Computers and Electronics in Agriculture</em>, revised in response to the reviewers&rsquo; comments, and resubmitted in November 2026 under its new title. The revision changed the study substantially: the original one-dimensional plant matching was replaced by a direct image registration between passes, and the method is now tested on a held-out flight against blind human ground truth. This page summarises the revised version, so the numbers differ from the originally submitted draft. They may still change before publication.</p>
     </div>
 
     <div style="margin-top:56px;display:flex;gap:14px;flex-wrap:wrap">
       <a href="../projects/cabbagetrack.html" class="btn btn-fill" data-magnet>SEE THE CODE PROJECT →</a>
+      <a href="https://doi.org/10.5281/zenodo.23582580" target="_blank" rel="noopener" class="btn btn-line" data-magnet>DATA ON ZENODO →</a>
       <a href="../index.html#research" class="btn btn-line" data-magnet>← BACK TO RESEARCH</a>
     </div>
   </div>

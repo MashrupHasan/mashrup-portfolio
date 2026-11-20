@@ -57,7 +57,7 @@
     <div class="subtitle" data-a>CabbageTrack</div>
     <p class="sublede" data-a>A vision-only UAV pipeline that recognises individual plants again on later drone passes, from the video alone: no RTK-GPS, no ground-control points, no landmarks.</p>
     <div class="meta-row" data-a>
-      <div class="meta-item"><span>Role</span><span>Independent Research Project</span></div>
+      <div class="meta-item"><span>Role</span><span>Co-author · Methods, Software &amp; Analysis</span></div>
       <div class="meta-item"><span>Stack</span><span>Python · YOLOv9c-seg · OpenCV</span></div>
       <div class="meta-item"><span>Result</span><span>98.9% of blind plants re-identified (held-out flight)</span></div>
     </div>
@@ -70,7 +70,7 @@
       <h3>Overview</h3>
       <p>Tracking the same individual plant across repeated drone surveys is the basis for per-plant growth curves, early stress detection, and yield forecasting. The standard solution, RTK-GPS on the drone, is accurate but expensive and often out of reach for smallholder or commercial vegetable operations on tighter budgets. CabbageTrack asks whether that same re-identification can be done from imagery alone.</p>
       <p>The pipeline segments plants with YOLOv9c-seg, tracks them within each pass with BoT-SORT, and follows the drone's movement by phase correlation of consecutive video frames, a keypoint-free technique that suits repetitive crop texture. Because that path drifts, it is used only to find earlier views of the same ground. For each such view, the shift between the two images is measured directly and the remembered plants are moved by it, then matched to the new plant tracks with Hungarian assignment.</p>
-      <p>It was developed on three flights over cabbage and cauliflower, frozen, and run once on a held-out flight over a new cabbage field, where it re-identified 90 of 91 plants sampled blindly by human annotators. The full methodology is described in a manuscript currently in revision at <em>Computers and Electronics in Agriculture</em>.</p>
+      <p>It was developed on three flights over cabbage and cauliflower, frozen, and run once on a held-out flight over a new cabbage field, where it re-identified 90 of 91 plants sampled blindly by human annotators. The method is not specific to cabbage: with a retrained plant detector it also ran on a cauliflower flight, and transfer to other row crops is still a hypothesis. The full methodology is described in a manuscript resubmitted in November 2026 to <em>Computers and Electronics in Agriculture</em>, where it is under review.</p>
 
       <figure class="fig-frame">
         <img src="../assets/research/cabbagetrack-v2-pipeline.webp" alt="Flowchart of the CabbageTrack pipeline in three groups: detection and tracking, camera motion from the images, and re-identification across passes (revisit query, link verification, cross-pass registration, Hungarian assignment).">
@@ -89,10 +89,14 @@
         <img src="../assets/research/cabbagetrack-v2-gnss-comparison.webp" alt="Two mosaics of the held-out field built from the same frames: placed with the method's camera path, 90 of 91 blind plants were re-identified; placed with the drone's GNSS and its own metadata, the field is stretched about 1.6 times too long and only 15 of 91 were re-identified.">
         <figcaption class="fig-caption">The same frames placed two ways on the held-out field: (a) with the method's camera path, 90/91 blind plants re-identified; (b) with the drone's own GNSS metadata, where the field is stretched and only 15/91 are recovered.</figcaption>
       </figure>
+
+      <h3>Open Data &amp; Code</h3>
+      <p>The flight videos, drone logs, annotated frames, detector weights, human ground truth and every run reported in the paper are archived on Zenodo under CC BY 4.0. The code for the method, the annotation tools and each analysis is released under AGPL-3.0.</p>
     </div>
 
     <div style="margin-top:56px;display:flex;gap:14px;flex-wrap:wrap">
-      <a href="https://github.com/MashrupHasan/CabbageTrack" target="_blank" class="btn btn-fill" data-magnet>VIEW ON GITHUB →</a>
+      <a href="https://github.com/saqlineniam/CabbageTrack" target="_blank" rel="noopener" class="btn btn-fill" data-magnet>VIEW CODE ON GITHUB →</a>
+      <a href="https://doi.org/10.5281/zenodo.23582580" target="_blank" rel="noopener" class="btn btn-line" data-magnet>DATA ON ZENODO →</a>
       <a href="../index.html#projects" class="btn btn-line" data-magnet>← BACK TO PROJECTS</a>
     </div>
   </div>
