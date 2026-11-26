@@ -310,3 +310,61 @@
     })), visible.indexOf(it));
   }));
 })();
+
+/* ---------- research article pages: contents rail, reading stats, figure zoom ---------- */
+(function(){
+  if(!document.body.classList.contains('article')) return;
+  const prose=document.querySelector('.subhero+.sec .prose');
+  const sp=prose&&prose.parentElement;
+  if(!prose) return;
+  const heads=[...prose.querySelectorAll(':scope > h3')];
+  heads.forEach((h,i)=>{ if(!h.id) h.id='s-'+(h.textContent.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||i); });
+
+  // reading stats go into the hero facts card
+  const words=prose.innerText.trim().split(/\s+/).length;
+  const figs=prose.querySelectorAll('.fig-frame,.radar-block,.pshow').length;
+  const meta=document.querySelector('.subhero .meta-row');
+  if(meta){
+    const st=document.createElement('div'); st.className='art-stats';
+    st.innerHTML='<div><b>'+Math.max(1,Math.round(words/220))+'</b>min read</div><div><b>'+heads.length+'</b>sections</div>'+(figs?'<div><b>'+figs+'</b>figure'+(figs>1?'s':'')+'</div>':'');
+    meta.appendChild(st);
+  }
+
+  // sticky rail: progress, contents, actions
+  const rail=document.createElement('aside'); rail.className='art-rail';
+  let html='<div class="art-progress"><i></i></div><div><div class="art-rail-k">On this page</div><div class="art-toc">';
+  heads.forEach((h,i)=>{ html+='<a href="#'+h.id+'"><i>'+String(i+1).padStart(2,'0')+'</i><span>'+h.textContent+'</span></a>'; });
+  html+='</div></div>';
+  const btns=[...sp.querySelectorAll(':scope > div a.btn')];
+  if(btns.length){
+    html+='<div class="art-rail-actions">';
+    btns.forEach(b=>{ html+='<a href="'+b.getAttribute('href')+'"'+(b.target?' target="'+b.target+'" rel="noopener"':'')+'>'+b.textContent.replace(/[→←]/g,'').trim()+'<span>'+(b.target?'↗':/back/i.test(b.textContent)?'←':'→')+'</span></a>'; });
+    html+='</div>';
+  }
+  rail.innerHTML=html; sp.appendChild(rail);
+
+  const links=[...rail.querySelectorAll('.art-toc a')];
+  links.forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); const t=document.getElementById(a.getAttribute('href').slice(1)); window.scrollTo({top:t.getBoundingClientRect().top+scrollY-96,behavior:'smooth'}); }));
+  const bar=rail.querySelector('.art-progress i');
+  function onScroll(){
+    const r=prose.getBoundingClientRect(), total=r.height-window.innerHeight*0.5;
+    bar.style.width=Math.min(100,Math.max(0,(-r.top+window.innerHeight*0.25)/total*100))+'%';
+    let on=0; heads.forEach((h,i)=>{ if(h.getBoundingClientRect().top<window.innerHeight*0.35) on=i; });
+    links.forEach((a,i)=>a.classList.toggle('is-on',i===on));
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  // click a figure to view it full screen
+  const lb=document.createElement('div'); lb.className='art-lb'; lb.innerHTML='<img alt="">'; document.body.appendChild(lb);
+  const lbImg=lb.querySelector('img');
+  const close=()=>lb.classList.remove('open');
+  lb.addEventListener('click',close);
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+  prose.querySelectorAll('.fig-frame').forEach(f=>{
+    const img=f.querySelector('img'); if(!img) return;
+    const z=document.createElement('span'); z.className='fig-zoom'; z.setAttribute('aria-hidden','true');
+    z.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+    f.appendChild(z);
+    img.addEventListener('click',()=>{ lbImg.src=img.currentSrc||img.src; lbImg.alt=img.alt; lb.classList.add('open'); });
+  });
+})();
