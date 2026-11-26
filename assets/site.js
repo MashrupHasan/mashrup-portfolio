@@ -320,16 +320,6 @@
   const heads=[...prose.querySelectorAll(':scope > h3')];
   heads.forEach((h,i)=>{ if(!h.id) h.id='s-'+(h.textContent.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||i); });
 
-  // reading stats go into the hero facts card
-  const words=prose.innerText.trim().split(/\s+/).length;
-  const figs=prose.querySelectorAll('.fig-frame,.radar-block,.pshow').length;
-  const meta=document.querySelector('.subhero .meta-row');
-  if(meta){
-    const st=document.createElement('div'); st.className='art-stats';
-    st.innerHTML='<div><b>'+Math.max(1,Math.round(words/220))+'</b>min read</div><div><b>'+heads.length+'</b>sections</div>'+(figs?'<div><b>'+figs+'</b>figure'+(figs>1?'s':'')+'</div>':'');
-    meta.appendChild(st);
-  }
-
   // sticky rail: progress, contents, actions
   const rail=document.createElement('aside'); rail.className='art-rail';
   let html='<div class="art-progress"><i></i></div><div><div class="art-rail-k">On this page</div><div class="art-toc">';

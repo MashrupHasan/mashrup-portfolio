@@ -1069,3 +1069,42 @@ body.article .fig-frame:hover .fig-zoom{opacity:1;transform:none}
   body.article .fig-frame{padding:8px}
 }
 body.article .subhero+.sec{overflow:clip}
+
+/* ---------- article components: stat strip, formula, figure grids, tiers, citation ---------- */
+body.article .stat-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin:30px 0 36px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+body.article .stat-strip>div{background:var(--white);padding:22px 20px 20px;border-top:3px solid var(--teal)}
+body.article .stat-strip>div:nth-child(even){border-top-color:var(--rust)}
+body.article .stat-strip b{display:block;font-family:'Cormorant Garamond',serif;font-size:clamp(30px,3vw,42px);font-weight:300;color:var(--ink);line-height:1;letter-spacing:-.02em;margin-bottom:10px;white-space:nowrap}
+body.article .stat-strip span{display:block;font-size:12px;line-height:1.5;color:var(--ink-soft)}
+body.article .formula-card{margin:8px 0 34px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--ash);overflow:hidden}
+body.article .formula{padding:18px 22px;font-size:14px;color:var(--ink);background:var(--white);border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap}
+body.article .formula-parts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+body.article .formula-parts>div{padding:16px 20px;border-right:1px solid var(--line)}
+body.article .formula-parts>div:last-child{border-right:none}
+body.article .fp-w{display:block;font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;color:var(--teal);line-height:1}
+body.article .fp-k{display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);margin:6px 0 6px}
+body.article .fp-d{display:block;font-size:12px;line-height:1.5;color:var(--ink-soft)}
+body.article .fig-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 40px}
+body.article .fig-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:10px 0 40px}
+body.article .fig-grid-3 .fig-frame,body.article .fig-pair .fig-frame{margin:0;padding:8px}
+body.article .fig-grid-3 .fig-zoom,body.article .fig-pair .fig-zoom{top:16px;right:16px}
+body.article .fig-narrow{max-width:520px}
+body.article .tier-list{display:flex;flex-direction:column;gap:10px;margin:6px 0 28px}
+body.article .tier{display:grid;grid-template-columns:180px minmax(0,1fr) auto;align-items:center;gap:18px;padding:16px 20px;border:1px solid var(--line);border-left:4px solid var(--rust);border-radius:var(--r-md);background:var(--white)}
+body.article .tier.t2{border-left-color:#E0954F}
+body.article .tier.t3{border-left-color:var(--teal)}
+body.article .tier-k{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+body.article .tier-v{font-size:13.5px;line-height:1.6;color:var(--ink-soft)}
+body.article .tier-n{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--teal);white-space:nowrap}
+body.article .cite-block{margin-top:40px;padding:20px 22px;border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:var(--r-md);background:var(--ash)}
+body.article .cite-k{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+body.article .cite-block p{margin:0;font-size:14px;line-height:1.7;max-width:none}
+body.article .cite-block a{color:var(--teal-deep);word-break:break-all}
+@media(max-width:900px){
+  body.article .stat-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  body.article .formula-parts{grid-template-columns:1fr}
+  body.article .formula-parts>div{border-right:none;border-bottom:1px solid var(--line)}
+  body.article .fig-grid-3{grid-template-columns:1fr}
+  body.article .fig-pair{grid-template-columns:1fr}
+  body.article .tier{grid-template-columns:1fr;gap:6px}
+}
